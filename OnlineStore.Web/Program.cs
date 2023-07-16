@@ -5,7 +5,10 @@ namespace OnlineStore.Web
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using OnlineStore.Services.Data;
+    using OnlineStore.Services.Data.Interfaces;
     using OnlineStore.Web.Data;
+    using OnlineStore.Web.Infrastructure;
 
     public class Program
     {
@@ -28,6 +31,8 @@ namespace OnlineStore.Web
             })
                 .AddEntityFrameworkStores<OnlineStoreDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddApplicationServices(typeof(IItemService));
+
 
             var app = builder.Build();
 

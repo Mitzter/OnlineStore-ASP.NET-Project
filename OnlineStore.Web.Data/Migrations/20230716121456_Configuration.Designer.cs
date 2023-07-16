@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Web.Data;
 
@@ -11,9 +12,10 @@ using OnlineStore.Web.Data;
 namespace OnlineStore.Web.Data.Migrations
 {
     [DbContext(typeof(OnlineStoreDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230716121456_Configuration")]
+    partial class Configuration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -303,38 +305,6 @@ namespace OnlineStore.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ItemCategories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Spray"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Consumable"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Part"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Accessory"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Cosmetic"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Tool"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

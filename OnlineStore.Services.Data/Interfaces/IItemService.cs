@@ -2,8 +2,9 @@
 {
     using OnlineStore.Web.ViewModels;
 
-    public interface IHouseService
+    public interface IItemService
     {
         Task<IEnumerable<IndexViewModel>> TopItemAsync();
+
     }
 }

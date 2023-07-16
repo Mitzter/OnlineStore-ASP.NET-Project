@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Services.Data\OnlineStore.Services.Data.csproj" />
     <ProjectReference Include="..\OnlineStore.Web.Data\OnlineStore.Web.Data.csproj" />
-    <ProjectReference Include="..\OnlineStore.Web.ViewModels\OnlineStore.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\OnlineStore.Web.Infrastructure\OnlineStore.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\OnlineStore.Web.Models\OnlineStore.Web.Models.csproj" />
   </ItemGroup>
 
 </Project>
