@@ -1,6 +1,60 @@
-﻿@{
+﻿@using OnlineStore.Web.Models.FormModels;
+@model ItemFormModel
+
+@{
     ViewBag.Title = "Add Product";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
+
+
+<div class="row">
+     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+         <form method="post">
+             <div class="form-group">
+                 <label asp-for="Name"></label>
+                 <input asp-for="Name" class="form-control" placeholder="Title...">
+                 <span asp-validation-for="Name" class="small text-danger"></span>
+             </div>
+             <div class="form-group">
+                 <label asp-for="Description"></label>
+                 <textarea asp-for="Description" rows="4" class="form-control"
+                placeholder="Two bedrooms..."></textarea>
+                 <span asp-validation-for="Description" class="small textdanger"></span>
+             </div>
+             <div class="form-group">
+                 <label asp-for="ImageUrl"></label>
+                 <input asp-for="ImageUrl" class="form-control" placeholder="Your 
+                fine URL here...">
+                © SoftUni – about.softuni.bg. Copyrighted document. Unauthorized copy, reproduction or use is not permitted.
+
+                Follow us: Page 40 of 69
+                 <span asp-validation-for="ImageUrl" class="small textdanger"></span>
+             </div>
+             <div class="form-group">
+                 <label asp-for="Price"></label>
+                 <input asp-for="Price" class="form-control">
+                 <span asp-validation-for="Price" class="small textdanger"></span>
+             </div>
+             <div class="form-group">
+                 <label asp-for="BulkPrice"></label>
+                 <input asp-for="BulkPrice" class="form-control">
+                 <span asp-validation-for="BulkPrice" class="small textdanger"></span>
+             </div>
+             <div class="form-group">
+                 <label asp-for="CategoryId"></label>
+                 <select asp-for="CategoryId" class="form-control">
+                                    @foreach (var category in Model.Categories)
+                                    {
+                     <option value="@category.Id">@category.Name</option>
+                                    }
+                 </select>
+                 <span asp-validation-for="CategoryId" class="small textdanger"></span>
+             </div>
+             <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+             </div>
+         </form>
+     </div>
+</div>
