@@ -243,7 +243,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("bulkBuyers");
+                    b.ToTable("bulkBuyers", (string)null);
                 });
 
             modelBuilder.Entity("OnlineStore.Web.Models.Item", b =>
@@ -284,7 +284,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("OnlineStore.Web.Models.ItemCategory", b =>
@@ -302,7 +302,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ItemCategories");
+                    b.ToTable("ItemCategories", (string)null);
 
                     b.HasData(
                         new
