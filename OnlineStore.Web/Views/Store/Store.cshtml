@@ -4,53 +4,64 @@
 @{
     ViewBag.Title = "Store";
 }
-<h2 class="text-center">@ViewBag.Title</h2>
+
+
+
+<h2 class="text-center text-light">@ViewBag.Title</h2>
 <hr />
 <form method="get">
-     <div class="row">
-         <div class="form-group col-md-3 d-flex justify-content-between">
-             <div class="form-group">
-                 <label asp-for="Category"></label>
-                 <select asp-for="Category" class="form-control">
-                 <option value="">All</option>
-                                    @foreach (var category in Model.Categories)
-                                    {
-                     <option value="@category">@category</option>
-                                    }
-                 </select>
-             </div>
-            <div class="form-group">
-                 <label asp-for="ItemsPerPage"></label>
-                 <select asp-for="ItemsPerPage" class="form-control">
-                 
-                    <option value="3">3</option>
-                    <option value="6">6</option>
-                    <option value="9">9</option>
-                 </select>
-             </div>
-         </div>
-         <div class="form-group col-md-3">
-             <label asp-for="SearchString"></label>
-             <input asp-for="SearchString" class="form-control" placeholder="...">
-         </div>
-         <div class="form-group col-md-3">
-             <div class="form-group">
-                 <label asp-for="ItemSorting"></label>
-                 <select asp-for="ItemSorting" class="form-control">
-                 <option value="0">Newest</option>
-                 <option value="1">Oldest</option>
-                 <option value="2">Price (Ascending)</option>
-                 <option value="3">Price (Descending)</option>
-                 <option value="4">Category</option>
-             </select>
-             </div>
-         </div>
-         <div class="col-md-3">
-             <div class="form-group mt-4 p-2">
-                <input type="submit" value="Search" class="btn btn-primary" />
-             </div>
-         </div>
-     </div>
+    <style>
+    .section-outline {
+        border: 2px solid red;
+        padding: 10px;
+    }
+</style>
+<
+</>
+    <div class="row section-outline align-items-start">
+    <div class="col-md-3">
+        <div class="form-group mt-3 p-2">
+            <input type="submit" value="Search" class="btn btn-outline-danger btn-lg" />
+        </div>
+    </div>
+    <div class="form-group col-md-3 d-flex flex-column justify-content-start text-light">
+        <div class="form-group">
+            <label asp-for="Category"></label>
+            <select asp-for="Category" class="form-control form-control-sm">
+                <option value="">All</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category">@category</option>
+                    }
+            </select>
+        </div>
+        <div class="form-group text-light">
+            <label asp-for="ItemsPerPage"></label>
+            <select asp-for="ItemsPerPage" class="form-control form-control-sm">
+                <option value="3">3</option>
+                <option value="6">6</option>
+                <option value="9">9</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group col-md-3 text-light">
+        <label asp-for="SearchString"></label>
+        <input asp-for="SearchString" class="form-control form-control-sm" placeholder="...">
+    </div>
+    <div class="form-group col-md-3 text-light">
+        <div class="form-group">
+            <label asp-for="ItemSorting"></label>
+            <select asp-for="ItemSorting" class="form-control form-control-sm">
+                <option value="0">Newest</option>
+                <option value="1">Oldest</option>
+                <option value="2">Price (Ascending)</option>
+                <option value="3">Price (Descending)</option>
+                <option value="4">Category</option>
+            </select>
+        </div>
+    </div>
+</div>
+
 </form>
 @{
     int previousPage = Model.CurrentPage - 1;
@@ -100,3 +111,4 @@
      <partial name="_ItemPartial" model="@item" />
     }
 </div>
+

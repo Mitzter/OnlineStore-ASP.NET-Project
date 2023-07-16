@@ -63,6 +63,7 @@
                     ImageUrl = i.ImageUrl,
                     Price = i.Price,
                     BulkPrice = i.Price,
+                    IsActive = true,
                 })
                 .ToArrayAsync();
 

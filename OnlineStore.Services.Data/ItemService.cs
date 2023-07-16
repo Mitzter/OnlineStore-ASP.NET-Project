@@ -55,7 +55,8 @@
                 ImageUrl = model.ImageUrl,
                 Price = model.Price,
                 BulkPrice =  model.BulkPrice,
-                CategoryId = model.CategoryId
+                CategoryId = model.CategoryId,
+                IsActive = true
             };
 
             await this.dbContext.Items.AddAsync(item);
