@@ -5,6 +5,7 @@
     using OnlineStore.Services.Data.Interfaces;
     using OnlineStore.Web.Models;
     using OnlineStore.Web.Models.FormModels;
+    using OnlineStore.Web.ViewModels;
     using System.Diagnostics;
 
     [Authorize]
@@ -20,9 +21,12 @@
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<IndexViewModel> viewModel =
+                await this.itemService.TopItemAsync();
+
+            return View(viewModel);
         }
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -59,7 +63,7 @@
             {
                 string itemId = await this.itemService.CreateAsync(model);
 
-                return this.RedirectToAction("All", "Home");
+                return this.RedirectToAction("Index", "Home");
             }
             catch (Exception)
             {

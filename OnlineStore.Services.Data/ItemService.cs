@@ -22,9 +22,22 @@
 
         
 
-        public Task<IEnumerable<IndexViewModel>> TopItemAsync()
+        public async Task<IEnumerable<IndexViewModel>> TopItemAsync()
         {
-            throw new NotImplementedException();
+            IEnumerable<IndexViewModel> topItems = await this.dbContext
+                .Items
+                .Where(i => i.IsActive == true)
+                .OrderByDescending(i => i.CreatedOn)
+                .Take(10)
+                .Select(i => new IndexViewModel()
+                {
+                    Id = i.Id.ToString(),
+                    Name = i.Name,
+                    ImageUrl = i.ImageUrl
+                })
+                .ToArrayAsync();
+
+            return topItems;
         }
 
         public async Task<IEnumerable<ItemSelectCategoryFormModel>> AllCategories()
