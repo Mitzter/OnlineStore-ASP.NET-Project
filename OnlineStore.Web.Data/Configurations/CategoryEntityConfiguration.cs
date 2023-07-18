@@ -2,7 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using OnlineStore.Web.Models;
+    using OnlineStore.Web.Models.StoreModels;
 
     public class CategoryEntityConfiguration : IEntityTypeConfiguration<ItemCategory>
     {

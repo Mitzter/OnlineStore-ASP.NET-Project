@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    using OnlineStore.Web.Models;
+    using OnlineStore.Web.Models.StoreModels;
     using System.Reflection;
 
     public class OnlineStoreDbContext : IdentityDbContext

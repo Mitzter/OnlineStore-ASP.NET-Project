@@ -1,9 +1,9 @@
-﻿namespace OnlineStore.Services.Data
+﻿namespace OnlineStore.Services.Data.StoreServices
 {
     using Microsoft.EntityFrameworkCore;
-    using OnlineStore.Services.Data.Interfaces;
+    using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
-    using OnlineStore.Web.Models;
+    using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.ViewModels.StoreModels;
     using OnlineStore.Web.ViewModels.StoreModels.Enums;
     using System.Threading.Tasks;
@@ -19,7 +19,7 @@
 
         public async Task<FilteredAndPagedItemsServiceModel> AllAsync(AllItemsQueryModel queryModel)
         {
-            IQueryable<Item> itemQuery = this.dbContext
+            IQueryable<Item> itemQuery = dbContext
                 .Items
                 .AsQueryable();
 
@@ -49,7 +49,7 @@
                 .OrderByDescending(i => i.Price),
                 ItemSort.Category => itemQuery
                 .OrderBy(i => i.Category),
-            } ;
+            };
 
             IEnumerable<AllItemsViewModel> allItems = await itemQuery
                 .Where(i => i.IsActive == true)

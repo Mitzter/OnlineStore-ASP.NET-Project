@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Web.Models
+﻿namespace OnlineStore.Web.Models.StoreModels
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@
     {
         public Item()
         {
-            this.Id = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
         public Guid Id { get; set; }
 
@@ -20,7 +20,7 @@
 
         [Required]
         [MaxLength(255)]
-        public string ImageUrl {  get ; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
 
         [Required]
         public decimal Price { get; set; }

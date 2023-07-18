@@ -6,7 +6,7 @@ namespace OnlineStore.Web
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data;
-    using OnlineStore.Services.Data.Interfaces;
+    using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
     using OnlineStore.Web.Infrastructure;
 

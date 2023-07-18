@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using OnlineStore.Services.Data.Interfaces;
+    using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Models;
     using OnlineStore.Web.Models.FormModels;
     using OnlineStore.Web.ViewModels;

@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Services.Data.Interfaces
+﻿namespace OnlineStore.Services.Data.Interfaces.StoreInterfaces
 {
     using OnlineStore.Web.Models.FormModels;
     using OnlineStore.Web.ViewModels;

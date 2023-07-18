@@ -1,10 +1,10 @@
-﻿namespace OnlineStore.Services.Data
+﻿namespace OnlineStore.Services.Data.StoreServices
 {
     using Microsoft.EntityFrameworkCore;
-    using OnlineStore.Services.Data.Interfaces;
+    using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
-    using OnlineStore.Web.Models;
     using OnlineStore.Web.Models.FormModels;
+    using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.ViewModels;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -20,11 +20,11 @@
             this.dbContext = dbContext;
         }
 
-        
+
 
         public async Task<IEnumerable<IndexViewModel>> TopItemAsync()
         {
-            IEnumerable<IndexViewModel> topItems = await this.dbContext
+            IEnumerable<IndexViewModel> topItems = await dbContext
                 .Items
                 .Where(i => i.IsActive == true)
                 .OrderByDescending(i => i.CreatedOn)
@@ -42,7 +42,7 @@
 
         public async Task<IEnumerable<ItemSelectCategoryFormModel>> AllCategories()
         {
-            return await this.dbContext
+            return await dbContext
                 .ItemCategories
                 .Select(c => new ItemSelectCategoryFormModel
                 {
@@ -54,7 +54,7 @@
 
         public async Task<bool> CategoryExists(int categoryId)
         {
-            return await this.dbContext
+            return await dbContext
                 .ItemCategories
                 .AnyAsync(c => c.Id == categoryId);
         }
@@ -67,17 +67,17 @@
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
                 Price = model.Price,
-                BulkPrice =  model.BulkPrice,
+                BulkPrice = model.BulkPrice,
                 CategoryId = model.CategoryId,
                 IsActive = true
             };
 
-            await this.dbContext.Items.AddAsync(item);
-            await this.dbContext.SaveChangesAsync();
+            await dbContext.Items.AddAsync(item);
+            await dbContext.SaveChangesAsync();
 
             return item.Id.ToString();
         }
 
-        
+
     }
 }

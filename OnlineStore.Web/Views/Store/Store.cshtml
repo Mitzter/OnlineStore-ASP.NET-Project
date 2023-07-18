@@ -73,9 +73,9 @@
     Model.ItemsPerPage);
 
 }
-
+<h5></h5>
 <div class="row mb-5">
-     <div class="col-md-1 d-grid gap-2 d-md-flex justify-content-md-start section-outline">
+     <div class="col-md-1 d-grid gap-2 d-md-flex justify-content-md-start">
          <a class="btn btn-danger @(Model.CurrentPage == 1 ? "disabled" : 
         string.Empty)"
          asp-controller="House"
@@ -89,7 +89,7 @@
         bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
         !Model.Items.Any();
     }
-     <div class="col-md-1 d-grid gap-2 d-md justify-content-md-end section-outline">
+     <div class="col-md-1 d-grid gap-2 d-md justify-content-md-end">
          <a class="btn btn-danger         @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
          asp-controller="House"
          asp-action="All"

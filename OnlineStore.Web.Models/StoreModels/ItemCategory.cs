@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Web.Models
+﻿namespace OnlineStore.Web.Models.StoreModels
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -10,6 +10,6 @@
         [MaxLength(30)]
         public string Name { get; set; } = null!;
 
-        public IEnumerable<Item> Items { get; set; } = new HashSet<Item>();   
+        public IEnumerable<Item> Items { get; set; } = new HashSet<Item>();
     }
 }

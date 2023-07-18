@@ -1,7 +1,7 @@
-﻿namespace OnlineStore.Services.Data
+﻿namespace OnlineStore.Services.Data.StoreServices
 {
     using Microsoft.EntityFrameworkCore;
-    using OnlineStore.Services.Data.Interfaces;
+    using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
     using OnlineStore.Web.Models.FormModels;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@
 
         public async Task<IEnumerable<ItemSelectCategoryFormModel>> AllCategoriesAsync()
         {
-            IEnumerable<ItemSelectCategoryFormModel> allCategories = await this.dbContext
+            IEnumerable<ItemSelectCategoryFormModel> allCategories = await dbContext
                 .ItemCategories
                 .AsNoTracking()
                 .Select(c => new ItemSelectCategoryFormModel()
@@ -33,7 +33,7 @@
 
         public async Task<IEnumerable<string>> AllCategoryNamesAsync()
         {
-            IEnumerable<string> allNames = await this.dbContext
+            IEnumerable<string> allNames = await dbContext
                 .ItemCategories
                 .Select(c => c.Name)
                 .ToArrayAsync();
@@ -43,9 +43,9 @@
 
         public async Task<bool> ExistsById(int id)
         {
-            bool result = await this.dbContext
+            bool result = await dbContext
                 .ItemCategories
-                .AnyAsync(c =>c.Id == id);
+                .AnyAsync(c => c.Id == id);
 
             return result;
         }

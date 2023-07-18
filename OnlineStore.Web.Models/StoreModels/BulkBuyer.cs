@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Web.Models
+﻿namespace OnlineStore.Web.Models.StoreModels
 {
     using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@
 
         public BulkBuyer()
         {
-            this.Id = Guid.NewGuid();
+            Id = Guid.NewGuid();
         }
         public Guid Id { get; set; }
 
