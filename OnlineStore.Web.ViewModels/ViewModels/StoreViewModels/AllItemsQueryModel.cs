@@ -1,17 +1,17 @@
-﻿namespace OnlineStore.Web.ViewModels.StoreModels
+﻿namespace OnlineStore.Web.ViewModels.ViewModels.StoreViewModels
 {
-    using OnlineStore.Web.ViewModels.StoreModels.Enums;
+    using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels.Enums;
     using System.ComponentModel.DataAnnotations;
 
     public class AllItemsQueryModel
     {
         public AllItemsQueryModel()
         {
-            this.CurrentPage = 1;
-            this.ItemsPerPage = 20;
+            CurrentPage = 1;
+            ItemsPerPage = 20;
 
-            this.Categories = new HashSet<string>();
-            this.Items = new HashSet<AllItemsViewModel>();
+            Categories = new HashSet<string>();
+            Items = new HashSet<AllItemsViewModel>();
         }
         public string? Category { get; set; }
 
@@ -23,7 +23,7 @@
 
         public int CurrentPage { get; set; }
 
-        [Display(Name ="Number of items per page")]
+        [Display(Name = "Number of items per page")]
         public int ItemsPerPage { get; set; }
 
         public int TotalItems { get; set; }

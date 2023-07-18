@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Web.ViewModels.StoreModels.Enums
+﻿namespace OnlineStore.Web.ViewModels.ViewModels.StoreViewModels.Enums
 {
     public enum ItemSort
     {

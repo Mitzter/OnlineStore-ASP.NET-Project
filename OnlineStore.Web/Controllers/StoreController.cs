@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
-    using OnlineStore.Web.ViewModels.StoreModels;
+    using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
 
     [Authorize]
     public class StoreController : Controller

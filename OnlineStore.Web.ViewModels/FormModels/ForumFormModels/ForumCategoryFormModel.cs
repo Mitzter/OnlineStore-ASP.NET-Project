@@ -1,12 +1,9 @@
 ﻿namespace OnlineStore.Web.ViewModels.FormModels.ForumFormModels
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    internal class ForumCategoryFormModel
+    public class ForumCategoryFormModel
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = null!;
     }
 }

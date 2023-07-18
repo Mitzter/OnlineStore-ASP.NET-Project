@@ -1,6 +1,6 @@
 ﻿namespace OnlineStore.Services.Data.Interfaces.StoreInterfaces
 {
-    using OnlineStore.Web.ViewModels.StoreModels;
+    using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
 
     public interface IStoreService
     {

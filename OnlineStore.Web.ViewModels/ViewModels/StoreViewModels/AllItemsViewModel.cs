@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Web.ViewModels.StoreModels
+﻿namespace OnlineStore.Web.ViewModels.ViewModels.StoreViewModels
 {
     using System.ComponentModel.DataAnnotations;
 

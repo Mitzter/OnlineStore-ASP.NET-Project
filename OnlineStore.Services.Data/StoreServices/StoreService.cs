@@ -4,8 +4,8 @@
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
     using OnlineStore.Web.Models.StoreModels;
-    using OnlineStore.Web.ViewModels.StoreModels;
-    using OnlineStore.Web.ViewModels.StoreModels.Enums;
+    using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
+    using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels.Enums;
     using System.Threading.Tasks;
 
     public class StoreService : IStoreService
