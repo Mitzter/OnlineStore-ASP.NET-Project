@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Web.Models.FormModels
+﻿namespace OnlineStore.Web.ViewModels.FormModels.StoreFormModels
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -7,7 +7,7 @@
 
         public ItemFormModel()
         {
-            this.Categories = new HashSet<ItemSelectCategoryFormModel>();
+            Categories = new HashSet<ItemSelectCategoryFormModel>();
         }
         [Required]
         [MinLength(6)]

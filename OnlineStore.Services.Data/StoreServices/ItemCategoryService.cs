@@ -3,7 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
-    using OnlineStore.Web.Models.FormModels;
+    using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 

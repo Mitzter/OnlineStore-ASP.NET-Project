@@ -1,7 +1,7 @@
 ﻿namespace OnlineStore.Services.Data.Interfaces.StoreInterfaces
 {
-    using OnlineStore.Web.Models.FormModels;
     using OnlineStore.Web.ViewModels;
+    using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
 
     public interface IItemService
     {
