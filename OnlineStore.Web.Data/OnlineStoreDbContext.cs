@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.Models.StoreModels;
     using System.Reflection;
 
@@ -18,6 +19,12 @@
         public DbSet<ItemCategory> ItemCategories { get; set; } = null!;
 
         public DbSet<BulkBuyer> bulkBuyers { get; set; } = null!;
+
+        public DbSet<ForumCategory> ForumCategories { get; set; } = null!;
+
+        public DbSet<Post> ForumPosts { get; set; } = null!;
+
+        public DbSet<Reply> ForumReplies { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
