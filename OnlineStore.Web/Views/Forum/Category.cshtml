@@ -1,0 +1,19 @@
+﻿
+@model ForumCategoryViewModel
+@{
+    ViewData["Title"] = Model.Name;
+    var posts = Model.Posts;
+}
+
+<h1>@Model.Name</h1>
+@foreach (var post in posts)
+{
+    <div>
+        <h5></h5>
+            <a href="@Url.Action("ViewPost", "Forum", new {Id = post.Id})">@post.Title</a>
+    </div>
+}
+
+
+<!-- Link to create a new post -->
+<a href="@Url.Action("CreatePost", "Forum", new { categoryId = Model.Id })">Create New Post</a>

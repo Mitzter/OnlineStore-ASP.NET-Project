@@ -5,6 +5,7 @@
     using OnlineStore.Web.Data;
     using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.ViewModels.FormModels.ForumFormModels;
+    using OnlineStore.Web.ViewModels.ViewModels.ForumViewModels;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -52,5 +53,7 @@
 
             return categories;
         }
+
+        
     }
 }

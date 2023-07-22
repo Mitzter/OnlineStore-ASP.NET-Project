@@ -2,6 +2,7 @@
 {
     using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.ViewModels.FormModels.ForumFormModels;
+    using OnlineStore.Web.ViewModels.ViewModels.ForumViewModels;
 
     public interface IForumCategoryService
     {

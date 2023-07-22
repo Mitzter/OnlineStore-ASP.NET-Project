@@ -1,24 +1,68 @@
 ﻿namespace OnlineStore.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using OnlineStore.Services.Data._0_Interfaces.ForumInterfaces;
+    using OnlineStore.Web.Models.ForumModels;
+    using OnlineStore.Web.ViewModels.FormModels.ForumFormModels;
+    using OnlineStore.Web.ViewModels.ViewModels.ForumViewModels;
 
     [Authorize]
-    public class ForumController
+    public class ForumController : Controller 
     {
         private readonly IForumCategoryService categoryService;
         private readonly IForumService forumService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ForumController(IForumCategoryService categoryService, IForumService forumService)
+        public ForumController(IForumCategoryService categoryService, IForumService forumService, UserManager<IdentityUser> _userManager)
         {
             this.categoryService = categoryService;
             this.forumService = forumService;
+            this._userManager = _userManager;
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> ForumMain()
         {
-            return null;
+            IEnumerable<ForumCategoryFormModel> categories = await this.categoryService
+                .AllCategoriesAsync();
+
+            return View(categories);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Category(int categoryId)
+        {
+            ForumCategoryViewModel viewModel = await this.forumService
+                .GetSelectedCategoryViewAsync(categoryId.ToString());
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreatePost(int postId)
+        {
+            var user = HttpContext.User;
+            var currentUser = await _userManager.GetUserAsync(user);
+
+            PostFormModel post = new PostFormModel()
+            {
+                PosterId = currentUser.Id,
+                Poster = currentUser,
+                CategoryId = postId,
+            };
+
+            return View(post);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreatePost(PostFormModel formModel)
+        {
+           
+                string postId = await this.forumService.CreatePostAsync(formModel);
+                return this.RedirectToAction("ForumMain", "Forum");
+            
+           
         }
     }
 }

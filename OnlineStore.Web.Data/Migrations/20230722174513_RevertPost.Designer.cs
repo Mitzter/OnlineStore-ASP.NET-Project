@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Web.Data;
 
@@ -11,9 +12,10 @@ using OnlineStore.Web.Data;
 namespace OnlineStore.Web.Data.Migrations
 {
     [DbContext(typeof(OnlineStoreDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230722174513_RevertPost")]
+    partial class RevertPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -288,6 +290,7 @@ namespace OnlineStore.Web.Data.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("PosterId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RepliesCount")
@@ -520,7 +523,9 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Poster")
                         .WithMany()
-                        .HasForeignKey("PosterId");
+                        .HasForeignKey("PosterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 

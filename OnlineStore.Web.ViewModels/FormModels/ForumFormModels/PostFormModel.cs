@@ -1,11 +1,13 @@
-﻿namespace OnlineStore.Web.Models.ForumModels
+﻿namespace OnlineStore.Web.ViewModels.FormModels.ForumFormModels
 {
     using Microsoft.AspNetCore.Identity;
+    using OnlineStore.Web.Models.ForumModels;
     using System.ComponentModel.DataAnnotations;
+    using System.Diagnostics.Contracts;
 
-    public class Post
+    public class PostFormModel
     {
-        public Post()
+        public PostFormModel()
         {
             this.Replies = new HashSet<Reply>();
         }
@@ -17,22 +19,17 @@
 
         public string? ImageUrl { get; set; }
 
-        
-        public IdentityUser Poster { get; set; } 
+        [Required]
+        public string PosterId { get; set; } = null!;
+        public IdentityUser Poster { get; set; }
         [Required]
         public DateTime CreatedOn { get; set; }
-        [Required]
-        public int RepliesCount { get; set; }
-        [Required]
-        public int Views { get; set; }
 
         public IEnumerable<Reply> Replies { get; set; }
-        
+
         public int CategoryId { get; set; }
 
-        [Required]
-        public virtual ForumCategory Category { get; set; } = null!;
-        [Required]
-        public bool IsActive { get; set; } 
+        public virtual ForumCategory Category { get; set; }
+
     }
 }

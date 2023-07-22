@@ -1,12 +1,18 @@
 ﻿namespace OnlineStore.Web.ViewModels.ViewModels.ForumViewModels
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using OnlineStore.Web.Models.ForumModels;
 
-    internal class ForumCategoryViewModel
+    public class ForumCategoryViewModel
     {
+        public ForumCategoryViewModel()
+        {
+            this.Posts = new HashSet<Post>();
+        }
+
+        public int Id { get; set; }
+
+        public string Name { get; set; } = null!;
+
+        public IEnumerable<Post> Posts { get; set; }
     }
 }

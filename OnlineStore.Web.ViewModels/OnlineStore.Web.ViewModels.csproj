@@ -17,4 +17,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Web.Models\OnlineStore.Web.Models.csproj" />
+  </ItemGroup>
+
 </Project>
