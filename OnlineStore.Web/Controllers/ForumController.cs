@@ -7,6 +7,7 @@
     using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.ViewModels.FormModels.ForumFormModels;
     using OnlineStore.Web.ViewModels.ViewModels.ForumViewModels;
+    using static OnlineStore.Web.Infrastructure.GetPrincipalExtension;
 
     [Authorize]
     public class ForumController : Controller 
@@ -58,8 +59,8 @@
         [HttpPost]
         public async Task<IActionResult> CreatePost(PostFormModel formModel)
         {
-           
-                string postId = await this.forumService.CreatePostAsync(formModel);
+            var userId = this.User.GetId()!.ToString();
+                string postId = await this.forumService.CreatePostAsync(formModel, userId);
                 return this.RedirectToAction("ForumMain", "Forum");
             
            

@@ -10,27 +10,28 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
+    using static OnlineStore.Web.Infrastructure.GetPrincipalExtension;
 
     public class ForumService : IForumService
     {
-        private OnlineStoreDbContext dbcontext;
+        private readonly OnlineStoreDbContext dbcontext;
 
         public ForumService(OnlineStoreDbContext dbcontext)
         {
             this.dbcontext = dbcontext;
         }
         
-        public async Task<string> CreatePostAsync(PostFormModel model)
+        public async Task<string> CreatePostAsync(PostFormModel model, string posterId)
         {
-               
+            
             Post post = new Post()
             {
                 Id = model.Id,
                 Title = model.Title,
                 Text = model.Text,
                 ImageUrl = model.ImageUrl,
-                Poster= model.Poster,
-                CreatedOn = DateTime.Now,
+                PosterId = posterId,
+                CreatedOn = DateTime.UtcNow,
                 CategoryId = model.CategoryId,
             };
 
@@ -39,6 +40,8 @@
 
             return post.Id.ToString();
         }
+
+       
 
         public async Task<string> GetPostByIdAsync(string id)
         {

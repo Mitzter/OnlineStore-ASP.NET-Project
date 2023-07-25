@@ -4,7 +4,7 @@
 
 namespace OnlineStore.Web.Data.Migrations
 {
-    public partial class What : Migration
+    public partial class Fix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,7 +24,7 @@ namespace OnlineStore.Web.Data.Migrations
                 name: "PosterId",
                 table: "ForumPosts",
                 type: "nvarchar(450)",
-                nullable: true,
+                nullable: false,
                 oldClrType: typeof(int),
                 oldType: "int");
 
@@ -38,7 +38,8 @@ namespace OnlineStore.Web.Data.Migrations
                 table: "ForumPosts",
                 column: "PosterId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -56,10 +57,8 @@ namespace OnlineStore.Web.Data.Migrations
                 table: "ForumPosts",
                 type: "int",
                 nullable: false,
-                defaultValue: 0,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(450)",
-                oldNullable: true);
+                oldType: "nvarchar(450)");
 
             migrationBuilder.AddColumn<string>(
                 name: "PosterId1",

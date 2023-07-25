@@ -6,7 +6,7 @@
     public interface IForumService
     {
         Task<string> GetPostByIdAsync(string id);
-        Task<string> CreatePostAsync(PostFormModel model);
+        Task<string> CreatePostAsync(PostFormModel model, string userId);
         Task<ForumCategoryViewModel> GetSelectedCategoryViewAsync(string categoryId);
 
         Task<IEnumerable<ReplyFormModel>> GetPostRepliesAsync(string postId);

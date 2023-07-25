@@ -12,8 +12,8 @@ using OnlineStore.Web.Data;
 namespace OnlineStore.Web.Data.Migrations
 {
     [DbContext(typeof(OnlineStoreDbContext))]
-    [Migration("20230722183902_What")]
-    partial class What
+    [Migration("20230725114542_Fix")]
+    partial class Fix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -290,6 +290,7 @@ namespace OnlineStore.Web.Data.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("PosterId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RepliesCount")
@@ -522,7 +523,9 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Poster")
                         .WithMany()
-                        .HasForeignKey("PosterId");
+                        .HasForeignKey("PosterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 

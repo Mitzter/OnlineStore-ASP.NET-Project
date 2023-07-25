@@ -20,7 +20,7 @@
         public string? ImageUrl { get; set; }
 
         [Required]
-        public string PosterId { get; set; } = null!;
+        public string PosterId { get; set; } 
         public IdentityUser Poster { get; set; }
         [Required]
         public DateTime CreatedOn { get; set; }
