@@ -5,18 +5,19 @@
     using Microsoft.AspNetCore.Mvc;
     using OnlineStore.Services.Data._0_Interfaces.ForumInterfaces;
     using OnlineStore.Web.Models.ForumModels;
+    using OnlineStore.Web.Models.UserModels;
     using OnlineStore.Web.ViewModels.FormModels.ForumFormModels;
     using OnlineStore.Web.ViewModels.ViewModels.ForumViewModels;
     using static OnlineStore.Web.Infrastructure.GetPrincipalExtension;
 
     [Authorize]
-    public class ForumController : Controller 
+    public class ForumController : Controller
     {
         private readonly IForumCategoryService categoryService;
         private readonly IForumService forumService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ForumController(IForumCategoryService categoryService, IForumService forumService, UserManager<IdentityUser> _userManager)
+        public ForumController(IForumCategoryService categoryService, IForumService forumService, UserManager<ApplicationUser> _userManager)
         {
             this.categoryService = categoryService;
             this.forumService = forumService;
@@ -46,6 +47,8 @@
             var user = HttpContext.User;
             var currentUser = await _userManager.GetUserAsync(user);
 
+
+
             PostFormModel post = new PostFormModel()
             {
                 PosterId = currentUser.Id,
@@ -60,10 +63,21 @@
         public async Task<IActionResult> CreatePost(PostFormModel formModel)
         {
             var userId = this.User.GetId()!.ToString();
-                string postId = await this.forumService.CreatePostAsync(formModel, userId);
-                return this.RedirectToAction("ForumMain", "Forum");
-            
-           
+            string postId = await this.forumService.CreatePostAsync(formModel, userId);
+            return this.RedirectToAction("ForumMain", "Forum");
+
+
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewPost(string id)
+        {
+            PostViewModel viewModel = await forumService
+                .ViewPostAsync(id);
+
+            return View(viewModel);
+
         }
     }
 }

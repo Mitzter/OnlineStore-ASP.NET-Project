@@ -5,12 +5,12 @@
 
     public interface IForumService
     {
-        Task<string> GetPostByIdAsync(string id);
+        Task<int> GetPostByIdAsync(string id);
         Task<string> CreatePostAsync(PostFormModel model, string userId);
         Task<ForumCategoryViewModel> GetSelectedCategoryViewAsync(string categoryId);
 
         Task<IEnumerable<ReplyFormModel>> GetPostRepliesAsync(string postId);
 
-        Task<string> GetUserIdAsync();
+        Task<PostViewModel> ViewPostAsync(string postId);
     }
 }

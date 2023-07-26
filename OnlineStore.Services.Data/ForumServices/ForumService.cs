@@ -30,7 +30,7 @@
                 Title = model.Title,
                 Text = model.Text,
                 ImageUrl = model.ImageUrl,
-                PosterId = posterId,
+                PosterId = Guid.Parse(posterId),
                 CreatedOn = DateTime.UtcNow,
                 CategoryId = model.CategoryId,
             };
@@ -43,12 +43,12 @@
 
        
 
-        public async Task<string> GetPostByIdAsync(string id)
+        public async Task<int> GetPostByIdAsync(string id)
         {
             Post post = await this.dbcontext
                 .ForumPosts
                 .FirstAsync(p => p.Id.ToString() == id);
-            return post.Id.ToString();
+            return post.Id;
         }
 
         public async Task<IEnumerable<ReplyFormModel>> GetPostRepliesAsync(string postId)
@@ -84,9 +84,26 @@
             };
         }
 
-        public Task<string> GetUserIdAsync()
+        public async Task<PostViewModel> ViewPostAsync(string postId)
         {
-            throw new NotImplementedException();
+
+            Post post = await dbcontext
+                .ForumPosts
+                .Where(p => p.IsActive)
+                .FirstAsync(p => p.Id.ToString() == postId);
+
+            return new PostViewModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Text = post.Text,
+                ImageUrl = post.ImageUrl,
+                UserId = post.PosterId,
+                Poster = post.Poster,
+                Replies = post.Replies,
+
+            };
+                
         }
     }
 

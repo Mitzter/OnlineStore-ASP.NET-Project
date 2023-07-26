@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.Web.Models.StoreModels
+﻿namespace OnlineStore.Web.Models.UserModels
 {
     using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;

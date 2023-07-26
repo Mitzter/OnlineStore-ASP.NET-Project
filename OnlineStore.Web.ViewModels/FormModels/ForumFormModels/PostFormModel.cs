@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity;
     using OnlineStore.Web.Models.ForumModels;
+    using OnlineStore.Web.Models.UserModels;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics.Contracts;
 
@@ -19,9 +20,9 @@
 
         public string? ImageUrl { get; set; }
 
-        [Required]
-        public string PosterId { get; set; } 
-        public IdentityUser Poster { get; set; }
+        public Guid PosterId { get; set; }
+
+        public ApplicationUser Poster { get; set; } = null!;
         [Required]
         public DateTime CreatedOn { get; set; }
 

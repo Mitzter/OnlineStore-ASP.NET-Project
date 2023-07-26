@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity;
     using OnlineStore.Web.Models.ForumModels;
+    using OnlineStore.Web.Models.UserModels;
     using System.ComponentModel.DataAnnotations;
 
     public class ReplyFormModel
@@ -11,8 +12,8 @@
         [Required]
         public string Message { get; set; } = null!;
 
-        [Required]
-        public IdentityUser User { get; set; } = null!;
+        public Guid PosterId { get; set; }
+        public virtual ApplicationUser User { get; set; } = null!;
 
         [Required]
         public int PostedAtId { get; set; }

@@ -1,6 +1,7 @@
 ﻿namespace OnlineStore.Web.Models.ForumModels
 {
     using Microsoft.AspNetCore.Identity;
+    using OnlineStore.Web.Models.UserModels;
     using System.ComponentModel.DataAnnotations;
 
     public class Post
@@ -17,8 +18,8 @@
 
         public string? ImageUrl { get; set; }
 
-        public string PosterId { get; set; }
-        public IdentityUser Poster { get; set; } 
+        public Guid PosterId { get; set; }
+        public virtual ApplicationUser Poster { get; set; } 
         [Required]
         public DateTime CreatedOn { get; set; }
         [Required]

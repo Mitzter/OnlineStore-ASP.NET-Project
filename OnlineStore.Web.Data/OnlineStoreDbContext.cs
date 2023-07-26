@@ -1,12 +1,14 @@
 ﻿namespace OnlineStore.Web.Data
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.Models.StoreModels;
+    using OnlineStore.Web.Models.UserModels;
     using System.Reflection;
 
-    public class OnlineStoreDbContext : IdentityDbContext
+    public class OnlineStoreDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public OnlineStoreDbContext(DbContextOptions<OnlineStoreDbContext> options) 
             : base(options)
@@ -18,7 +20,7 @@
 
         public DbSet<ItemCategory> ItemCategories { get; set; } = null!;
 
-        public DbSet<BulkBuyer> bulkBuyers { get; set; } = null!;
+        public DbSet<BulkBuyer> BulkBuyers { get; set; } = null!;
 
         public DbSet<ForumCategory> ForumCategories { get; set; } = null!;
 
@@ -37,5 +39,6 @@
 
 
         }
+ 
     }
 }
