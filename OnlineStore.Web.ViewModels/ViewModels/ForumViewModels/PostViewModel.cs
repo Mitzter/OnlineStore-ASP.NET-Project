@@ -9,6 +9,7 @@
         {
             this.Replies = new HashSet<Reply>();
         }
+
         public int Id { get; set; }
 
         public string Title { get; set; } = null!;
@@ -17,9 +18,7 @@
 
         public string? ImageUrl { get; set; }
 
-        public Guid UserId { get; set; }
-
-        public virtual ApplicationUser Poster { get; set; } = null!;
+        public UserInfoOnPostViewModel Poster {get; set;} = null!;
         public virtual IEnumerable<Reply> Replies { get; set; } = null!;
     }
 }

@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
+    using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.ViewModels;
     using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
@@ -36,7 +37,7 @@
                     ImageUrl = i.ImageUrl
                 })
                 .ToArrayAsync();
-
+            
             return topItems;
         }
 

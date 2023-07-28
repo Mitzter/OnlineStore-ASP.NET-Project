@@ -9,6 +9,10 @@
     {
         public void Configure(EntityTypeBuilder<ForumCategory> builder)
         {
+            builder
+                .HasMany(c => c.Posts);
+
+
             builder.HasData(this.GenerateCategories());
         }
 

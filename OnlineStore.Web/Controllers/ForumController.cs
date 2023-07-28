@@ -38,7 +38,7 @@
             ForumCategoryViewModel viewModel = await this.forumService
                 .GetSelectedCategoryViewAsync(categoryId.ToString());
 
-            return View(viewModel);
+           return View(viewModel);
         }
 
         [HttpGet]
@@ -66,8 +66,6 @@
             string postId = await this.forumService.CreatePostAsync(formModel, userId);
             return this.RedirectToAction("ForumMain", "Forum");
 
-
-
         }
 
         [HttpGet]
@@ -78,6 +76,31 @@
 
             return View(viewModel);
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateReply(int postId)
+        {
+            var user = HttpContext.User;
+            var currentUser = await _userManager.GetUserAsync(user);
+
+            ReplyFormModel reply = new ReplyFormModel()
+            {
+                PosterId = currentUser.Id,
+                User = currentUser,
+                PostedAtId = postId
+            };
+
+
+            return View(reply);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateReply(ReplyFormModel reply)
+        {
+            var userId = this.User.GetId()!.ToString();
+            string replyId = await this.forumService.CreateReplyAsync(reply, userId);
+            return this.RedirectToAction("ViewPost", "Forum", new {id = reply.PostedAtId});
         }
     }
 }

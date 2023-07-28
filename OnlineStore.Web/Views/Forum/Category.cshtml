@@ -4,16 +4,37 @@
     ViewData["Title"] = Model.Name;
     var posts = Model.Posts;
 }
+<style>
+    .section-outline{
+        border: 5px solid brown;
+        padding: 20px;
+        background-color:darkgray
+    }
+</style>
 
-<h1>@Model.Name</h1>
+<h1 class="text-center text-light">@Model.Name</h1>
+
+
+
 @foreach (var post in posts)
 {
-    <div>
-        <h5></h5>
-            <a href="@Url.Action("ViewPost", "Forum", new {Id = post.Id})">@post.Title</a>
-    </div>
+        <div class="container-fluid col-md-6 section-outline align-content-center">
+            
+                <div class="">
+                        <a href="@Url.Action("ViewPost", "Forum", new {Id = post.Id})">@post.Title</a>
+                </div>
+                
+                <hr/>
+                <div>
+                    <h10 class="justify-content-end">Created: @post.CreatedOn</h10>
+                </div>
+                <div>
+                    <h10 class="justify-content-end">Comments: @post.Replies.Count()</h10>
+                </div>
+                   
+        </div>
 }
-
+  
 
 <!-- Link to create a new post -->
 <a href="@Url.Action("CreatePost", "Forum", new { categoryId = Model.Id })">Create New Post</a>

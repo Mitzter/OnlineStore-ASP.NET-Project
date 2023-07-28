@@ -23,11 +23,11 @@
         [Required]
         public DateTime CreatedOn { get; set; }
         [Required]
-        public int RepliesCount { get; set; }
+        public int RepliesCount => Replies.Count;
         [Required]
         public int Views { get; set; }
 
-        public IEnumerable<Reply> Replies { get; set; }
+        public ICollection<Reply> Replies { get; set; }
         
         public int CategoryId { get; set; }
 

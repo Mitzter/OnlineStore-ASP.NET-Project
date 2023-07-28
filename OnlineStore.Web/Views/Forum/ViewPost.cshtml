@@ -1,5 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PostViewModel
+
 @{
+    ViewBag.Title = Model.Title;
 }
+<style>
+    .section-post-outline{
+        border: 2px solid brown;
+        padding: 20px;
+        
+    }
+    .section-outline {
+        border: 5px solid brown;
+        padding: 10px;
+        background-color:darkgray
+    }
+    .section-comment-outline{
+        border: 1px solid gray;
+        padding: 10px;
+    }
+     .w1-sidebar {
+        border: 1px solid brown;
+        margin-right: auto;
+        margin-left: 0;
+    }
+</style>
+<h2 class="text-center text-light">@ViewBag.Title</h2>
+<hr />
+
+<div class="container-fluid col-md-6 section-outline align-content-center">
+    <h6 class="section-post-outline text-dark">@Model.Text</h6>
+    <h8 class="text-center text-dark">@Model.Poster.NickName</h8>
+    <hr/>
+    
+    @foreach (var reply in Model.Replies)
+    {
+        <h6 class="section-comment-outline text-dark">
+            @reply.Message
+        </h6>
+            <h8>@reply.User.UserName</h8> 
+            <div> 
+                <h10>Posted at: @reply.CreatedOn</h10>
+            </div>
+            
+        <hr />
+    }
+   
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h5 class="align-content-center text-light">Reply!</h5>
+        @Html.Partial("_CreateReplyPartial", new ReplyFormModel { PostedAtId = Model.Id })
+    }
+</div>
+
+

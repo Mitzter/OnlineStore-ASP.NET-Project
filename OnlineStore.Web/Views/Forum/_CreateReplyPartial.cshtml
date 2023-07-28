@@ -1,0 +1,14 @@
+﻿@model ReplyFormModel
+
+@using (Html.BeginForm("CreateReply", "Forum", new { PostedAtId = Model.PostedAtId }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+        <div class="form-group text-light" >
+        @Html.LabelFor(m => m.Message)
+        @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Message)
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Reply</button>
+}

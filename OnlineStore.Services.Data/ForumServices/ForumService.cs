@@ -11,6 +11,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using static OnlineStore.Web.Infrastructure.GetPrincipalExtension;
+    using OnlineStore.Web.Models.UserModels;
 
     public class ForumService : IForumService
     {
@@ -23,7 +24,7 @@
         
         public async Task<string> CreatePostAsync(PostFormModel model, string posterId)
         {
-            
+
             Post post = new Post()
             {
                 Id = model.Id,
@@ -33,6 +34,7 @@
                 PosterId = Guid.Parse(posterId),
                 CreatedOn = DateTime.UtcNow,
                 CategoryId = model.CategoryId,
+                Replies = (ICollection<Reply>)model.Replies,
             };
 
             await this.dbcontext.ForumPosts.AddAsync(post);
@@ -41,7 +43,30 @@
             return post.Id.ToString();
         }
 
-       
+        public async Task<string> CreateReplyAsync(ReplyFormModel model, string userId)
+        {
+            Post post = await this.dbcontext
+                .ForumPosts
+                .Include(p => p.Replies)
+                .FirstAsync(p => p.Id == model.PostedAtId);
+
+            string upperUserId = userId.ToUpper();
+            Reply reply = new Reply()
+            {
+                Id = model.Id,
+                Message = model.Message,
+                UserId = Guid.Parse(upperUserId),
+                PostedAtId = model.PostedAtId,
+                CreatedOn = DateTime.UtcNow,
+
+            };
+                
+            post.Replies.Add(reply);
+            await this.dbcontext.ForumReplies.AddAsync(reply);
+            await this.dbcontext.SaveChangesAsync();
+
+            return reply.Id.ToString();
+        }
 
         public async Task<int> GetPostByIdAsync(string id)
         {
@@ -74,6 +99,7 @@
             ForumCategory forumCategory = await this.dbcontext
                 .ForumCategories
                 .Include(c => c.Posts)
+                .ThenInclude(p => p.Replies)
                 .FirstAsync(fc => fc.Id.ToString() == categoryId);
 
             return new ForumCategoryViewModel()
@@ -84,11 +110,24 @@
             };
         }
 
+        public async Task<IEnumerable<Post>> TopPostsAsync()
+        {
+            IEnumerable<Post> posts = await this.dbcontext
+                .ForumPosts
+                .OrderBy(p => p.RepliesCount)
+                .Take(5)
+                .ToArrayAsync();
+
+            return posts;
+        }
+
         public async Task<PostViewModel> ViewPostAsync(string postId)
         {
 
             Post post = await dbcontext
                 .ForumPosts
+                .Include(p => p.Poster)
+                .Include(p => p.Replies)
                 .Where(p => p.IsActive)
                 .FirstAsync(p => p.Id.ToString() == postId);
 
@@ -98,8 +137,10 @@
                 Title = post.Title,
                 Text = post.Text,
                 ImageUrl = post.ImageUrl,
-                UserId = post.PosterId,
-                Poster = post.Poster,
+                Poster = new UserInfoOnPostViewModel
+                {
+                    NickName = post.Poster.Email
+                },
                 Replies = post.Replies,
 
             };

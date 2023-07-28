@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using OnlineStore.Services.Data._0_Interfaces.ForumInterfaces;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Models;
     using OnlineStore.Web.ViewModels;
@@ -13,11 +14,13 @@
     {
         private readonly IItemService itemService;
         private readonly IItemCategoryService itemCategoryService;
+        private readonly IForumService forumService;
 
-        public HomeController(IItemService itemService, IItemCategoryService itemCategoryService)
+        public HomeController(IItemService itemService, IItemCategoryService itemCategoryService, IForumService forumService)
         {
             this.itemService = itemService;
             this.itemCategoryService = itemCategoryService;
+            this.forumService = forumService;
         }
 
         [AllowAnonymous]

@@ -11,7 +11,7 @@
         [Required]
         public string Message { get; set; } = null!;
 
-        public Guid PosterId { get;set; }
+        public Guid UserId { get;set; }
         
         public virtual ApplicationUser User { get; set; } = null!;
 

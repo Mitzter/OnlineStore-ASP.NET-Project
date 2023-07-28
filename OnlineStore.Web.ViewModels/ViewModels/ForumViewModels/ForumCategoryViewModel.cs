@@ -13,6 +13,6 @@
 
         public string Name { get; set; } = null!;
 
-        public IEnumerable<Post> Posts { get; set; }
+        public virtual IEnumerable<Post> Posts { get; set; } = null!;
     }
 }

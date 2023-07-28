@@ -8,6 +8,8 @@
     {
         public void Configure(EntityTypeBuilder<ItemCategory> builder)
         {
+            
+
             builder.HasData(this.GenerateCategories());
         }
 
