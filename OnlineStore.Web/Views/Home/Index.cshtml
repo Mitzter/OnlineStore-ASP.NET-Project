@@ -28,23 +28,6 @@
     
 </style>
 
-@if (!Model.Any())
-{
-        <div class="mt-4 p-5 bg-light">
-            <h1 class="display-4 text-light">Welcome to the best place for renting houses!</h1>
-            <p class="lead">
-                There are no houses in the system currently available, so why don't you just add one?
-            </p>
-            <hr class="my-4">
-            <p class="lead">
-            @if (User.Identity.IsAuthenticated)
-            {
-                        <a asp-controller="Home" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Item</a>
-            }
-            </p>
-        </div>
-}
-
 <div class="container-fluid w1-container">
     <div class="row">
         <div class="col-md-2">
@@ -87,7 +70,7 @@
                         {
                                 <div class="carousel-item @(item == items.First() ? "active" : string.Empty)">
                                     <h5 class="d-sm-flex justify-content-center align-items-center">
-                                        <a class="btn btn-outline-danger text-light" asp-controller="House" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+                                        <a class="btn btn-outline-danger text-light" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
                                     </h5>
                                     <div class="d-sm-flex justify-content-center align-items-center">
                                         <img class="d-block w-70" style="height:350px" src="@item.ImageUrl" alt="@item.Name">
