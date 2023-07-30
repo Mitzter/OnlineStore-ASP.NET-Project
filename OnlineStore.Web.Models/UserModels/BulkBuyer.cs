@@ -10,6 +10,7 @@
         {
             Id = Guid.NewGuid();
         }
+        [Key]
         public Guid Id { get; set; }
 
         [Required]
@@ -18,9 +19,18 @@
         public string PhoneNumber { get; set; } = null!;
 
         [Required]
-        public string UserId { get; set; } = null!;
+        public string VATNumber { get; set; } = null!;
+
+        
 
         [Required]
-        public ApplicationUser User { get; set; } = null!;
+        public string CompanyName { get; set; } = null!;
+
+        [Required]
+        public string FinancialManager { get; set; } = null!;
+        public Guid UserId { get; set; } 
+
+        [Required]
+        public virtual ApplicationUser User { get; set; } = null!;
     }
 }

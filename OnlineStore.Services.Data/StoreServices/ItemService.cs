@@ -25,6 +25,13 @@
 
         public async Task<IEnumerable<IndexViewModel>> TopItemAsync()
         {
+
+            ICollection<Post> posts = await this.dbContext
+                .ForumPosts
+                .OrderByDescending(post => post.CreatedOn)
+                .Take(8)
+                .ToListAsync();
+
             IEnumerable<IndexViewModel> topItems = await dbContext
                 .Items
                 .Where(i => i.IsActive == true)
@@ -34,8 +41,8 @@
                 {
                     Id = i.Id.ToString(),
                     Name = i.Name,
-                    ImageUrl = i.ImageUrl
-                })
+                    ImageUrl = i.ImageUrl,
+                 })
                 .ToArrayAsync();
             
             return topItems;

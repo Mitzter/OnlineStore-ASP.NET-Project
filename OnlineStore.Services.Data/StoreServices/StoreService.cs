@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
+    using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.Models.UserModels;
     using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
@@ -52,6 +53,8 @@
                 .OrderBy(i => i.Category),
             };
 
+            
+
             IEnumerable<AllItemsViewModel> allItems = await itemQuery
                 .Where(i => i.IsActive == true)
                 .Skip((queryModel.CurrentPage - 1) * queryModel.ItemsPerPage)
@@ -63,8 +66,9 @@
                     Description = i.Description,
                     ImageUrl = i.ImageUrl,
                     Price = i.Price,
-                    BulkPrice = i.Price,
+                    BulkPrice = i.BulkPrice,
                     IsActive = true,
+                    
                 })
                 .ToArrayAsync();
 

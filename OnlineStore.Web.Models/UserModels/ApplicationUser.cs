@@ -20,6 +20,8 @@
 
         public virtual List<Item> BoughtItems { get; set; }
 
+        bool IsAdministrator { get; set; }
+
 
     }
 }

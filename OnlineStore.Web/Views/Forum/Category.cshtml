@@ -31,10 +31,12 @@
                 <div>
                     <h10 class="justify-content-end">Comments: @post.Replies.Count()</h10>
                 </div>
+                
                    
         </div>
+        <hr/>
 }
-  
-
+ 
+ 
 <!-- Link to create a new post -->
 <a href="@Url.Action("CreatePost", "Forum", new { categoryId = Model.Id })">Create New Post</a>

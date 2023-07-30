@@ -16,6 +16,7 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
             this._dbContext = dbContext;
         }
 
+        public bool HasUserRegisteredCompany { get; set; }
         public List<Item> UserCollectionItems { get; set; }
 
         public async Task OnGet()
@@ -28,6 +29,10 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
                 .Include(u => u.BoughtItems)
                 .FirstOrDefaultAsync();
 
+            bool IsUserCompanyRegistered = await _dbContext.BulkBuyers
+                .AnyAsync(u => user.Id.ToString() == userId);
+
+            HasUserRegisteredCompany = IsUserCompanyRegistered;
             UserCollectionItems = user!.BoughtItems;
         }
     }
