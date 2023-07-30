@@ -87,10 +87,22 @@
             Item item = await this.dbContext
                 .Items
                 .FirstAsync(i => i.Id.ToString() == itemId);
-
-            item.QuantityBought += quantity;
-            user.BoughtItems.Add(item);
-            await this.dbContext.SaveChangesAsync();
+            
+            try
+            {
+                if(user != null && item != null)
+                {
+                    item.QuantityBought += quantity;
+                    user.BoughtItems.Add(item);
+                    await this.dbContext.SaveChangesAsync();
+                }
+                
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException("Something does not exist!");
+            }
+            
         }
         
         public async Task<bool> ExistsByIdAsync(string itemId)
@@ -105,22 +117,30 @@
 
         public async Task<ItemDetailsViewModel> GetDetailsByIdAsync(string itemId)
         {
+
             Item item = await this.dbContext
                 .Items
                 .Include(i => i.Category)
                 .Where(i => i.IsActive)
                 .FirstAsync(i => i.Id.ToString() == itemId);
 
-            return new ItemDetailsViewModel()
+            try
             {
-                Id = item.Id.ToString(),
-                Name = item.Name,
-                Description = item.Description,
-                ImageUrl = item.ImageUrl,
-                Price = item.Price,
-                BulkPrice = item.Price,
-                Category = item.Category
-            };
+                return new ItemDetailsViewModel()
+                {
+                    Id = item.Id.ToString(),
+                    Name = item.Name,
+                    Description = item.Description,
+                    ImageUrl = item.ImageUrl,
+                    Price = item.Price,
+                    BulkPrice = item.Price,
+                    Category = item.Category
+                };
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException("Item ID is null.");
+            }
         }
     }
 }
