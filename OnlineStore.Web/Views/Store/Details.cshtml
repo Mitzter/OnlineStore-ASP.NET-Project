@@ -1,0 +1,69 @@
+﻿@model ItemDetailsViewModel
+
+@{
+    ViewBag.Title = "Item Details";
+}
+
+<h2 class="text-center text-light">@ViewBag.Title</h2>
+<hr/>
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;" src="@Model.ImageUrl" alt="Image" />
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;">
+                <u>@Model.Name</u>
+            </p>
+            <p> Description: 
+                <b>@Model.Description</b>
+            </p>
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" class="form-control" min="1" value="1" />
+            </div>
+            <button class="btn btn-success" id="buyButton" data-item-id="@Model.Id">Buy</button>
+        </div>
+    </div>
+</div>
+
+<div id="successMessage" class="alert alert-success smaller-text" style="display: none;"></div>
+
+<style>
+    .smaller-text {
+        font-size: 14px;
+    }
+</style>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Handle the "Buy" button click event
+        $("#buyButton").click(function () {
+            // Get the item ID and quantity from the input field
+            var itemId = $(this).data("item-id");
+            var quantity = $("#quantity").val();
+
+            // Send an AJAX request to the server
+            $.ajax({
+                type: "POST",
+                url: "/Store/Buy", // Replace this with the actual URL for your Buy action
+                data: { itemId: itemId, quantity: quantity },
+                success: function (data) {
+                    // Handle the success response from the server
+                    // Display the success message on the screen
+                    $("#successMessage").text("Item purchased successfully!");
+                    $("#successMessage").fadeIn().delay(5000).fadeOut();
+                },
+                error: function () {
+                    // Handle errors if necessary
+                    console.log("Error occurred while buying the item.");
+                }
+            });
+        });
+    });
+</script>

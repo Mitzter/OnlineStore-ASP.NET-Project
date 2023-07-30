@@ -21,6 +21,6 @@
         public string UserId { get; set; } = null!;
 
         [Required]
-        public IdentityUser User { get; set; } = null!;
+        public ApplicationUser User { get; set; } = null!;
     }
 }

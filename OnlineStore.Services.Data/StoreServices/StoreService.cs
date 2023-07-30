@@ -4,6 +4,7 @@
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
     using OnlineStore.Web.Models.StoreModels;
+    using OnlineStore.Web.Models.UserModels;
     using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
     using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels.Enums;
     using System.Threading.Tasks;
@@ -73,6 +74,52 @@
             {
                 TotalItemsCount = totalItems,
                 Items = allItems
+            };
+        }
+
+        public async Task BuyItemAsync(string itemId, string userId, int quantity)
+        {
+            ApplicationUser user = await this.dbContext
+                .Users
+                .Include(u => u.BoughtItems)
+                .FirstAsync(i => i.Id.ToString() == userId);
+
+            Item item = await this.dbContext
+                .Items
+                .FirstAsync(i => i.Id.ToString() == itemId);
+
+            item.QuantityBought += quantity;
+            user.BoughtItems.Add(item);
+            await this.dbContext.SaveChangesAsync();
+        }
+        
+        public async Task<bool> ExistsByIdAsync(string itemId)
+        {
+            bool result = await this.dbContext
+                .Items
+                .Where(i => i.IsActive)
+                .AnyAsync(i => i.Id.ToString() == itemId);
+
+            return result;
+        }
+
+        public async Task<ItemDetailsViewModel> GetDetailsByIdAsync(string itemId)
+        {
+            Item item = await this.dbContext
+                .Items
+                .Include(i => i.Category)
+                .Where(i => i.IsActive)
+                .FirstAsync(i => i.Id.ToString() == itemId);
+
+            return new ItemDetailsViewModel()
+            {
+                Id = item.Id.ToString(),
+                Name = item.Name,
+                Description = item.Description,
+                ImageUrl = item.ImageUrl,
+                Price = item.Price,
+                BulkPrice = item.Price,
+                Category = item.Category
             };
         }
     }

@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OnlineStore.Common\OnlineStore.Common.csproj" />
     <ProjectReference Include="..\OnlineStore.Services.Data\OnlineStore.Services.Data.csproj" />
     <ProjectReference Include="..\OnlineStore.Web.Data\OnlineStore.Web.Data.csproj" />
     <ProjectReference Include="..\OnlineStore.Web.Infrastructure\OnlineStore.Web.Infrastructure.csproj" />

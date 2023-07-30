@@ -11,14 +11,14 @@
             this.Id = Guid.NewGuid();
             this.Posts = new HashSet<Post>();
             this.Replies = new HashSet<Reply>();
-            this.BoughtItems = new HashSet<Item>();
         }
 
+        
         public virtual ICollection<Post> Posts { get; set; }
         
         public virtual ICollection<Reply> Replies { get; set; }
 
-        public virtual ICollection<Item> BoughtItems { get; set; }
+        public virtual List<Item> BoughtItems { get; set; }
 
 
     }

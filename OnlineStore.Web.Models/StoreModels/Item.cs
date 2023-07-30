@@ -37,5 +37,7 @@
         public virtual ItemCategory Category { get; set; } = null!;
 
         public bool IsActive { get; set; }
+
+        public int QuantityBought { get; set; }
     }
 }

@@ -1,0 +1,48 @@
+﻿@page
+@model CartModel
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+    decimal totalPrice = 0; // Initialize the totalPrice variable to 0
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.UserCollectionItems != null && Model.UserCollectionItems.Count > 0)
+{
+        <table class="table text-light">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.UserCollectionItems)
+            {
+                        <tr>
+                            <td><img class="card-img-top" src="@item.ImageUrl" alt="Image"></td>
+                            <td>@item.Name</td>
+                            <td>@($"{item.Price:f2}") BGN</td>
+                            <td>@item.QuantityBought</td>
+                    @{
+                        
+                        decimal subtotal = item.Price * item.QuantityBought;
+                        
+                        totalPrice += subtotal;
+                    }
+                        </tr>
+            }
+            </tbody>
+        </table>
+
+        <p class="text-light">Total Price: @($"{totalPrice:f2}") BGN</p> 
+
+        <button type="button" onclick="location.href='@Url.Action("Checkout", "Order")'">Buy</button>
+}
+else
+{
+        <p>Your cart is empty.</p>
+}

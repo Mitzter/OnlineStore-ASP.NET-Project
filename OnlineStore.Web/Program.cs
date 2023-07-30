@@ -30,7 +30,9 @@ namespace OnlineStore.Web
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
+
                 .AddEntityFrameworkStores<OnlineStoreDbContext>();
+                
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddApplicationServices(typeof(IItemService));
