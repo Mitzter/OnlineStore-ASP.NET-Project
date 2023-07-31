@@ -1,7 +1,7 @@
 ﻿namespace OnlineStore.Web.Models.StoreModels
 {
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using static Common.EntityValidationConstants.Item;
 
     public class Item
     {
@@ -16,10 +16,11 @@
         public string Name { get; set; } = null!;
 
         [Required]
+        [MaxLength(ItemDescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
         [Required]
-        [MaxLength(255)]
+        [MaxLength(ImageUrlMaxLength)]
         public string ImageUrl { get; set; } = null!;
 
         [Required]

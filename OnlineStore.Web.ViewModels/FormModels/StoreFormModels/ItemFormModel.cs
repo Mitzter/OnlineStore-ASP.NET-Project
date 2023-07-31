@@ -19,19 +19,17 @@
         public string Description { get; set; } = null!;
 
         [Required]
-        [MaxLength(255)]
+        [MaxLength(ImageUrlMaxLength)]
 
         public string ImageUrl { get; set; } = null!;
 
         [Required]
-        [Range(0.00, 20000,
-            ErrorMessage = "Price cannot be negative!")]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         [Display(Name = "Price")]
         public decimal Price { get; set; }
 
         [Required]
-        [Range(0.00, 20000,
-            ErrorMessage = "Price cannot be negative!")]
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         [Display(Name = "Bulk Price")]
         public decimal BulkPrice { get; set; }
 
