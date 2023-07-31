@@ -17,5 +17,7 @@
         Task<PostViewModel> ViewPostAsync(string postId);
 
         Task<IEnumerable<Post>> TopPostsAsync();
+
+        Task<Post> FindPostById(int id);
     }
 }

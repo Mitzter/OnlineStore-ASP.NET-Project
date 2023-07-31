@@ -16,15 +16,18 @@
     public class ForumService : IForumService
     {
         private readonly OnlineStoreDbContext dbcontext;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public ForumService(OnlineStoreDbContext dbcontext)
+        public ForumService(OnlineStoreDbContext dbcontext, UserManager<ApplicationUser> userManager)
         {
             this.dbcontext = dbcontext;
+            this.userManager = userManager;
         }
         
         public async Task<string> CreatePostAsync(PostFormModel model, string posterId)
         {
-
+            var user = await this.userManager
+                .Users.FirstAsync(u => u.Id == Guid.Parse(posterId));
             Post post = new Post()
             {
                 Id = model.Id,
@@ -32,6 +35,7 @@
                 Text = model.Text,
                 ImageUrl = model.ImageUrl,
                 PosterId = Guid.Parse(posterId),
+                Poster = model.Poster,
                 CreatedOn = DateTime.UtcNow,
                 CategoryId = model.CategoryId,
                 Replies = (ICollection<Reply>)model.Replies,
@@ -50,22 +54,37 @@
                 .Include(p => p.Replies)
                 .FirstAsync(p => p.Id == model.PostedAtId);
 
+            var user = await this.userManager
+                .Users.FirstAsync(u => u.Id == Guid.Parse(userId));
+
             string upperUserId = userId.ToUpper();
             Reply reply = new Reply()
             {
                 Id = model.Id,
                 Message = model.Message,
                 UserId = Guid.Parse(upperUserId),
+                User = model.User,
                 PostedAtId = model.PostedAtId,
+                PostedAt = post,
                 CreatedOn = DateTime.UtcNow,
 
             };
-                
+            
+            
             post.Replies.Add(reply);
             await this.dbcontext.ForumReplies.AddAsync(reply);
             await this.dbcontext.SaveChangesAsync();
 
             return reply.Id.ToString();
+        }
+
+        public async Task<Post> FindPostById(int id)
+        {
+            Post post = await this.dbcontext
+                .ForumPosts
+                .FirstAsync(p => p.Id == id);
+
+            return post;
         }
 
         public async Task<int> GetPostByIdAsync(string id)

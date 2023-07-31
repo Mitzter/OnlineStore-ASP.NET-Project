@@ -31,6 +31,7 @@
 
             return View(viewModel);
         }
+        //This will be an administrator only action. To be implemented. Currently used for testing
         [HttpGet]
         public async Task<IActionResult> Add()
         {

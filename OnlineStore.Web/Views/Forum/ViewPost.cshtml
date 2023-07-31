@@ -34,15 +34,20 @@
     
     @foreach (var reply in Model.Replies)
     {
-        <h6 class="section-comment-outline text-dark">
-            @reply.Message
-        </h6>
-            <h8>@reply.User.UserName</h8> 
-            <div> 
-                <h10>Posted at: @reply.CreatedOn</h10>
-            </div>
-            
-        <hr />
+        if (reply != null)
+        {
+                <h6 class="section-comment-outline text-dark">
+                @reply.Message
+                </h6>
+            @if (reply.User != null)
+            {
+                        <h8>@reply.User.UserName</h8>
+            }
+                <div>
+                    <h10>Posted at: @reply.CreatedOn</h10>
+                </div>
+                <hr />
+        }
     }
    
     @if (User.Identity.IsAuthenticated)

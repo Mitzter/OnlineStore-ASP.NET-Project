@@ -99,6 +99,7 @@
         public async Task<IActionResult> CreateReply(ReplyFormModel reply)
         {
             var userId = this.User.GetId()!.ToString();
+
             string replyId = await this.forumService.CreateReplyAsync(reply, userId);
             return this.RedirectToAction("ViewPost", "Forum", new {id = reply.PostedAtId});
         }
