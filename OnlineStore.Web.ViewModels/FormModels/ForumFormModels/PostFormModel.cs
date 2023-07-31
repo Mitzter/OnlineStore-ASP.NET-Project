@@ -5,6 +5,7 @@
     using OnlineStore.Web.Models.UserModels;
     using System.ComponentModel.DataAnnotations;
     using System.Diagnostics.Contracts;
+    using static Common.EntityValidationConstants.Post;
 
     public class PostFormModel
     {
@@ -14,10 +15,13 @@
         }
         public int Id { get; set; }
         [Required]
+        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
         public string Title { get; set; } = null!;
         [Required]
+        [StringLength(TextMaxLength, MinimumLength = TextMinLength)]
         public string Text { get; set; } = null!;
 
+        [MaxLength(ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
 
         public Guid PosterId { get; set; }

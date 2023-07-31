@@ -4,12 +4,14 @@
     using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.Models.UserModels;
     using System.ComponentModel.DataAnnotations;
+    using static Common.EntityValidationConstants.Reply;
 
     public class ReplyFormModel
     {
         public int Id { get; set; }
 
         [Required]
+        [StringLength(MessageMaxLength, MinimumLength = MessageMinLength)]
         public string Message { get; set; } = null!;
 
         public Guid PosterId { get; set; }

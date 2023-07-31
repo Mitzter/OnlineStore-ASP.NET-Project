@@ -12,7 +12,7 @@
         public Guid Id { get; set; }
 
         [Required]
-        [MinLength(6)]
+        [MaxLength(ItemNameMaxLength)]
         public string Name { get; set; } = null!;
 
         [Required]

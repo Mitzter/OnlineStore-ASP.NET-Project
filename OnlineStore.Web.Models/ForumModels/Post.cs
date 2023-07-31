@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Identity;
     using OnlineStore.Web.Models.UserModels;
     using System.ComponentModel.DataAnnotations;
+    using static Common.EntityValidationConstants.Post;
 
     public class Post
     {
@@ -11,14 +12,20 @@
             this.Replies = new HashSet<Reply>();
         }
         public int Id { get; set; }
+
         [Required]
+        [MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
+
         [Required]
+        [MaxLength(TextMaxLength)]
         public string Text { get; set; } = null!;
 
+        [MaxLength(ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
 
         public Guid PosterId { get; set; }
+
         public virtual ApplicationUser Poster { get; set; } 
         [Required]
         public DateTime CreatedOn { get; set; }

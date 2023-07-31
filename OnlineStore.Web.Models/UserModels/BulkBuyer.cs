@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity;
     using System.ComponentModel.DataAnnotations;
+    using static Common.EntityValidationConstants.BulkBuyer;
 
     public class BulkBuyer
     {
@@ -14,20 +15,21 @@
         public Guid Id { get; set; }
 
         [Required]
-        [MinLength(7)]
-        [MaxLength(15)]
+        [MaxLength(PhoneNumberMaxLength)]
         public string PhoneNumber { get; set; } = null!;
 
         [Required]
+        [MaxLength(VatNumberMaxLength)]
         public string VATNumber { get; set; } = null!;
 
-        
-
         [Required]
+        [MaxLength(CompanyNameMaxLength)]
         public string CompanyName { get; set; } = null!;
 
         [Required]
+        [MaxLength(FinancialManagerNameMinLength)]
         public string FinancialManager { get; set; } = null!;
+
         public Guid UserId { get; set; } 
 
         [Required]

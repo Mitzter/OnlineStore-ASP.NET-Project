@@ -3,12 +3,14 @@
     using Microsoft.AspNetCore.Identity;
     using OnlineStore.Web.Models.UserModels;
     using System.ComponentModel.DataAnnotations;
+    using static Common.EntityValidationConstants.Reply;
 
     public class Reply
     {
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(MessageMaxLength)]
         public string Message { get; set; } = null!;
 
         public Guid UserId { get;set; }

@@ -1,7 +1,7 @@
 ﻿namespace OnlineStore.Web.ViewModels.FormModels.StoreFormModels
 {
     using System.ComponentModel.DataAnnotations;
-
+    using static Common.EntityValidationConstants.Item;
     public class ItemFormModel
     {
 
@@ -10,12 +10,11 @@
             Categories = new HashSet<ItemSelectCategoryFormModel>();
         }
         [Required]
-        [MinLength(6)]
-        [MaxLength(255)]
+        [StringLength(ItemNameMaxLength, MinimumLength = ItemNameMinLength)]
         public string Name { get; set; } = null!;
 
         [Required]
-        [MaxLength(500)]
+        [StringLength(ItemDescriptionMaxLength, MinimumLength = ItemDescriptionMinLength)]
 
         public string Description { get; set; } = null!;
 
