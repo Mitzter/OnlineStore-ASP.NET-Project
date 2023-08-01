@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Identity;
     using OnlineStore.Web.Models.UserModels;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using static Common.EntityValidationConstants.Post;
 
     public class Post
@@ -24,6 +25,7 @@
         [MaxLength(ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
 
+        [ForeignKey(nameof(Poster))]
         public Guid PosterId { get; set; }
 
         public virtual ApplicationUser Poster { get; set; } 

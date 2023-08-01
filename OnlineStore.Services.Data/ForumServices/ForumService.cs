@@ -52,18 +52,18 @@
             Post post = await this.dbcontext
                 .ForumPosts
                 .Include(p => p.Replies)
+                .ThenInclude(r => r.User)
                 .FirstAsync(p => p.Id == model.PostedAtId);
 
             var user = await this.userManager
                 .Users.FirstAsync(u => u.Id == Guid.Parse(userId));
 
-            string upperUserId = userId.ToUpper();
             Reply reply = new Reply()
             {
                 Id = model.Id,
                 Message = model.Message,
-                UserId = Guid.Parse(upperUserId),
-                User = model.User,
+                UserId = user.Id,
+                User = user,
                 PostedAtId = model.PostedAtId,
                 PostedAt = post,
                 CreatedOn = DateTime.UtcNow,
@@ -105,6 +105,7 @@
                     Message = r.Message,
                     PostedAtId = int.Parse(postId),
                     PostedAt = r.PostedAt,
+                    PosterId = r.UserId,
                     User = r.User,
                     CreatedOn = DateTime.UtcNow
                 }).ToListAsync();
@@ -158,7 +159,7 @@
                 ImageUrl = post.ImageUrl,
                 Poster = new UserInfoOnPostViewModel
                 {
-                    NickName = post.Poster.Email
+                    NickName = post.Poster.UserName
                 },
                 Replies = post.Replies,
 

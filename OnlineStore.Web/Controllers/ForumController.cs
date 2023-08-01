@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data._0_Interfaces.ForumInterfaces;
     using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.Models.UserModels;
@@ -81,12 +82,14 @@
         [HttpGet]
         public async Task<IActionResult> CreateReply(int postId)
         {
-            var user = HttpContext.User;
-            var currentUser = await _userManager.GetUserAsync(user);
+            var user = this.User.GetId()!;
+            var currentUser = await
+                this._userManager.Users
+                .FirstOrDefaultAsync(u => u.Id == Guid.Parse(user));
 
             ReplyFormModel reply = new ReplyFormModel()
             {
-                PosterId = currentUser.Id,
+                PosterId = currentUser!.Id,
                 User = currentUser,
                 PostedAtId = postId
             };
