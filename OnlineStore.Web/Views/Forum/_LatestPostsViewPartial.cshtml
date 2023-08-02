@@ -1,0 +1,25 @@
+﻿@model IEnumerable<PostViewModel>
+
+
+<style>
+    .post-title-container {
+        max-width: 200px; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+    }
+</style>
+
+<nav class="w1-sidebar w1-bar-block">
+    @foreach (var post in Model)
+    {
+        <div class="container-fluid align-items-md-start w1-sidebar">
+            <h8 class="text-white">
+                <a class="text-white" href="@Url.Action("ViewPost", "Forum", new { id = post.Id })">
+                    <div class="post-title-container">@post.Title</div>
+                </a>
+            </h8>
+        </div>
+        <hr/>
+    }
+</nav>

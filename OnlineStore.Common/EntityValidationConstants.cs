@@ -23,7 +23,7 @@
         {
 
             public const int TitleMinLength = 10;
-            public const int TitleMaxLength = 60;
+            public const int TitleMaxLength = 100;
 
             public const int TextMinLength = 5;
             public const int TextMaxLength = 10000;

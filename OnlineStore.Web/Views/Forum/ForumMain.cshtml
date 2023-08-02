@@ -1,8 +1,7 @@
-﻿@model IEnumerable<ForumCategoryFormModel>
+﻿@model ForumMainViewModel
 
 @{
     ViewData["Title"] = "Forum";
-    var items = Model.ToList();
 }
 <style>
     .section-outline{
@@ -18,31 +17,15 @@
 
 <hr/>
 
-<div class="container-fluid d-flex text-light justify-content-center">
-    <div class="col-md-2">
-            <h5 class="text-light align-content-center">Top Forum Discussions</h5>
-            <nav class="w1-sidebar w1-bar-block">
-                <div class="container-fluid align-items-md-start w1-sidebar">
-                    <h8 class="text-white">Forum post One</h8>
-
-                </div>
-                <h2></h2>
-                <div class="container-fluid align-items-md-start w1-sidebar">
-                    <h8 class="text-white">Forum post Two</h8>
-
-                </div>
-                <h2></h2>
-                <div class="container-fluid align-items-md-start w1-sidebar">
-                    <h8 class="text-white">Forum post Three</h8>
-
-                </div>
-                <h2></h2>
-                <div class="container-fluid align-items-md-start w1-sidebar">
-                    <h8 class="text-white">Forum post Four</h8>
-
-                </div>
-            </nav>
-        </div>
+<div class="container-fluid d-flex text-light justify-content-center ">
+    <div class="col-sm-2 bg-dark">
+        <h3 class="text-light text-center">Latest Forum Topics</h3>
+        <hr/>
+            @Html.Partial("_LatestPostsViewPartial", Model.LatestPosts)
+    </div>
+    <div class="col-sm-1">
+        <!-- Empty space with a margin-top of 20px -->
+    </div>
     <div class="row">
 
         <div class="container-fluid d-flex justify-content-center">
@@ -53,7 +36,7 @@
 
         <hr/>
     
-        @foreach (var item in items)
+        @foreach (var item in Model.Categories)
         {
                 <div class="col">
                         <div class="card section-outline mb-3 text-center bg-gradient">

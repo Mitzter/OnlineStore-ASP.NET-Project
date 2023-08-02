@@ -19,5 +19,7 @@
         Task<IEnumerable<Post>> TopPostsAsync();
 
         Task<Post> FindPostById(int id);
+
+        Task<IEnumerable<PostViewModel>> GetLatestForumPostsAsync();
     }
 }

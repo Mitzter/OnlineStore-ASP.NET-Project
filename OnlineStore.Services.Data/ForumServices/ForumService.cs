@@ -34,8 +34,8 @@
                 Title = model.Title,
                 Text = model.Text,
                 ImageUrl = model.ImageUrl,
-                PosterId = Guid.Parse(posterId),
-                Poster = model.Poster,
+                PosterId = user.Id,
+                Poster = user,
                 CreatedOn = DateTime.UtcNow,
                 CategoryId = model.CategoryId,
                 Replies = (ICollection<Reply>)model.Replies,
@@ -85,6 +85,21 @@
                 .FirstAsync(p => p.Id == id);
 
             return post;
+        }
+
+        public async Task<IEnumerable<PostViewModel>> GetLatestForumPostsAsync()
+        {
+            var latestPosts = await this.dbcontext.ForumPosts
+                .OrderByDescending(p => p.CreatedOn)
+                .Take(10)
+                .Select(post => new PostViewModel
+                {
+                    Id = post.Id,
+                    Title = post.Title
+                })
+                .ToListAsync();
+
+            return latestPosts;
         }
 
         public async Task<int> GetPostByIdAsync(string id)
@@ -162,6 +177,7 @@
                     NickName = post.Poster.UserName
                 },
                 Replies = post.Replies,
+                CreatedAt = DateTime.UtcNow,
 
             };
                 

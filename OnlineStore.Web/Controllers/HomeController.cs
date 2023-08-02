@@ -9,7 +9,9 @@
     using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
     using System.Diagnostics;
 
-    [Authorize]
+    using static Common.GeneralApplicationConstants;
+
+    
     public class HomeController : Controller
     {
         private readonly IItemService itemService;
@@ -23,9 +25,13 @@
             this.forumService = forumService;
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsInRole(AdminRoleName))
+            {
+                return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
+
             IEnumerable<IndexViewModel> viewModel =
                 await this.itemService.TopItemAsync();
 

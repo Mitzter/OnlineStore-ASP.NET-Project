@@ -11,6 +11,7 @@ namespace OnlineStore.Web
     using OnlineStore.Web.Infrastructure;
     using OnlineStore.Web.Models.UserModels;
 
+    using static Common.GeneralApplicationConstants;
     public class Program
     {
         public static void Main(string[] args)
@@ -30,7 +31,7 @@ namespace OnlineStore.Web
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
-
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<OnlineStoreDbContext>();
                 
 
@@ -60,10 +61,28 @@ namespace OnlineStore.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllerRoute(
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministrator(DevelopmentAdminEmail);
+            }
+
+            app.UseEndpoints(config =>
+            {
+                config.MapControllerRoute(
+                name: "areas",
+                pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                config.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-            app.MapRazorPages();
+                pattern: "/{controller=Home}/{action=Index}/{id?}");
+                //defaults: new { Controller = "Store", Action = "Details" });
+               
+                config.MapDefaultControllerRoute();
+                config.MapRazorPages();
+                
+            });
+            
+            
 
 
             app.Run();

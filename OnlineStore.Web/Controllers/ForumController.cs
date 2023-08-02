@@ -30,7 +30,16 @@
             IEnumerable<ForumCategoryFormModel> categories = await this.categoryService
                 .AllCategoriesAsync();
 
-            return View(categories);
+            var latestPosts = await this.forumService.GetLatestForumPostsAsync(); // Replace this with the actual method that fetches the latest posts
+
+            
+            var viewModel = new ForumMainViewModel
+            {
+                Categories = categories,
+                LatestPosts = latestPosts
+            };
+
+            return View(viewModel);
         }
 
         [AllowAnonymous]

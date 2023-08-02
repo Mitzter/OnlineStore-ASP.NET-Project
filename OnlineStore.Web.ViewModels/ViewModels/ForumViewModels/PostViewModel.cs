@@ -20,5 +20,7 @@
 
         public UserInfoOnPostViewModel Poster {get; set;} = null!;
         public virtual IEnumerable<Reply> Replies { get; set; } = null!;
+
+        public DateTime CreatedAt { get; set; }
     }
 }
