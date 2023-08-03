@@ -7,10 +7,12 @@ namespace OnlineStore.Web
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
+    using OnlineStore.Services.Mapping;
     using OnlineStore.Web.Data;
     using OnlineStore.Web.Infrastructure;
+    using OnlineStore.Web.Models;
     using OnlineStore.Web.Models.UserModels;
-
+    using System.Reflection;
     using static Common.GeneralApplicationConstants;
     public class Program
     {
@@ -38,8 +40,16 @@ namespace OnlineStore.Web
             builder.Services.AddControllersWithViews();
             builder.Services.AddApplicationServices(typeof(IItemService));
 
+            //builder.Services.ConfigureApplicationCookie(cfg =>
+            //{
+            //    cfg.LoginPath = "/User/Login";
+            //    //This will be used once a custom error page has been implmeneted;
+            //    // cfg.AccessDeniedPath = "/Home/Error/401";
+            //});
 
-            var app = builder.Build();
+            WebApplication app = builder.Build();
+
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

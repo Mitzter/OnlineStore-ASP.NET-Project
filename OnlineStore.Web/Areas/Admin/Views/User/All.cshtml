@@ -1,0 +1,48 @@
+﻿@using OnlineStore.Web.ViewModels.ViewModels.UserViewModels;
+@model IEnumerable<UserViewModel>
+@{
+    ViewBag.Title = "All Users";
+}
+<h2 class="text-center text-light">@ViewBag.Title</h2>
+<hr />
+<table class="table text-light">
+     <thead>
+         <tr>
+         <th><label>Email</label></th>
+         <th><label>UserName</label></th>
+         <th><label>Phone Number</label></th>
+         <th><label>Bulk Client</label></th>
+         <th><label>Company Name</label></th>
+         <th><label>VAT Number</label></th>
+         <th><label>Financial Manager</label></th>
+         </tr>
+     </thead>
+     <tbody>
+            @foreach (var user in Model)
+            {
+         <tr>
+         <td><label>@user.Email</label></td>
+         <td><label>@user.UserName</label></td>
+         <td><label>@user.PhoneNumber</label></td>
+         <td>
+                        @if (user.PhoneNumber != string.Empty)
+                        {
+             <label>✔</label>
+                        }
+                        else
+                        {
+             <label class="text-center">❌</label>
+                        }
+         </td>
+             <td><label>@user.CompanyName</label></td>
+             
+                 <td><label>@user.VATNumber</label></td>
+            
+                 <td><label>@user.FinancialManager</label></td>
+             
+         </tr>
+            }
+
+
+     </tbody>
+</table>

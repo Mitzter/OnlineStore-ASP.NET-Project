@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineStore.Common\OnlineStore.Common.csproj" />
+    <ProjectReference Include="..\OnlineStore.Services.Mapping\OnlineStore.Services.Mapping.csproj" />
     <ProjectReference Include="..\OnlineStore.Web.Models\OnlineStore.Web.Models.csproj" />
   </ItemGroup>
 

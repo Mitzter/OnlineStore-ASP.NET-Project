@@ -92,7 +92,7 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
             
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var userName = await _userManager.GetUserNameAsync(user);
-            if (Input.PhoneNumber != phoneNumber && Input.Username != userName)
+            if (Input.PhoneNumber != phoneNumber || Input.Username != userName)
             {
                 var setUserName = await _userManager.SetUserNameAsync(user, Input.Username);
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);

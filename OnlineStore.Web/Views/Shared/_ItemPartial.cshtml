@@ -24,6 +24,10 @@
                 {
                             <h6>
                                 Price:
+                                <b>@($"{Model.Price:f2}") BGN</b>
+                            </h6>
+                            <h6>
+                                Bulk Price:
                                 <b>@($"{Model.BulkPrice:f2}") BGN</b>
                             </h6>
                 }
@@ -44,7 +48,7 @@
             }
 
             <br />
-            <a asp-controller="Store" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">Details</a>
+            <a asp-area="" asp-controller="Store" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-info">Details</a>
         </div>
     </div>
 </div>
