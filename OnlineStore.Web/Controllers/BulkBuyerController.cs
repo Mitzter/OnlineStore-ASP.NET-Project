@@ -23,7 +23,29 @@
         public async Task<IActionResult> RegisterCompany()
         {
             var userId = this.User.GetId();
-            bool isBulkBuyerAlready = await this.userService.IsUserBulkClientAsync(userId);
+            bool isBulkBuyerAlready = await this.userService.IsUserBulkClientAsync(userId!);
+            ApplicationUser user = await this.userService.GetUserByIdAsync(userId!);
+
+
+            if(user.BoughtItems != null)
+            {
+                decimal shoppingCartTotal = user.BoughtItems.Sum(i => i.Price);
+
+                if (shoppingCartTotal < 1000)
+                {
+                    this.TempData[ErrorMessage] = "You do not have access to this page.";
+
+                    return this.RedirectToAction("Index", "Home");
+                }
+            }
+            else if (user.BoughtItems == null)
+            {
+                this.TempData[ErrorMessage] = "You do not have access to this page.";
+
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            
 
             if (isBulkBuyerAlready)
             {

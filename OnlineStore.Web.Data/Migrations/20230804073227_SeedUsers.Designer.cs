@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Web.Data;
 
@@ -11,9 +12,10 @@ using OnlineStore.Web.Data;
 namespace OnlineStore.Web.Data.Migrations
 {
     [DbContext(typeof(OnlineStoreDbContext))]
-    partial class OnlineStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230804073227_SeedUsers")]
+    partial class SeedUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -426,9 +428,6 @@ namespace OnlineStore.Web.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<byte[]>("PictureSource")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -454,35 +453,47 @@ namespace OnlineStore.Web.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("596c1585-4ab6-4e3e-9126-57bd79bb36f1"),
+                            Id = new Guid("a7e5a5ed-bc76-4bfe-ba05-7d32352168eb"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "58ad26f7-1b84-4193-831c-7e1e3878936f",
-                            DisplayName = "Tester",
+                            ConcurrencyStamp = "831f7c4a-ce52-43c5-af88-8bfefa9a4df4",
+                            DisplayName = "Admin",
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "admin@admin.com",
+                            NormalizedUserName = "admin@admin.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOkKZEBQ4fDlFqbXYD4ZBN6tNm33aC2stlqLi4BzZw7VQbtn4suv+5PopSnPTmjAQA==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com"
+                        },
+                        new
+                        {
+                            Id = new Guid("48364a71-d862-4bbf-b681-ab0315245633"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d3b0bd37-01c5-403a-a672-cf4f73556f74",
                             Email = "test@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "TEST@TEST.COM",
-                            NormalizedUserName = "TEST@TEST.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAp4Kkk3SX9RHp9wsPz9Xyx6EMUd2WPsQHNdVDgbFBnwCcxUrfoLNRGp/LcgSXmttg==",
+                            NormalizedEmail = "test@test.com",
+                            NormalizedUserName = "test@test.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEB1hMWiXuEFq6wNITU37vkEXMNgEnchB9ctZ33Iyn3vlLnUbXpTo+RsI+Bq9rz5/sw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5fa5c615-c76a-42de-898e-f67b6dbb4d7c",
                             TwoFactorEnabled = false,
                             UserName = "test@test.com"
                         },
                         new
                         {
-                            Id = new Guid("d23f5148-7cc3-4fd5-9a54-775e5a02cfad"),
+                            Id = new Guid("bbe94000-7672-4453-8ea7-3fc6901af69b"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f6028217-7eee-4c69-a5a8-cc62050fb271",
-                            DisplayName = "BulkClient",
+                            ConcurrencyStamp = "9f077e21-5109-47c7-aed5-50279322c1e7",
                             Email = "bulk@bulk.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "BULK@BULK.COM",
-                            NormalizedUserName = "BULK@BULK.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOhgaQt9wGBX4uiix6HXHJ0VxtNewamFWpFIAZ3+JCjN0WXzjuEJFmHDUdFZpi448A==",
+                            NormalizedEmail = "bulk@bulk.com",
+                            NormalizedUserName = "bulk@bulk.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMHInDsO0adaoPfu8iCBk9A07utYVuO/JV9URMfVbc3mQ5WDyC6Zo72iYyMZmTXUdQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f78a3b20-032f-4734-9e60-142b20d9dca8",
                             TwoFactorEnabled = false,
                             UserName = "bulk@bulk.com"
                         });

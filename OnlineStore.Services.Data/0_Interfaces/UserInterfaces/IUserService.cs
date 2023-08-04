@@ -1,5 +1,6 @@
 ﻿namespace OnlineStore.Services.Data._0_Interfaces.UserInterfaces
 {
+    using OnlineStore.Web.Models.UserModels;
     using OnlineStore.Web.ViewModels.FormModels.UserFormModels;
     using OnlineStore.Web.ViewModels.ViewModels.UserViewModels;
 
@@ -18,5 +19,7 @@
         Task<string> GetUserNameByIdAsync(string userId);
 
         Task<IEnumerable<UserViewModel>> AllUsersAsync();
+
+        Task<ApplicationUser> GetUserByIdAsync(string userId);
     }
 }

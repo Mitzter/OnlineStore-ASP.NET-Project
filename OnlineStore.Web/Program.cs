@@ -51,6 +51,12 @@ namespace OnlineStore.Web
 
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
+            using var scope = app.Services.CreateScope();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+            
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -70,6 +76,7 @@ namespace OnlineStore.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
 
             if (app.Environment.IsDevelopment())
             {
@@ -78,6 +85,11 @@ namespace OnlineStore.Web
 
             app.UseEndpoints(config =>
             {
+                config.MapControllerRoute(
+                name: "bulkbuyer",
+                pattern: "/{controller=BulkBuyer}/{action=Index}/{id?}");
+
+
                 config.MapControllerRoute(
                 name: "areas",
                 pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");

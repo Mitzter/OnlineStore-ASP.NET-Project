@@ -13,14 +13,16 @@
             this.Replies = new HashSet<Reply>();
         }
 
-        
+        public string? DisplayName { get; set; }
+
+        public byte[]? PictureSource { get; set; }
+
         public virtual ICollection<Post> Posts { get; set; }
         
         public virtual ICollection<Reply> Replies { get; set; }
 
-        public virtual List<Item> BoughtItems { get; set; }
+        public virtual List<Item>? BoughtItems { get; set; }
 
-        bool IsAdministrator { get; set; }
 
 
     }

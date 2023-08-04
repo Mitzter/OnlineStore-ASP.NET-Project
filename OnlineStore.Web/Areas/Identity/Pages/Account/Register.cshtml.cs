@@ -58,8 +58,8 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "Username")]
-            public string UserName { get; set; }
+            [Display(Name = "User Name")]
+            public string DisplayName { get; set; }
 
             
             [Required]
@@ -94,9 +94,14 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                //var user = CreateUser();
+                var user = new ApplicationUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    DisplayName = Input.DisplayName 
+                };
 
-                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

@@ -30,7 +30,7 @@
                 {
                     Id = u.Id.ToString(),
                     Email = u.Email,
-                    UserName = u.UserName
+                    DisplayName = u.DisplayName!
                 })
                 .ToListAsync();
 
@@ -82,6 +82,15 @@
 
             await this.dbContext.BulkBuyers.AddAsync(client);
             await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
+        {
+            ApplicationUser? user = await this.dbContext
+                .Users
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            return user;
         }
 
         public async Task<string> GetUserNameByIdAsync(string userId)

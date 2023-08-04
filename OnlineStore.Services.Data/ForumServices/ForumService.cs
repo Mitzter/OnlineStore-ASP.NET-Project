@@ -174,7 +174,7 @@
                 ImageUrl = post.ImageUrl,
                 Poster = new UserInfoOnPostViewModel
                 {
-                    NickName = post.Poster.UserName
+                    NickName = post.Poster.DisplayName
                 },
                 Replies = post.Replies,
                 CreatedAt = DateTime.UtcNow,

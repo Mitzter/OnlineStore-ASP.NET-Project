@@ -50,21 +50,32 @@
 
             Task.Run(async () =>
             {
-                if (await roleManager.RoleExistsAsync(AdminRoleName))
+                // Check if the "Administrator" role exists; if not, create it
+                if (!await roleManager.RoleExistsAsync(AdminRoleName))
                 {
-                    return;
+                    IdentityRole<Guid> role = new IdentityRole<Guid>(AdminRoleName);
+                    await roleManager.CreateAsync(role);
                 }
 
-                IdentityRole<Guid> role = new IdentityRole<Guid>(AdminRoleName);
-
-                await roleManager.CreateAsync(role);
-
+                // Check if the Admin user exists; if not, create and seed it
                 ApplicationUser adminUser = await userManager.FindByEmailAsync(email);
+                if (adminUser == null)
+                {
+                    adminUser = new ApplicationUser
+                    {
+                        UserName = email,
+                        Email = email,
+                        DisplayName = "Admin"
+                    };
 
+                    string adminPassword = "admin1"; // Replace with the actual password
+                    await userManager.CreateAsync(adminUser, adminPassword);
+                }
+
+                // Assign the "Administrator" role to the Admin user
                 await userManager.AddToRoleAsync(adminUser, AdminRoleName);
-            })
-                .GetAwaiter()
-                .GetResult();
+
+            }).GetAwaiter().GetResult();
             return app;
         }
     }

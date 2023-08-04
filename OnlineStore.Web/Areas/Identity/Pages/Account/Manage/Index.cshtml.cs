@@ -26,9 +26,6 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-  
-        public string Username { get; set; }
-
       
         [TempData]
         public string StatusMessage { get; set; }
@@ -40,26 +37,26 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
  
         public class InputModel
         {
-           
-            public string Username { get; set; }
+            [Display(Name = "Profile Picture")]
+            public IFormFile PictureUser { get; set; }
+            [Display(Name = "User Name")]   
+            public string DisplayName { get; set; }
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            public byte[]? CurrentPictureSource { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
 
-            Username = userName;
-
             Input = new InputModel
             {
-                
-                Username = userName,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                CurrentPictureSource = user.PictureSource
             };
         }
 
@@ -91,23 +88,48 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
 
             
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            var userName = await _userManager.GetUserNameAsync(user);
-            if (Input.PhoneNumber != phoneNumber || Input.Username != userName)
+            if (Input.PhoneNumber != phoneNumber)
             {
-                var setUserName = await _userManager.SetUserNameAsync(user, Input.Username);
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setUserName.Succeeded)
-                {
-                    StatusMessage = "Username is already taken.";
-                    return RedirectToPage();
-                }
+               
                 if (!setPhoneResult.Succeeded)
                 {
                     StatusMessage = "Unexpected error when trying to set phone number.";
                     return RedirectToPage();
                 }
             }
-          
+
+            if(Input.PictureUser != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+
+                    await Input.PictureUser.CopyToAsync(memoryStream);
+
+                    // Upload the file if less than 2 MB  
+                    if (memoryStream.Length < 2097152)
+                    {
+                        user.PictureSource = memoryStream.ToArray();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                }
+            }
+            
+            if (Input.DisplayName != user.DisplayName) 
+            {
+                user.DisplayName = Input.DisplayName; 
+                var updateResult = await _userManager.UpdateAsync(user);
+
+                if (!updateResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to update display name.";
+                    return RedirectToPage();
+                }
+            }
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
