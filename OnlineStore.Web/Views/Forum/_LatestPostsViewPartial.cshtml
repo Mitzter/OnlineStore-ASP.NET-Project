@@ -17,7 +17,9 @@
             <h8 class="text-white">
                 <a class="text-white" href="@Url.Action("ViewPost", "Forum", new { id = post.Id })">
                     <div class="post-title-container">@post.Title</div>
-                </a>
+                    
+                </a
+                <h10>Created on: @post.CreatedAt</h10> 
             </h8>
         </div>
         <hr/>

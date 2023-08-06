@@ -13,6 +13,12 @@
                 .WithMany(c => c.Items)
                 .HasForeignKey(i => i.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(i => i.Order) 
+                .WithMany(o => o.OrderedItems)
+                .HasForeignKey(i => i.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

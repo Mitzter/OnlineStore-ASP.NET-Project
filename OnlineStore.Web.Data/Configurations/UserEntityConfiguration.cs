@@ -39,7 +39,7 @@ namespace OnlineStore.Web.Data.Configurations
             users.Add(regularUser);
 
             //This user is to be used to register as a BulkBuyer.
-            //The prompt to register as a Bulk Buyer pops up after exceeding 1000 leva of purchased goods in the user's shopping cart.
+            //The prompt to register as a Bulk Buyer pops up at the shopping cart after exceeding 1000 leva of purchased goods in the user's shopping cart.
             ApplicationUser bulkBuyer = new ApplicationUser()
             {
                 Id = Guid.NewGuid(),

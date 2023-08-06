@@ -7,36 +7,51 @@
 <style>
     .section-outline{
         border: 5px solid brown;
-        padding: 20px;
+        padding: 10px;
         background-color:darkgray
+    }
+    /* Your CSS styles go here */
+    .larger-post-title {
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: none; /* Remove underline */
+        color: black; /* Change text color to your desired color */
+    }
+
+    /* Style the link when hovered over */
+    .larger-post-title:hover {
+        text-decoration: underline; /* Add underline on hover */
+        color: #007bff; /* Change text color on hover to your desired color */
     }
 </style>
 
 <h1 class="text-center text-light">@Model.Name</h1>
 
 
+<div class="container-fluid bg-gradient col-md-10" >
+    <hr/>
+    <div class="align-content-center d-flex justify-content-center" style="margin-top: 50px;">
+        <a class="btn btn-outline-success" asp-action="CreatePost" asp-controller="Forum">Create Post</a>
+    </div>
+    <hr />
 
-@foreach (var post in posts)
-{
-        <div class="container-fluid col-md-6 section-outline align-content-center">
+    @foreach (var post in posts)
+    {
+            <div class="container-fluid col-md-6 section-outline align-content-center" style="padding: 10px;">
+                <div>
+                     <a href="@Url.Action("ViewPost", "Forum", new { Id = post.Id })" class="larger-post-title">@post.Title</a>
+                </div>
+                <hr />
+                <div>
+                    <h10>Created: @post.CreatedOn</h10>
+                </div>
+                <div>
+                    <h10>Comments: @post.Replies.Count()</h10>
+                </div>
             
-                <div class="">
-                        <a href="@Url.Action("ViewPost", "Forum", new {Id = post.Id})">@post.Title</a>
-                </div>
-                
-                <hr/>
-                <div>
-                    <h10 class="justify-content-end">Created: @post.CreatedOn</h10>
-                </div>
-                <div>
-                    <h10 class="justify-content-end">Comments: @post.Replies.Count()</h10>
-                </div>
-                
-                   
-        </div>
-        <hr/>
-}
- 
- 
-<!-- Link to create a new post -->
-<a href="@Url.Action("CreatePost", "Forum", new { categoryId = Model.Id })">Create New Post</a>
+            </div>
+
+    }
+</div>
+
+

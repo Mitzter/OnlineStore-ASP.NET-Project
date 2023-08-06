@@ -95,7 +95,10 @@
                 .Select(post => new PostViewModel
                 {
                     Id = post.Id,
-                    Title = post.Title
+                    Title = post.Title,
+                    CreatedAt = post.CreatedOn,
+                    Replies = post.Replies
+
                 })
                 .ToListAsync();
 
