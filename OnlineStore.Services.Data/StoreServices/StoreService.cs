@@ -182,6 +182,8 @@
                 .Include(u => u.BoughtItems)
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
+            var orderedItems = new List<Item>(user!.BoughtItems);
+
             Order order = new Order()
             {
                 FirstName = formModel.FirstName,
@@ -194,13 +196,15 @@
                 UserId = user!.Id,
                 User = user,
                 OrderTime = DateTime.UtcNow,
-                OrderedItems = user!.BoughtItems,
+                OrderedItems = orderedItems,
                 Status = OrderStatus.Pending,
             };
-
+            
+            user.BoughtItems.Clear();   
             await this.dbContext.Orders.AddAsync(order);
             await this.dbContext.SaveChangesAsync();
 
+            
             return order.Id.ToString();
         }
     }

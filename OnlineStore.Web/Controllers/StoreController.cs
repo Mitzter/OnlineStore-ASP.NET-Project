@@ -116,9 +116,17 @@
         [HttpPost]
         public async Task<IActionResult> Checkout(OrderFormModel order)
         {
-            var userId = this.User.GetId();
-            string orderId = await this.storeService.CreateOrderAsync(order, userId!);
-            return this.RedirectToAction("ShoppingCart", "Store");
+            try
+            {
+                var userId = this.User.GetId();
+                string orderId = await this.storeService.CreateOrderAsync(order, userId!);
+                return RedirectToAction("ShoppingCart", "Store");
+            }
+            catch (Exception ex)
+            {
+               
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private IActionResult GeneralError()
