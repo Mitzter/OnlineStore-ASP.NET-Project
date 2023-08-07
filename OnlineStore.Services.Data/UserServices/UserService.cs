@@ -88,6 +88,7 @@
         {
             ApplicationUser? user = await this.dbContext
                 .Users
+                .Include(u => u.BoughtItems)
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
             return user;

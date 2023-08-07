@@ -1,0 +1,85 @@
+﻿@model ShoppingCartViewModel;
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+    bool UserRegisteredForBulkPrices = Model.isUserCompanyRegistered;
+    decimal totalPrice = 0;
+}
+
+<h1 class="align-content-center text-light">@ViewData["Title"]</h1>
+
+@if (Model.Items != null && Model.Items.Count > 0)
+{
+            <table class="table text-light">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+            @foreach (var item in Model.Items)
+            {
+                        <tr>
+                            <td>
+                            <div class="d-flex " style="height: 200px;">
+                                <img class="card-img-top" src="@item.ImageUrl" alt="Image" style="max-width: 200px; max-height: 200px;" />
+                            </div>
+                            </td>
+                            <td>@item.Name</td>
+                    @if (!UserRegisteredForBulkPrices)
+                    {
+                                   <td>@($"{item.Price:f2}") BGN</td>
+                    }
+                    @if (UserRegisteredForBulkPrices)
+                    {
+                                    <td>@($"{item.BulkPrice}")</td>
+                    }
+
+                            <td>@item.QuantityBought</td>
+                    @{
+                        decimal subtotal = 0;
+                        @if (!UserRegisteredForBulkPrices)
+                        {
+                            subtotal = item.Price * item.QuantityBought;
+                        }
+                        @if (UserRegisteredForBulkPrices)
+                        {
+                            subtotal = item.BulkPrice * item.QuantityBought;
+                        } 
+
+
+                        totalPrice += subtotal;
+                    }
+                        </tr>
+            }
+                </tbody>
+            </table>
+    @if (totalPrice > 1000)
+    {
+                        <script>
+                            function showConfirmation() {
+                                var isBulkClient = confirm("Your total price exceeds 1000 BGN. Would you like to register your company and receive our Bulk Discounts?");
+                                if (isBulkClient) {
+                                            window.location.href = '@Url.Action("RegisterCompany", "BulkBuyer")';
+                                }
+                            }
+
+
+                            window.onload = function () {
+                                showConfirmation();
+                            };
+                        </script>
+    }
+
+            <button type="button" onclick="location.href='@Url.Action("Checkout", "Order")'">Buy</button>
+            <p class="text-light">Total Price: @($"{totalPrice:f2}") BGN</p> 
+
+            <button type="button" onclick="location.href='@Url.Action("Checkout", "Order")'">Buy</button>
+}
+else
+{
+            <p>Your cart is empty.</p>
+}

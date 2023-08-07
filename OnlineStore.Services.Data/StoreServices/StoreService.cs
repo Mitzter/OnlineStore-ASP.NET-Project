@@ -146,5 +146,28 @@
                 throw new ArgumentNullException("Item ID is null.");
             }
         }
+
+        public async Task<ShoppingCartViewModel> GetShoppingCartByUserIdAsync(string userId)
+        {
+            var user = await this.dbContext
+                 .Users
+                 .Include(u => u.BoughtItems)
+                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            bool isUserCompanyRegistered = false;
+
+            if(user!.GetType() == typeof(BulkBuyer))
+            {
+                isUserCompanyRegistered = true;
+            }
+
+            return new ShoppingCartViewModel()
+            {
+                UserId = userId,
+                User = user!,
+                Items = user!.BoughtItems,
+                isUserCompanyRegistered = isUserCompanyRegistered,
+            };
+        }
     }
 }

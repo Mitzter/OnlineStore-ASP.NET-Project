@@ -13,5 +13,7 @@
 
         Task BuyItemAsync(string itemId, string userId, int quantity);
 
+        Task<ShoppingCartViewModel> GetShoppingCartByUserIdAsync(string userId);
+
     }
 }

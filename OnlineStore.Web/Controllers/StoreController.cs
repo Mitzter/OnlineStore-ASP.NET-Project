@@ -79,6 +79,16 @@
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ShoppingCart()
+        {
+            var userId = this.User.GetId();
+
+            ShoppingCartViewModel viewModel = await this.storeService.GetShoppingCartByUserIdAsync(userId!);
+
+            return View(viewModel);
+        }
+
         private IActionResult GeneralError()
         {
             this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact an administrator!";

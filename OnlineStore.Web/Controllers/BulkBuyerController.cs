@@ -29,7 +29,12 @@
 
             if(user.BoughtItems != null)
             {
-                decimal shoppingCartTotal = user.BoughtItems.Sum(i => i.Price);
+                decimal shoppingCartTotal = 0;
+
+                foreach (var item in user.BoughtItems)
+                {
+                    shoppingCartTotal = item.Price * item.QuantityBought;
+                }
 
                 if (shoppingCartTotal < 1000)
                 {
