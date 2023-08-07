@@ -1,5 +1,6 @@
 ﻿namespace OnlineStore.Services.Data.Interfaces.StoreInterfaces
 {
+    using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
 
     public interface IStoreService
@@ -12,6 +13,5 @@
 
         Task BuyItemAsync(string itemId, string userId, int quantity);
 
-        
     }
 }

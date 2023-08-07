@@ -28,6 +28,7 @@
         {
             var user = await this.userManager
                 .Users.FirstAsync(u => u.Id == Guid.Parse(posterId));
+            
             Post post = new Post()
             {
                 Id = model.Id,

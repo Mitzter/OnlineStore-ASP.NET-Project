@@ -12,7 +12,7 @@ namespace OnlineStore.Web.Data.Configurations
 
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.HasData(this.GenerateCategories());
+            //builder.HasData(this.GenerateCategories());
         }
 
         private ApplicationUser[] GenerateCategories()

@@ -14,8 +14,7 @@
         [MaxLength(MessageMaxLength)]
         public string Message { get; set; } = null!;
 
-        [Required]
-        [ForeignKey(nameof(User))]
+        
         public Guid UserId { get;set; }
 
         [Required]

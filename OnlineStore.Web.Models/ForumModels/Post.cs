@@ -24,8 +24,6 @@
 
         [MaxLength(ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
-
-        [ForeignKey(nameof(Poster))]
         public Guid PosterId { get; set; }
 
         public virtual ApplicationUser Poster { get; set; } 

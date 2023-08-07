@@ -52,7 +52,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreatePost(int postId)
+        public async Task<IActionResult> CreatePost(int categoryId)
         {
             var user = HttpContext.User;
             var currentUser = await _userManager.GetUserAsync(user);
@@ -63,7 +63,7 @@
             {
                 PosterId = currentUser.Id,
                 Poster = currentUser,
-                CategoryId = postId,
+                CategoryId = categoryId,
             };
 
             return View(post);
