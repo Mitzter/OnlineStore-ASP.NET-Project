@@ -1,11 +1,14 @@
 ﻿namespace OnlineStore.Services.Data.StoreServices
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Data;
     using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.Models.StoreModels;
+    using OnlineStore.Web.Models.StoreModels.Enums;
     using OnlineStore.Web.Models.UserModels;
+    using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
     using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
     using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels.Enums;
     using System.Threading.Tasks;
@@ -108,7 +111,9 @@
             }
             
         }
-        
+
+       
+
         public async Task<bool> ExistsByIdAsync(string itemId)
         {
             bool result = await this.dbContext
@@ -168,6 +173,35 @@
                 Items = user!.BoughtItems,
                 isUserCompanyRegistered = isUserCompanyRegistered,
             };
+        }
+
+        public async Task<string> CreateOrderAsync(OrderFormModel formModel, string userId)
+        {
+            var user = await this.dbContext
+                .Users
+                .Include(u => u.BoughtItems)
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            Order order = new Order()
+            {
+                FirstName = formModel.FirstName,
+                LastName = formModel.LastName,
+                City = formModel.City,
+                Address = formModel.Address,
+                AdditionalInformation = formModel.AdditionalInformation,
+                PhoneNumber = formModel.PhoneNumber,
+                PostalCode = formModel.PostalCode,
+                UserId = user!.Id,
+                User = user,
+                OrderTime = DateTime.UtcNow,
+                OrderedItems = user!.BoughtItems,
+                Status = OrderStatus.Pending,
+            };
+
+            await this.dbContext.Orders.AddAsync(order);
+            await this.dbContext.SaveChangesAsync();
+
+            return order.Id.ToString();
         }
     }
 }

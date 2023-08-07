@@ -1,9 +1,13 @@
 ﻿namespace OnlineStore.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
     using OnlineStore.Web.Infrastructure;
+    using OnlineStore.Web.Models.UserModels;
+    using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
     using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
     using static OnlineStore.Common.NotificationMessagesConstants;
 
@@ -12,11 +16,13 @@
     {
         private readonly IStoreService storeService;
         private readonly IItemCategoryService itemCategoryService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public StoreController(IStoreService storeService, IItemCategoryService itemCategoryService)
+        public StoreController(IStoreService storeService, IItemCategoryService itemCategoryService, UserManager<ApplicationUser> userManager)
         {
             this.storeService = storeService;
             this.itemCategoryService = itemCategoryService;
+            this.userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -87,6 +93,32 @@
             ShoppingCartViewModel viewModel = await this.storeService.GetShoppingCartByUserIdAsync(userId!);
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Checkout(int orderId)
+        {
+            var userId = this.User.GetId();
+            var currentUser = await this.userManager.Users
+                .Include(u => u.BoughtItems)
+                .FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId!));
+
+            OrderFormModel order = new OrderFormModel()
+            {
+                UserId = currentUser!.Id,
+                User = currentUser,
+                OrderedItems = currentUser.BoughtItems!,
+            };
+
+            return View(order);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Checkout(OrderFormModel order)
+        {
+            var userId = this.User.GetId();
+            string orderId = await this.storeService.CreateOrderAsync(order, userId!);
+            return this.RedirectToAction("ShoppingCart", "Store");
         }
 
         private IActionResult GeneralError()

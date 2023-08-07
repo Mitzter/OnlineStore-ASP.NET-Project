@@ -1,5 +1,6 @@
 ﻿namespace OnlineStore.Web.Models.StoreModels
 {
+    using OnlineStore.Web.Models.StoreModels.Enums;
     using OnlineStore.Web.Models.UserModels;
 
     public class Order
@@ -11,6 +12,18 @@
             this.OrderedItems = new HashSet<Item>();
         }
         public Guid Id { get; set; }
+        public string FirstName { get; set; } = null!;
+
+        public string LastName { get; set; } = null!;
+
+        public string PhoneNumber { get; set; } = null!;
+        public string City { get; set; } = null!;
+
+        public string Address { get; set; } = null!;
+
+        public string PostalCode { get; set; } = null!;
+
+        public string AdditionalInformation { get; set; } = null!;
 
         public Guid UserId { get; set; } 
         public ApplicationUser User { get; set; } = null!;
@@ -19,7 +32,7 @@
 
         public IEnumerable<Item> OrderedItems { get; set; }
 
-
+        public OrderStatus Status { get; set; }
         
     }
 }
