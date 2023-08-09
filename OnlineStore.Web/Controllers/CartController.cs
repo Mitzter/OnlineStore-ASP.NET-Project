@@ -23,14 +23,39 @@ namespace OnlineStore.Web.Controllers
             this.storeService = storeService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var userId = this.User.GetId()!;
+
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
 
+            var user = await this.dbContext
+                .Users
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            bool isUserCompanyRegistered = false;
+            decimal grandTotal = 0;
+
+            var bulkBuyer = await this.dbContext
+                .BulkBuyers
+                .FirstOrDefaultAsync(u => u.UserId.ToString() == userId);
+
+            if (bulkBuyer?.UserId == user!.Id)
+            {
+                isUserCompanyRegistered = true;
+                grandTotal = cart.Sum(x => x.Quantity * x.BulkPrice);
+            } 
+            else
+            {
+                grandTotal = cart.Sum(x => x.Quantity * x.Price);
+            }
+
+            
             ShoppingCartViewModel viewModel = new()
             {
                 CartItems = cart,
-                GrantTotal = cart.Sum(x => x.Quantity * x.Price),
+                GrantTotal = grandTotal,
+                IsUserCompanyRegistered = isUserCompanyRegistered,
             };
 
             return View(viewModel);
@@ -159,7 +184,7 @@ namespace OnlineStore.Web.Controllers
                 var userId = this.User.GetId();
                 string orderId = await this.storeService.CreateOrderAsync(order, userId!, cart);
                 HttpContext.Session.Remove("Cart");
-                return RedirectToAction("ShoppingCart", "Store");
+                return RedirectToAction("Index", "Cart");
             }
             catch (Exception ex)
             {

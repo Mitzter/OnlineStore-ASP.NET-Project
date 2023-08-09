@@ -9,7 +9,7 @@
         public Order()
         {
             this.Id = Guid.NewGuid();
-            this.OrderedItems = new HashSet<CartItem>();
+            this.OrderedItems = new List<CartItem>();
         }
         public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;
@@ -25,14 +25,16 @@
 
         public string AdditionalInformation { get; set; } = null!;
 
-        public Guid UserId { get; set; } 
+        public Guid UserId { get; set; }
         public ApplicationUser User { get; set; } = null!;
 
         public DateTime OrderTime { get; set; }
 
-        public IEnumerable<CartItem> OrderedItems { get; set; }
+        public List<CartItem> OrderedItems { get; set; }
 
         public OrderStatus Status { get; set; }
-        
+
+        public bool IsUserCompanyRegistered { get; set; }
+
     }
 }

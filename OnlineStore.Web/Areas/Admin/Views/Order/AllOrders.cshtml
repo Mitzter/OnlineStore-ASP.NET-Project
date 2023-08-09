@@ -1,0 +1,58 @@
+﻿@using OnlineStore.Web.Models.UserModels;
+@using OnlineStore.Web.ViewModels.ViewModels.OrderViewModels
+@model IEnumerable<AllOrdersViewModel>
+
+@{
+    ViewBag.Title = "All Orders";
+    bool IsUserCompanyRegistered;
+}
+
+<h2 class="text-center text-light">@ViewBag.Title</h2>
+<hr />
+<table class="table text-light">
+    <thead>
+        <tr>
+            <th><label>FirstName</label></th>
+            <th><label>LastName</label></th>
+            <th><label>Phone Number</label></th>
+            <th><label>Registered Company</label></th>
+            <th><label>Order Time</label></th>
+            <th><label>Total</label></th>
+            <th><label>Status</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td><label>@order.FirstName</label></td>
+                <td><label>@order.LastName</label></td>
+                <td><label>@order.PhoneNumber</label></td>
+                <td>
+                    @if (order.IsUserCompanyRegistered)
+                    {
+                            <label>✔</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">❌</label>
+                    }
+                    
+                </td>
+               
+                <td><label>@order.OrderTime</label></td>
+
+                
+                <td class="text-white"> @order.Total.ToString("C2")</td>
+                
+                <td><label>@order.Status</label></td>
+
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+                   

@@ -22,7 +22,7 @@
 
 
         [Required]
-        [StringLength(FinancialManagerNameMinLength, MinimumLength = FinancialManagerNameMinLength)]
+        [StringLength(FinancialManagerNameMaxLength, MinimumLength = FinancialManagerNameMinLength)]
         [Display(Name = "Financial Manager")]
         public string FinancialManager { get; set; } = null!;
 

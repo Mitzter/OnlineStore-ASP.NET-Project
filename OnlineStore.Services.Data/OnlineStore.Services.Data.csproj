@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="0_Interfaces\NewFolder1\**" />
+    <Compile Remove="0_Interfaces\NewFolder\**" />
+    <EmbeddedResource Remove="0_Interfaces\NewFolder1\**" />
+    <EmbeddedResource Remove="0_Interfaces\NewFolder\**" />
+    <None Remove="0_Interfaces\NewFolder1\**" />
+    <None Remove="0_Interfaces\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.20" />

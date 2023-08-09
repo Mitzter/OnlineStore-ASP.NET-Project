@@ -9,5 +9,7 @@
 
         public decimal GrantTotal { get; set; }
 
+        public bool IsUserCompanyRegistered { get; set; }
+
     }
 }

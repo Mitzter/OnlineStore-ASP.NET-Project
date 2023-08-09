@@ -183,6 +183,15 @@
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
             var orderedItems = sessionItems;
+            bool isUserCompanyRegistered = false;
+
+            var bulkBuyer = await this.dbContext
+                .BulkBuyers
+                .FirstOrDefaultAsync(u => u.UserId.ToString() == userId);
+            if (bulkBuyer?.UserId == user!.Id)
+            {
+                isUserCompanyRegistered = true;
+            }
 
             Order order = new Order()
             {
@@ -198,6 +207,7 @@
                 OrderTime = DateTime.UtcNow,
                 OrderedItems = orderedItems,
                 Status = OrderStatus.Pending,
+                IsUserCompanyRegistered = isUserCompanyRegistered,
             };
              
             await this.dbContext.Orders.AddAsync(order);

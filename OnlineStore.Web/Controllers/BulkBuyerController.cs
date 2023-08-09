@@ -4,6 +4,8 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using OnlineStore.Services.Data._0_Interfaces.UserInterfaces;
+    using OnlineStore.Web.Infrastructure;
+    using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.Models.UserModels;
     using OnlineStore.Web.ViewModels.FormModels.UserFormModels;
     using static Common.NotificationMessagesConstants;
@@ -22,18 +24,19 @@
         [HttpGet]
         public async Task<IActionResult> RegisterCompany()
         {
+            List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
             var userId = this.User.GetId();
             bool isBulkBuyerAlready = await this.userService.IsUserBulkClientAsync(userId!);
             ApplicationUser user = await this.userService.GetUserByIdAsync(userId!);
 
 
-            if(user.BoughtItems != null)
+            if(cart != null)
             {
                 decimal shoppingCartTotal = 0;
 
-                foreach (var item in user.BoughtItems)
+                foreach (var item in cart)
                 {
-                    shoppingCartTotal = item.Price * item.QuantityBought;
+                    shoppingCartTotal += item.Price * item.Quantity;
                 }
 
                 if (shoppingCartTotal < 1000)
@@ -43,7 +46,7 @@
                     return this.RedirectToAction("Index", "Home");
                 }
             }
-            else if (user.BoughtItems == null)
+            else if (cart == null)
             {
                 this.TempData[ErrorMessage] = "You do not have access to this page.";
 
@@ -111,7 +114,7 @@
                 return this.RedirectToAction("Index", "Home");
             }
 
-            return this.RedirectToAction("Cart", "Store");
+            return this.RedirectToAction("Index", "Cart");
         }
     }
 }

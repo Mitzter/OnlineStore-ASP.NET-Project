@@ -25,8 +25,18 @@
                     <a class="btn btn-primary btn-sm" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
                     <a class="btn btn-danger btn-sm" asp-action="Remove" asp-route-id="@item.ProductId">Remove</a>
                 </td>
-                <td class="text-white">@item.Price.ToString("C2")</td>
-                <td class="text-white"> @Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C2")</td>
+                
+                @if (Model.IsUserCompanyRegistered)
+                {
+                    <td class="text-white">@item.BulkPrice.ToString("C2")</td>
+                    <td class="text-white"> @Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.BulkPrice).ToString("C2")</td>
+                } 
+                else
+                {
+                    <td class="text-white">@item.Price.ToString("C2")</td>
+                    <td class="text-white"> @Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C2")</td>
+                }
+                
             </tr>
         }
         <tr >
@@ -43,5 +53,21 @@
 else 
 {
     <h3 class="display-4 text-center text-white">Your cart is empty</h3>
+}
+@if (Model.GrantTotal >= 1000 && Model.IsUserCompanyRegistered == false)
+{
+    <script>
+        function showConfirmation() {
+            var isBulkClient = confirm("Your total price exceeds 1000 BGN. Would you like to register your company and receive our Bulk Discounts?");
+            if (isBulkClient) {
+                window.location.href = '@Url.Action("RegisterCompany", "BulkBuyer")';
+            }
+        }
+
+
+        window.onload = function () {
+            showConfirmation();
+        };
+    </script>
 }
 
