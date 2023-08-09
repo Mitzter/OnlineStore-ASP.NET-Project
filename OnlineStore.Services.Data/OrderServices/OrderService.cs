@@ -8,6 +8,7 @@ using OnlineStore.Web.ViewModels.ViewModels.OrderViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,16 @@ namespace OnlineStore.Services.Data.OrderServices
         {
                 this.dbContext = dbContext;
         }
+
+        public async Task ChangeOrderStatusAsync(string id, int statusNum)
+        {
+            Order order = await GetOrderByIdAsync(id);
+
+            order.Status = (OrderStatus)statusNum;
+
+            this.dbContext.SaveChanges();
+        }
+
         public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync()
         {
             IEnumerable<AllOrdersViewModel> allOrders = await this.dbContext
@@ -43,6 +54,42 @@ namespace OnlineStore.Services.Data.OrderServices
 
             return allOrders;
 
+        }
+
+        public async Task<Order> GetOrderByIdAsync(string id)
+        {
+
+            Order? order = await this.dbContext
+                .Orders
+                .Include(o => o.OrderedItems)
+                .Include(o => o.User)
+                .FirstOrDefaultAsync(o => o.Id.ToString() == id);
+
+            return order;
+        }
+
+        public async Task<OrderViewModel> GetOrderViewAsync(string id)
+        {
+            Order order = await GetOrderByIdAsync(id);
+
+            OrderViewModel viewModel = new OrderViewModel()
+            {
+                Id = order.Id.ToString(),
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                PhoneNumber = order.PhoneNumber,
+                UserId = order.User.Id,
+                User = order.User,
+                PostalCode = order.PostalCode,
+                City = order.City,
+                Address = order.Address,
+                AdditionalInformation = order.AdditionalInformation,
+                OrderedItems = order.OrderedItems,
+                OrderTime = order.OrderTime,
+                Status = order.Status,
+            };
+
+            return viewModel;
         }
     }
 }

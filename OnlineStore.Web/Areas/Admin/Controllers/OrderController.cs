@@ -20,5 +20,19 @@ namespace OnlineStore.Web.Areas.Admin.Controllers
 
             return View(viewModel);
         }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            OrderViewModel viewModel = await this.orderService.GetOrderViewAsync(id);
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ChangeStatus(string id, int statusNum)
+        {
+            await this.orderService.ChangeOrderStatusAsync(id, statusNum);
+
+            return RedirectToAction("AllOrders", "Order");
+        }
     }
 }
