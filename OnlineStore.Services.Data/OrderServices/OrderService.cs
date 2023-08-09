@@ -34,6 +34,9 @@ namespace OnlineStore.Services.Data.OrderServices
 
         public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync()
         {
+            
+            
+
             IEnumerable<AllOrdersViewModel> allOrders = await this.dbContext
                 .Orders
                 .Include(o => o.OrderedItems)
@@ -47,7 +50,6 @@ namespace OnlineStore.Services.Data.OrderServices
                     CartItems = o.OrderedItems,
                     OrderTime = o.OrderTime,
                     Status = o.Status,
-                    Total = o.OrderedItems.Sum(x => x.Quantity * x.Price),
                     IsUserCompanyRegistered = o.IsUserCompanyRegistered,
                 })
                 .ToListAsync();
@@ -87,6 +89,8 @@ namespace OnlineStore.Services.Data.OrderServices
                 OrderedItems = order.OrderedItems,
                 OrderTime = order.OrderTime,
                 Status = order.Status,
+                IsUserCompanyRegistered = order.IsUserCompanyRegistered,
+
             };
 
             return viewModel;
