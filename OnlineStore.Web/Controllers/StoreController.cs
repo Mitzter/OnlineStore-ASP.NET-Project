@@ -85,15 +85,15 @@
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ShoppingCart()
-        {
-            var userId = this.User.GetId();
+        //[HttpGet]
+        //public async Task<IActionResult> ShoppingCart()
+        //{
+        //    var userId = this.User.GetId();
 
-            ShoppingCartViewModel viewModel = await this.storeService.GetShoppingCartByUserIdAsync(userId!);
+        //    ShoppingCartViewModel viewModel = await this.storeService.GetShoppingCartByUserIdAsync(userId!);
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
        
 

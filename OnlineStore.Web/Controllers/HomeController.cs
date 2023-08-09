@@ -37,53 +37,7 @@
 
             return View(viewModel);
         }
-        //This will be an administrator only action. To be implemented. Currently used for testing
-        [HttpGet]
-        public async Task<IActionResult> Add()
-        {
-            ItemFormModel formModel = new ItemFormModel()
-            {
-                Categories = await this.itemCategoryService.AllCategoriesAsync()
-            };
-
-            return View(formModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Add(ItemFormModel model)
-        {
-            bool categoryExists = await this.itemCategoryService
-                .ExistsById(model.CategoryId);
-
-            if (!categoryExists)
-            {
-                this.ModelState.AddModelError(nameof(model.CategoryId),
-                    "Selected category does not exist!");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                model.Categories = await this.itemCategoryService
-                    .AllCategoriesAsync();
-
-                return this.View(model);
-            }
-
-            try
-            {
-                string itemId = await this.itemService.CreateAsync(model);
-
-                return this.RedirectToAction("Index", "Home");
-            }
-            catch (Exception)
-            {
-                this.ModelState.AddModelError(string.Empty, "Unexpected error occured when trying to add new product. Please try again later or contact an administrator!");
-                model.Categories = await this.itemCategoryService
-                    .AllCategoriesAsync();
-
-                return this.View(model);
-            }
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
