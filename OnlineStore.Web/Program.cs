@@ -35,11 +35,19 @@ namespace OnlineStore.Web
             })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<OnlineStoreDbContext>();
-                
+
+            builder.Services.AddDistributedMemoryCache();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+            });
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddApplicationServices(typeof(IItemService));
 
+            
             //builder.Services.ConfigureApplicationCookie(cfg =>
             //{
             //    cfg.LoginPath = "/User/Login";
@@ -48,6 +56,8 @@ namespace OnlineStore.Web
             //});
 
             WebApplication app = builder.Build();
+
+            app.UseSession();
 
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
@@ -85,9 +95,7 @@ namespace OnlineStore.Web
 
             app.UseEndpoints(config =>
             {
-                config.MapControllerRoute(
-                name: "bulkbuyer",
-                pattern: "/{controller=BulkBuyer}/{action=Index}/{id?}");
+               
 
 
                 config.MapControllerRoute(

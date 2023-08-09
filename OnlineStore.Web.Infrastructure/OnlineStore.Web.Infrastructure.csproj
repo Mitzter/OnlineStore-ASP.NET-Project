@@ -15,10 +15,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineStore.Web.Data\OnlineStore.Web.Data.csproj" />
+    <ProjectReference Include="..\OnlineStore.Web.ViewModels\OnlineStore.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

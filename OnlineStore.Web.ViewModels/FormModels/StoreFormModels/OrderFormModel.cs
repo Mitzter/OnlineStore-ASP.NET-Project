@@ -7,7 +7,7 @@
     {
         public OrderFormModel() 
         {
-            this.OrderedItems = new List<Item>();
+            this.OrderedItems = new List<CartItem>();
         }
         public string FirstName { get; set; } = null!;
 
@@ -28,6 +28,6 @@
 
         public DateTime OrderTime { get; set; } 
 
-        public List<Item> OrderedItems { get; set; }
+        public List<CartItem> OrderedItems { get; set; }
     }
 }

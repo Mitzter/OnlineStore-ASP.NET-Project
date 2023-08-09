@@ -9,7 +9,7 @@
         public Order()
         {
             this.Id = Guid.NewGuid();
-            this.OrderedItems = new HashSet<Item>();
+            this.OrderedItems = new HashSet<CartItem>();
         }
         public Guid Id { get; set; }
         public string FirstName { get; set; } = null!;
@@ -30,7 +30,7 @@
 
         public DateTime OrderTime { get; set; }
 
-        public IEnumerable<Item> OrderedItems { get; set; }
+        public IEnumerable<CartItem> OrderedItems { get; set; }
 
         public OrderStatus Status { get; set; }
         

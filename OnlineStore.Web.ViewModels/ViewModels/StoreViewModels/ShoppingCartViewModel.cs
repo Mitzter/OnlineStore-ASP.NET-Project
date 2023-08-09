@@ -5,14 +5,9 @@
 
     public class ShoppingCartViewModel
     {
-        public string UserId { get; set; } = null!;
+        public List<CartItem> CartItems { get; set; }
 
-        public virtual ApplicationUser User { get; set; } = null!;
-
-        public List<Item>? Items { get; set; }
-
-        public bool isUserCompanyRegistered { get; set; }
-
+        public decimal GrantTotal { get; set; }
 
     }
 }

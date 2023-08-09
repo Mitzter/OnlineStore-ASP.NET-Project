@@ -16,7 +16,7 @@
 
         Task<ShoppingCartViewModel> GetShoppingCartByUserIdAsync(string userId);
 
-        Task<string> CreateOrderAsync(OrderFormModel formModel, string userId);
+        Task<string> CreateOrderAsync(OrderFormModel formModel, string userId, List<CartItem> sessionItems);
 
     }
 }

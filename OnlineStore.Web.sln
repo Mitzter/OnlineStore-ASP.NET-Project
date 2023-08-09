@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{4ADA52
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Common", "OnlineStore.Common\OnlineStore.Common.csproj", "{0EE6D09A-B499-4D7E-BECB-A96CDB25EDA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore.Services.Mapping", "OnlineStore.Services.Mapping\OnlineStore.Services.Mapping.csproj", "{0A875B19-F924-4858-87AD-532064AFEF81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore.Services.Mapping", "OnlineStore.Services.Mapping\OnlineStore.Services.Mapping.csproj", "{0A875B19-F924-4858-87AD-532064AFEF81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

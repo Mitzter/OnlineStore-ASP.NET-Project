@@ -1,5 +1,6 @@
 ﻿namespace OnlineStore.Services.Data.StoreServices
 {
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
@@ -152,37 +153,36 @@
             }
         }
 
-        public async Task<ShoppingCartViewModel> GetShoppingCartByUserIdAsync(string userId)
-        {
-            var user = await this.dbContext
-                 .Users
-                 .Include(u => u.BoughtItems)
-                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+        //public async Task<ShoppingCartViewModel> GetShoppingCartByUserIdAsync(string userId)
+        //{
+        //    var user = await this.dbContext
+        //         .Users
+        //         .Include(u => u.BoughtItems)
+        //         .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
-            bool isUserCompanyRegistered = false;
+        //    bool isUserCompanyRegistered = false;
 
-            if(user!.GetType() == typeof(BulkBuyer))
-            {
-                isUserCompanyRegistered = true;
-            }
+        //    if(user!.GetType() == typeof(BulkBuyer))
+        //    {
+        //        isUserCompanyRegistered = true;
+        //    }
 
-            return new ShoppingCartViewModel()
-            {
-                UserId = userId,
-                User = user!,
-                Items = user!.BoughtItems,
-                isUserCompanyRegistered = isUserCompanyRegistered,
-            };
-        }
+        //    return new ShoppingCartViewModel()
+        //    {
+        //        UserId = userId,
+        //        User = user!,
+        //        Items = user!.BoughtItems,
+        //        isUserCompanyRegistered = isUserCompanyRegistered,
+        //    };
+        //}
 
-        public async Task<string> CreateOrderAsync(OrderFormModel formModel, string userId)
+        public async Task<string> CreateOrderAsync(OrderFormModel formModel, string userId, List<CartItem> sessionItems)
         {
             var user = await this.dbContext
                 .Users
-                .Include(u => u.BoughtItems)
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
-            var orderedItems = new List<Item>(user!.BoughtItems);
+            var orderedItems = sessionItems;
 
             Order order = new Order()
             {
@@ -199,13 +199,17 @@
                 OrderedItems = orderedItems,
                 Status = OrderStatus.Pending,
             };
-            
-            user.BoughtItems.Clear();   
+             
             await this.dbContext.Orders.AddAsync(order);
             await this.dbContext.SaveChangesAsync();
 
             
             return order.Id.ToString();
+        }
+
+        public Task<ShoppingCartViewModel> GetShoppingCartByUserIdAsync(string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

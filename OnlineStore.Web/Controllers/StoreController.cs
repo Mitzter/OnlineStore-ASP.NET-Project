@@ -95,39 +95,39 @@
             return View(viewModel);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Checkout(int orderId)
-        {
-            var userId = this.User.GetId();
-            var currentUser = await this.userManager.Users
-                .Include(u => u.BoughtItems)
-                .FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId!));
+        //[HttpGet]
+        //public async Task<IActionResult> Checkout(int orderId)
+        //{
+        //    var userId = this.User.GetId();
+        //    var currentUser = await this.userManager.Users
+        //        .Include(u => u.BoughtItems)
+        //        .FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId!));
 
-            OrderFormModel order = new OrderFormModel()
-            {
-                UserId = currentUser!.Id,
-                User = currentUser,
-                OrderedItems = currentUser.BoughtItems!,
-            };
+        //    OrderFormModel order = new OrderFormModel()
+        //    {
+        //        UserId = currentUser!.Id,
+        //        User = currentUser,
+        //        OrderedItems = currentUser.BoughtItems!,
+        //    };
 
-            return View(order);
-        }
+        //    return View(order);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Checkout(OrderFormModel order)
-        {
-            try
-            {
-                var userId = this.User.GetId();
-                string orderId = await this.storeService.CreateOrderAsync(order, userId!);
-                return RedirectToAction("ShoppingCart", "Store");
-            }
-            catch (Exception ex)
-            {
+        //[HttpPost]
+        //public async Task<IActionResult> Checkout(OrderFormModel order)
+        //{
+        //    try
+        //    {
+        //        var userId = this.User.GetId();
+        //        string orderId = await this.storeService.CreateOrderAsync(order, userId!);
+        //        return RedirectToAction("ShoppingCart", "Store");
+        //    }
+        //    catch (Exception ex)
+        //    {
                
-                return RedirectToAction("Error", "Home");
-            }
-        }
+        //        return RedirectToAction("Error", "Home");
+        //    }
+        //}
 
         private IActionResult GeneralError()
         {

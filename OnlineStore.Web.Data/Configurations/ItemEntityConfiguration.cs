@@ -13,10 +13,10 @@
                 .WithMany(c => c.Items)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .HasOne(i => i.Order) 
-                .WithMany(o => o.OrderedItems)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder
+            //    .HasOne(i => i.Order) 
+            //    .WithMany(o => o.OrderedItems)
+            //    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
