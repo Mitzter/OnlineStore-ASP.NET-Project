@@ -4,5 +4,7 @@
     {
         public string NickName { get; set; } = null!;
 
+        public byte[]? PictureSource { get; set; }
+
     }
 }

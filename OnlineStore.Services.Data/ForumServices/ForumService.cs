@@ -167,6 +167,7 @@
                 .ForumPosts
                 .Include(p => p.Poster)
                 .Include(p => p.Replies)
+                .ThenInclude(r => r.User)
                 .Where(p => p.IsActive)
                 .FirstAsync(p => p.Id.ToString() == postId);
 
@@ -176,10 +177,7 @@
                 Title = post.Title,
                 Text = post.Text,
                 ImageUrl = post.ImageUrl,
-                Poster = new UserInfoOnPostViewModel
-                {
-                    NickName = post.Poster.DisplayName
-                },
+                Poster = post.Poster,
                 Replies = post.Replies,
                 CreatedAt = DateTime.UtcNow,
 

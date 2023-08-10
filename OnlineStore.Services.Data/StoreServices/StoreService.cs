@@ -100,7 +100,7 @@
             {
                 if(user != null && item != null)
                 {
-                    item.QuantityBought += quantity;
+                    
                     user.BoughtItems.Add(item);
                     await this.dbContext.SaveChangesAsync();
                 }
@@ -153,28 +153,7 @@
             }
         }
 
-        //public async Task<ShoppingCartViewModel> GetShoppingCartByUserIdAsync(string userId)
-        //{
-        //    var user = await this.dbContext
-        //         .Users
-        //         .Include(u => u.BoughtItems)
-        //         .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-
-        //    bool isUserCompanyRegistered = false;
-
-        //    if(user!.GetType() == typeof(BulkBuyer))
-        //    {
-        //        isUserCompanyRegistered = true;
-        //    }
-
-        //    return new ShoppingCartViewModel()
-        //    {
-        //        UserId = userId,
-        //        User = user!,
-        //        Items = user!.BoughtItems,
-        //        isUserCompanyRegistered = isUserCompanyRegistered,
-        //    };
-        //}
+       
 
         public async Task<string> CreateOrderAsync(OrderFormModel formModel, string userId, List<CartItem> sessionItems)
         {

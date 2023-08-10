@@ -28,19 +28,19 @@
                 
                 @if (Model.IsUserCompanyRegistered)
                 {
-                    <td class="text-white">@item.BulkPrice.ToString("C2")</td>
-                    <td class="text-white"> @Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.BulkPrice).ToString("C2")</td>
+                    <td class="text-white">@item.BulkPrice.ToString() BGN</td>
+                    <td class="text-white"> @Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.BulkPrice).ToString() BGN</td>
                 } 
                 else
                 {
-                    <td class="text-white">@item.Price.ToString("C2")</td>
-                    <td class="text-white"> @Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString("C2")</td>
+                    <td class="text-white">@item.Price.ToString() BGN</td>
+                    <td class="text-white"> @Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x => x.Quantity * x.Price).ToString() BGN</td>
                 }
                 
             </tr>
         }
         <tr >
-            <td class="text-right text-white" colspan="4">Grand Total: @Model.GrantTotal.ToString("C2")</td>
+            <td class="text-right text-white" colspan="4">Grand Total: @Model.GrantTotal.ToString() BGN</td>
         </tr>
         <tr>
             <td class="text-right text-white" colspan="4">

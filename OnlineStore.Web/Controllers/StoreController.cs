@@ -45,17 +45,24 @@
             bool itemExists = await this.storeService
                 .ExistsByIdAsync(id);
 
-            if (!itemExists)
+            try
             {
-                this.TempData[ErrorMessage] = "Item does not exist";
+                if (!itemExists)
+                {
+                    this.TempData[ErrorMessage] = "Item does not exist";
 
-                return this.RedirectToAction("Store", "Store");
+                    return this.RedirectToAction("Store", "Store");
+                }
+
+                ItemDetailsViewModel viewModel = await this.storeService
+                    .GetDetailsByIdAsync(id);
+
+                return View(viewModel);
             }
-
-            ItemDetailsViewModel viewModel = await this.storeService
-                .GetDetailsByIdAsync(id);
-
-            return View(viewModel);
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
         }
         [Authorize]
         [HttpPost]
@@ -71,12 +78,8 @@
 
             try
             {
-                
                await this.storeService.BuyItemAsync(itemId, this.User.GetId()!, quantity);
-                
-
-
-                return Ok(new { message = "Item purchased successfully!" });
+               return Ok(new { message = "Item purchased successfully!" });
             }
             catch (Exception)
             {
@@ -85,15 +88,6 @@
             }
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> ShoppingCart()
-        //{
-        //    var userId = this.User.GetId();
-
-        //    ShoppingCartViewModel viewModel = await this.storeService.GetShoppingCartByUserIdAsync(userId!);
-
-        //    return View(viewModel);
-        //}
 
        
 

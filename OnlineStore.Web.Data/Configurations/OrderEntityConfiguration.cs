@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using OnlineStore.Web.Models.StoreModels;
+    using System;
 
     public class OrderEntityConfiguration : IEntityTypeConfiguration<Order>
     {
@@ -14,8 +15,10 @@
             builder.HasOne(o => o.User)
                    .WithMany(u => u.Orders)
                    .OnDelete(DeleteBehavior.Restrict);
-
-         
         }
+
+      
     }
+
 }
+    

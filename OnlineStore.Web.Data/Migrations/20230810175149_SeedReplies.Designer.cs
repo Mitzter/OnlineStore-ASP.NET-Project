@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Web.Data;
 
@@ -11,9 +12,10 @@ using OnlineStore.Web.Data;
 namespace OnlineStore.Web.Data.Migrations
 {
     [DbContext(typeof(OnlineStoreDbContext))]
-    partial class OnlineStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230810175149_SeedReplies")]
+    partial class SeedReplies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,7 +252,7 @@ namespace OnlineStore.Web.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 252, DateTimeKind.Utc).AddTicks(1514),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 617, DateTimeKind.Utc).AddTicks(8259),
                             IsActive = true,
                             PosterId = new Guid("f1e6ceae-0595-404b-bd12-51ddaf35655b"),
                             Text = "How do I use this website? I'm new I just bought a computer for the first time.",
@@ -261,7 +263,7 @@ namespace OnlineStore.Web.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 252, DateTimeKind.Utc).AddTicks(1527),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 617, DateTimeKind.Utc).AddTicks(8282),
                             IsActive = true,
                             PosterId = new Guid("90cd4c54-0258-4e14-bb5b-ee50b0809bf4"),
                             Text = "We've Been Trying To Reach You About Your Car's Extended Warranty",
@@ -306,7 +308,7 @@ namespace OnlineStore.Web.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 252, DateTimeKind.Utc).AddTicks(4091),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 618, DateTimeKind.Utc).AddTicks(1296),
                             Message = "I don't know",
                             PostedAtId = 1,
                             UserId = new Guid("90cd4c54-0258-4e14-bb5b-ee50b0809bf4")
@@ -314,7 +316,7 @@ namespace OnlineStore.Web.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 252, DateTimeKind.Utc).AddTicks(4105),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 618, DateTimeKind.Utc).AddTicks(1311),
                             Message = "How did you find me?",
                             PostedAtId = 2,
                             UserId = new Guid("f1e6ceae-0595-404b-bd12-51ddaf35655b")
@@ -411,7 +413,7 @@ namespace OnlineStore.Web.Data.Migrations
                             Id = new Guid("8f1bcccd-5a33-460c-ac2b-11b79f12ba37"),
                             BulkPrice = 3.50m,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 251, DateTimeKind.Utc).AddTicks(6719),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 617, DateTimeKind.Utc).AddTicks(728),
                             Description = "General purpose spray for loosening screws and bolts covered in rust and prevents rust from building up. Can also function as a lubricant for moving parts",
                             ImageUrl = "https://tpetrov.com/thumbs/3/spr-dl60-4.jpg",
                             IsActive = true,
@@ -423,7 +425,7 @@ namespace OnlineStore.Web.Data.Migrations
                             Id = new Guid("75efbb9b-0c10-4527-9479-8f31c2502d52"),
                             BulkPrice = 4.50m,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 251, DateTimeKind.Utc).AddTicks(6749),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 617, DateTimeKind.Utc).AddTicks(777),
                             Description = "Easy to use lubricant spray for moving parts and machinery. The lithium grease in an aerosolized form prevents you from having to get your hands dirty with using conventional grease",
                             ImageUrl = "https://markita.net/sites/default/files/styles/markita_products_4_colons_157_x_130_/public/2021-02/%D0%93%D0%A0%D0%95%D0%A1%20%D0%9B%D0%98%D0%A2%D0%98%D0%95%D0%92%D0%90%20%D0%A1%D0%9F%D0%A0%D0%95%D0%99%20400%D0%BC%D0%BB%20DL600%20%D0%A3%D0%9D%D0%98%D0%92%D0%95%D0%A0%D0%A1%D0%90%D0%9B%D0%9D%D0%90.JPG",
                             IsActive = true,
@@ -435,7 +437,7 @@ namespace OnlineStore.Web.Data.Migrations
                             Id = new Guid("fb0dd29f-3432-401d-8af9-b2d699f3a54c"),
                             BulkPrice = 3.00m,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 251, DateTimeKind.Utc).AddTicks(6756),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 617, DateTimeKind.Utc).AddTicks(787),
                             Description = "Universal aerosolized paint with a quick-drying agent formula",
                             ImageUrl = "https://www.sentryair.com/blog/wp-content/uploads/2013/04/FH17JUN_579_07_034.jpg",
                             IsActive = true,
@@ -447,7 +449,7 @@ namespace OnlineStore.Web.Data.Migrations
                             Id = new Guid("6a0c2eca-1915-4853-82c3-b921edb5383d"),
                             BulkPrice = 75m,
                             CategoryId = 5,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 251, DateTimeKind.Utc).AddTicks(6762),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 617, DateTimeKind.Utc).AddTicks(794),
                             Description = "Stylish sports rims made of the highest quality Polish Alluminum. Extremely durable and won't bend as easily as regular alluminum 'summer' rims. Country of manufacture: Poland",
                             ImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUyBauHMYH3D89DHPOUPsGeTZ8cNlwt2fi740hn5nT9B4g9pVc3Xo3KdczDUGknfokPEE&usqp=CAU",
                             IsActive = true,
@@ -459,7 +461,7 @@ namespace OnlineStore.Web.Data.Migrations
                             Id = new Guid("b2eb8a5c-5f08-46db-8462-eb63f616150d"),
                             BulkPrice = 35m,
                             CategoryId = 4,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 251, DateTimeKind.Utc).AddTicks(6771),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 617, DateTimeKind.Utc).AddTicks(809),
                             Description = "FITMENT — 2009-2023 Ram 1500/Ram 1500 Classic, 2010-2018 Ram 2500/3500 w/Single Rear Wheels & w/out OEM Fender Flares\r\nFITS LIKE FACTORY — Built specifically for your make and model providing that perfectly tailored fit. Available in full-tread coverage for single- or dually-factory tire width.\r\nIMPACT RESISTANT CONSTRUCTION — Built to stand up to a lifetime of abuse thanks to its nail-tough, impact-resistant thermoplastic construction. With proprietary Husky Shield Film for an invisible layer of protection.\r\nEASY TO INSTALL — A few screws and a few minutes are all it takes to mount Mud Guards for a perfect match to your vehicle every time.\r\nUPGRADED LOOKS — An instant improvement for your vehicle’s appearance with sleek style that looks like it came from the factory, with some added custom flair.\r\nLIFETIME GUARANTEE — Proudly made in the USA. When we say it’s “guaranteed for life” that is exactly what we mean. No hassles, no guff. If you have a problem with this or any Husky product, we’ll replace it.",
                             ImageUrl = "https://m.media-amazon.com/images/I/61pbiH9b13L._AC_SL1500_.jpg",
                             IsActive = true,
@@ -471,7 +473,7 @@ namespace OnlineStore.Web.Data.Migrations
                             Id = new Guid("927c618e-4b91-4556-9418-93d3cbed707e"),
                             BulkPrice = 100m,
                             CategoryId = 6,
-                            CreatedOn = new DateTime(2023, 8, 10, 18, 54, 22, 251, DateTimeKind.Utc).AddTicks(6776),
+                            CreatedOn = new DateTime(2023, 8, 10, 17, 51, 48, 617, DateTimeKind.Utc).AddTicks(836),
                             Description = "Specifications:Hydraulic trolley jack features a 3 ton (6,600 lbs) capacity with lifting height from 5.1\" to 18.3\".Floor Jack saddle Diameter: 4 inch.With quick lift function.Its the best tool for car repairing and auto emergency treatment in garage,shop",
                             ImageUrl = "https://m.media-amazon.com/images/I/71dhyZ89JkL.jpg",
                             IsActive = true,
@@ -661,16 +663,16 @@ namespace OnlineStore.Web.Data.Migrations
                         {
                             Id = new Guid("f1e6ceae-0595-404b-bd12-51ddaf35655b"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dcec6777-125c-4279-ac10-5bb6895a357f",
+                            ConcurrencyStamp = "34b276ff-ae61-4f75-8194-118220411933",
                             DisplayName = "Tester",
                             Email = "test@test.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@TEST.COM",
                             NormalizedUserName = "TEST@TEST.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFoAqR2AT0ICngxO9HeOtjKbofeEmiWCrjpb/EXCJ37TLZQH0Bb4TTjqk/BHNJ+SvQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHmRcTQeDTspxab2aZcMm7ibyECS2ZgStAlOt+yil8dK6erzlmFOKWO6mweY6GwLrQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "44277449-0150-4207-bc42-92be03f749ab",
+                            SecurityStamp = "d3fdaa59-fc3d-477f-ba37-1c0ff30d9989",
                             TwoFactorEnabled = false,
                             UserName = "test@test.com"
                         },
@@ -678,16 +680,16 @@ namespace OnlineStore.Web.Data.Migrations
                         {
                             Id = new Guid("90cd4c54-0258-4e14-bb5b-ee50b0809bf4"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d3331878-e000-4205-8451-cbfc91a94df7",
+                            ConcurrencyStamp = "5a00583b-d67a-488c-a50c-612fb21162d9",
                             DisplayName = "BulkClient",
                             Email = "bulk@bulk.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "BULK@BULK.COM",
                             NormalizedUserName = "BULK@BULK.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIP1C1uUyYGOxH50BM9OsBd3uaXsyyRxUzJ2ghhZ3ASufZsl75i2Hhg2hm93K7GCUA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHxzLq1VpCZILxN5G2axJ8kpdnFX+aKnL1sypG8KO9m+F03uEdy+SaPRRQ1Wtc3jIw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2159813f-2ca6-4f10-a3ea-c9ce160bac96",
+                            SecurityStamp = "63e624c9-5995-47e7-a04d-ff9e595d106f",
                             TwoFactorEnabled = false,
                             UserName = "bulk@bulk.com"
                         });

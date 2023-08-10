@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
 using OnlineStore.Web.Data;
 using OnlineStore.Web.Infrastructure;
 using OnlineStore.Web.Models.StoreModels;
-using OnlineStore.Web.Models.UserModels;
 using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
 using OnlineStore.Web.ViewModels.ViewModels.StoreViewModels;
-using System.Net.Http.Headers;
+using static OnlineStore.Common.NotificationMessagesConstants;
 
 namespace OnlineStore.Web.Controllers
 {
@@ -44,13 +43,13 @@ namespace OnlineStore.Web.Controllers
             {
                 isUserCompanyRegistered = true;
                 grandTotal = cart.Sum(x => x.Quantity * x.BulkPrice);
-            } 
+            }
             else
             {
                 grandTotal = cart.Sum(x => x.Quantity * x.Price);
             }
 
-            
+
             ShoppingCartViewModel viewModel = new()
             {
                 CartItems = cart,
@@ -70,20 +69,28 @@ namespace OnlineStore.Web.Controllers
 
             CartItem? cartItem = cart.Where(c => c.ProductId == id.ToString()).FirstOrDefault();
 
-            if (cartItem == null)
+       
+            try
             {
-                cart.Add(new CartItem(item));
+                if (cartItem == null)
+                {
+                    cart.Add(new CartItem(item));
+                }
+                else
+                {
+                    cartItem.Quantity += 1;
+                }
+
+                HttpContext.Session.SetJson("Cart", cart);
+
+                TempData["Success"] = "The product has been added";
+
+                return Redirect(Request.Headers["Referer"].ToString());
             }
-            else
+            catch (Exception)
             {
-                cartItem.Quantity += 1;
+                return this.GeneralError();
             }
-
-            HttpContext.Session.SetJson("Cart", cart);
-
-            TempData["Success"] = "The product has been added";
-
-            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         public async Task<IActionResult> Decrease(Guid id)
@@ -94,29 +101,38 @@ namespace OnlineStore.Web.Controllers
 
             CartItem? cartItem = cart.Where(c => c.ProductId == id.ToString()).FirstOrDefault();
 
-            if (cartItem.Quantity > 1)
-            {
-                --cartItem.Quantity;
-            }
-            else
-            {
-                cart.RemoveAll(x => x.ProductId == id.ToString());
-            }
 
-            if (cart.Count == 0)
+            try
             {
-                HttpContext.Session.Remove("Cart");
-            }
-            else
-            {
+                if (cartItem.Quantity > 1)
+                {
+                    --cartItem.Quantity;
+                }
+                else
+                {
+                    cart.RemoveAll(x => x.ProductId == id.ToString());
+                }
+
+                if (cart.Count == 0)
+                {
+                    HttpContext.Session.Remove("Cart");
+                }
+                else
+                {
+                    HttpContext.Session.SetJson("Cart", cart);
+                }
+
                 HttpContext.Session.SetJson("Cart", cart);
+
+                TempData["Success"] = "The product has been added";
+
+                return Redirect("Index");
             }
-
-            HttpContext.Session.SetJson("Cart", cart);
-
-            TempData["Success"] = "The product has been added";
-
-            return Redirect("Index");
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+            
         }
 
         public async Task<IActionResult> Remove(Guid id)
@@ -124,26 +140,28 @@ namespace OnlineStore.Web.Controllers
 
 
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
-
-            cart.RemoveAll(x => x.ProductId == id.ToString());
-
-
-
-
-            if (cart.Count == 0)
+            try
             {
-                HttpContext.Session.Remove("Cart");
+                cart.RemoveAll(x => x.ProductId == id.ToString());
+
+                if (cart.Count == 0)
+                {
+                    HttpContext.Session.Remove("Cart");
+                }
+                else
+                {
+                    HttpContext.Session.SetJson("Cart", cart);
+                }
+                TempData["Success"] = "The product has been added";
+
+                return Redirect("Index");
             }
-            else
+            catch (Exception)
             {
-                HttpContext.Session.SetJson("Cart", cart);
+                return this.GeneralError();
             }
 
-
-
-            TempData["Success"] = "The product has been added";
-
-            return Redirect("Index");
+            
         }
 
         public IActionResult Clear()
@@ -160,18 +178,26 @@ namespace OnlineStore.Web.Controllers
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
 
-            var userId = this.User.GetId();
-            var currentUser = await this.dbContext.Users
-                .FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId!));
-
-            OrderFormModel order = new OrderFormModel()
+            try
             {
-                UserId = currentUser!.Id,
-                User = currentUser,
-                OrderedItems = cart,
-            };
 
-            return View(order);
+                var userId = this.User.GetId();
+                var currentUser = await this.dbContext.Users
+                    .FirstOrDefaultAsync(u => u.Id == Guid.Parse(userId!));
+                OrderFormModel order = new OrderFormModel()
+                {
+                    UserId = currentUser!.Id,
+                    User = currentUser,
+                    OrderedItems = cart,
+                };
+
+                return View(order);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
         }
 
         [HttpPost]
@@ -189,8 +215,19 @@ namespace OnlineStore.Web.Controllers
             catch (Exception ex)
             {
 
-                return RedirectToAction("Error", "Home");
+                return this.GeneralError();
             }
+
+
         }
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] =
+                "Unexpected error occurred! Please try again later or contact administrator";
+
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

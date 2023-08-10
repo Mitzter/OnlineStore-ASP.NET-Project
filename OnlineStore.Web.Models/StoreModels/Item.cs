@@ -1,6 +1,7 @@
 ﻿namespace OnlineStore.Web.Models.StoreModels
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using static Common.EntityValidationConstants.Item;
 
     public class Item
@@ -32,6 +33,7 @@
         [Required]
         public DateTime CreatedOn { get; set; }
 
+        [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
 
         [Required]
@@ -39,7 +41,6 @@
 
         public bool IsActive { get; set; }
 
-        public int QuantityBought { get; set; }
 
     }
 }

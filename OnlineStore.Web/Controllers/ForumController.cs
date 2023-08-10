@@ -30,7 +30,7 @@
             IEnumerable<ForumCategoryFormModel> categories = await this.categoryService
                 .AllCategoriesAsync();
 
-            var latestPosts = await this.forumService.GetLatestForumPostsAsync(); // Replace this with the actual method that fetches the latest posts
+            var latestPosts = await this.forumService.GetLatestForumPostsAsync(); 
 
             
             var viewModel = new ForumMainViewModel
@@ -111,9 +111,16 @@
         public async Task<IActionResult> CreateReply(ReplyFormModel reply)
         {
             var userId = this.User.GetId()!.ToString();
-
-            string replyId = await this.forumService.CreateReplyAsync(reply, userId);
-            return this.RedirectToAction("ViewPost", "Forum", new {id = reply.PostedAtId});
+            try
+            {
+                string replyId = await this.forumService.CreateReplyAsync(reply, userId);
+                return this.RedirectToAction("ViewPost", "Forum", new { id = reply.PostedAtId });
+            }
+            catch (Exception)
+            {
+                throw new Exception("Was unble to create a reply!");
+            }
+            
         }
     }
 }

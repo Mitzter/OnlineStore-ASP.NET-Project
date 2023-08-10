@@ -1,8 +1,27 @@
-﻿@model PostViewModel
+﻿
+@using OnlineStore.Web.Models.UserModels;
+@using System.Text;
+@model PostViewModel
 
 @{
     ViewBag.Title = Model.Title;
 }
+@functions{
+    private string GetProfileImage(ApplicationUser user)
+    {
+        if (user.PictureSource == null)
+    {
+            return "/images/default-user-picture.png";
+        }
+        else
+        {
+            string base64Image = Convert.ToBase64String(user.PictureSource);
+            string imageSrc = $"data:image/png;base64,{base64Image}";
+            return imageSrc;
+        }
+    }
+}
+
 <style>
     .section-post-outline{
         border: 2px solid brown;
@@ -28,33 +47,42 @@
 <hr />
 
 <div class="container-fluid col-md-6 section-outline align-content-center">
-    <h6 class="section-post-outline text-dark">@Model.Text</h6>
-    <h8 class="text-center text-dark">@Model.Poster.NickName</h8>
-    <hr/>
-    
+    <div class="row">
+        <div class="col-2">
+            <img src="@GetProfileImage(Model.Poster)" alt="User Image" class="img-fluid rounded-circle">
+            <h6>@Model.Poster.DisplayName</h6>
+            <p>Posted at: @Model.CreatedAt</p>
+        </div>
+        <div class="col-10">
+            <p class="section-post-outline text-dark">@Model.Text</p>
+        </div>
+    </div>
+    <hr />
+
     @foreach (var reply in Model.Replies)
     {
         if (reply != null)
         {
-                <h6 class="section-comment-outline text-dark">
-                @reply.Message
-                </h6>
-            @if (reply.User != null)
-            {
-                        <h8>@reply.User.DisplayName</h8>
-            }
-                <div>
-                    <h10>Posted at: @reply.CreatedOn</h10>
+            <div class="row">
+                <div class="col-2">
+                    <img src="@GetProfileImage(reply.User)" alt="User Image" class="img-fluid rounded-circle">
+                    <h6>@reply.User.DisplayName</h6>
+                    <p>Posted at: @reply.CreatedOn</p>
                 </div>
-                <hr />
+                <div class="col-10">
+                    <p class="section-comment-outline text-dark">
+                        @reply.Message
+                    </p>
+                </div>
+            </div>
+            <hr />
         }
     }
-   
+
     @if (User.Identity.IsAuthenticated)
     {
         <h5 class="align-content-center text-light">Reply!</h5>
         @Html.Partial("_CreateReplyPartial", new ReplyFormModel { PostedAtId = Model.Id })
     }
 </div>
-
 

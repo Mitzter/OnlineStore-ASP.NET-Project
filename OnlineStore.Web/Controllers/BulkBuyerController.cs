@@ -71,40 +71,40 @@
             var userId = this.User.GetId();
             bool isBulkBuyerAlready = await this.userService.IsUserBulkClientAsync(userId);
 
-            if (isBulkBuyerAlready)
-            {
-                this.TempData[ErrorMessage] = "You have already registered your company for your bulk discounts!";
-
-                return this.RedirectToAction("Index", "Home");
-            }
-
-            bool isCompanyNameTaken =
-                await this.userService.IsCompanyNameTakenAsync(model.CompanyName);
-
-            if (isCompanyNameTaken)
-            {
-                this.ModelState.AddModelError(nameof(model.CompanyName), "Company with such a name already exists!");
-            }
-
-            bool isPhoneNumberTaken =
-                await this.userService.IsPhoneNumberTakenAsync(model.PhoneNumber);
-
-            if (isPhoneNumberTaken)
-            {
-                this.ModelState.AddModelError(nameof(model.PhoneNumber), "The phone number has already been registered to a different company!");
-            }
-
-            bool isVatNumberTaken =
-                await this.userService.IsCompanyRegisteredWithSameVAT(model.VATNumber);
-
-            if (isVatNumberTaken)
-            {
-                this.ModelState.AddModelError(nameof(model.VATNumber), "The VAT number is already in use by another company!");
-            }
-
-
+            
             try
             {
+                if (isBulkBuyerAlready)
+                {
+                    this.TempData[ErrorMessage] = "You have already registered your company for your bulk discounts!";
+
+                    return this.RedirectToAction("Index", "Home");
+                }
+
+                bool isCompanyNameTaken =
+                    await this.userService.IsCompanyNameTakenAsync(model.CompanyName);
+
+                if (isCompanyNameTaken)
+                {
+                    this.ModelState.AddModelError(nameof(model.CompanyName), "Company with such a name already exists!");
+                }
+
+                bool isPhoneNumberTaken =
+                    await this.userService.IsPhoneNumberTakenAsync(model.PhoneNumber);
+
+                if (isPhoneNumberTaken)
+                {
+                    this.ModelState.AddModelError(nameof(model.PhoneNumber), "The phone number has already been registered to a different company!");
+                }
+
+                bool isVatNumberTaken =
+                    await this.userService.IsCompanyRegisteredWithSameVAT(model.VATNumber);
+
+                if (isVatNumberTaken)
+                {
+                    this.ModelState.AddModelError(nameof(model.VATNumber), "The VAT number is already in use by another company!");
+                }
+
                 await this.userService.CreateBulkClient(userId, model);
             }
             catch (Exception)

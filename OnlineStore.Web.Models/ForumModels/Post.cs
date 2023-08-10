@@ -24,6 +24,8 @@
 
         [MaxLength(ImageUrlMaxLength)]
         public string? ImageUrl { get; set; }
+
+        [ForeignKey(nameof(Poster))]
         public Guid PosterId { get; set; }
 
         public virtual ApplicationUser Poster { get; set; } 
@@ -35,7 +37,8 @@
         public int Views { get; set; }
 
         public ICollection<Reply> Replies { get; set; }
-        
+
+        [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
 
         [Required]

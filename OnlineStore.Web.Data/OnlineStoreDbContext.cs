@@ -13,7 +13,10 @@
         public OnlineStoreDbContext(DbContextOptions<OnlineStoreDbContext> options) 
             : base(options)
         {
-
+            if (!this.Database.IsRelational())
+            {
+                this.Database.EnsureCreated();
+            }
         }
 
         public DbSet<Item> Items { get; set; } = null!;

@@ -1,76 +1,56 @@
-﻿@model ItemDetailsViewModel
+﻿@using OnlineStore.Web.Data;
+@using OnlineStore.Web.Models.UserModels;
+@using static OnlineStore.Web.Infrastructure.GetPrincipalExtension;
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@inject OnlineStoreDbContext dbContext
+
+
+@model ItemDetailsViewModel
 
 @{
     ViewBag.Title = "Item Details";
 }
 
-<h2 class="text-center text-light">@ViewBag.Title</h2>
-<hr/>
-
-<div class="container" style="display:inline">
+<div class="container my-5">
     <div class="row">
-        <div class="col-4">
-            <img class="card-img-top" style="width: 20rem;" src="@Model.ImageUrl" alt="Image" />
+        <div class="col-md-6">
+            <img class="img-fluid rounded" style="max-width: 50%;" src="@Model.ImageUrl" alt="Image" />
         </div>
-        <div class="card col-8 border-0">
-            <p style="font-size:25px;">
-                <u>@Model.Name</u>
-            </p>
-            <p> Description: 
-                <b>@Model.Description</b>
-            </p>
-            <p>
-                <a class="btn btn-primary" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id">Add to cart</a>
-            </p>
+        <div class="col-md-6 text-light">
+            <h2 class="mb-4">@Model.Name</h2>
+            <div class="bg-white p-3 rounded">
+                <p class="lead text-dark">@Model.Description</p>
+            </div>
 
+            @if (User.Identity.IsAuthenticated)
+            {
+                var userId = this.User.GetId();
+                var isBulkBuyer = dbContext.BulkBuyers.Any(b => b.UserId.ToString() == userId);
 
-        </div>
-    </div>
-</div>
+                <h4 class="mt-4">
+                    Price:
+                    <span class="text-primary">@($"{(isBulkBuyer ? Model.BulkPrice : Model.Price):f2}") BGN</span>
+                </h4>
 
-
-@*<button class="btn btn-success" id="buyButton" data-item-id="@Model.Id">Buy</button>
-        </div>
-    </div>
-</div>
-
-<div id="successMessage" class="alert alert-success smaller-text" style="display: none;"></div>
-
-<style>
-    .smaller-text {
-        font-size: 14px;
-    }
-</style>
-
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        // Handle the "Buy" button click event
-        $("#buyButton").click(function () {
-            // Get the item ID and quantity from the input field
-            var itemId = $(this).data("item-id");
-            var quantity = $("#quantity").val();
-
-            // Send an AJAX request to the server
-            $.ajax({
-                type: "POST",
-                url: "/Store/Buy", // Replace this with the actual URL for your Buy action
-                data: { itemId: itemId, quantity: quantity },
-                success: function (data) {
-                    // Handle the success response from the server
-                    // Display the success message on the screen
-                    $("#successMessage").text("Item purchased successfully!");
-                    $("#successMessage").fadeIn().delay(5000).fadeOut();
-                },
-                error: function () {
-                    // Handle errors if necessary
-                    console.log("Error occurred while buying the item.");
+                @if (isBulkBuyer)
+                {
+                    <h5>
+                        Bulk Price:
+                        <span class="text-success">@($"{Model.BulkPrice:f2}") BGN</span>
+                    </h5>
                 }
-            });
-        });
-    });
-</script>
-*@
+            }
+            else
+            {
+                <h4 class="mt-4">
+                    Price:
+                    <span class="text-primary">@($"{Model.Price:f2}") BGN</span>
+                </h4>
+            }
+
+            <p class="mt-4">
+                <a class="btn btn-primary" asp-controller="Cart" asp-action="Add" asp-route-id="@Model.Id">Add to Cart</a>
+            </p>
+        </div>
+    </div>
+</div>
