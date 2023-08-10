@@ -4,6 +4,7 @@ using OnlineStore.Web.Data;
 namespace OnlineStore.Web
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Services.Data;
     using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
@@ -20,7 +21,6 @@ namespace OnlineStore.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<OnlineStoreDbContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -44,16 +44,12 @@ namespace OnlineStore.Web
                 options.Cookie.IsEssential = true;
             });
 
-            builder.Services.AddControllersWithViews();
-            builder.Services.AddApplicationServices(typeof(IItemService));
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
-            
-            //builder.Services.ConfigureApplicationCookie(cfg =>
-            //{
-            //    cfg.LoginPath = "/User/Login";
-            //    //This will be used once a custom error page has been implmeneted;
-            //    // cfg.AccessDeniedPath = "/Home/Error/401";
-            //});
+            builder.Services.AddApplicationServices(typeof(IItemService));
 
             WebApplication app = builder.Build();
 
@@ -67,7 +63,6 @@ namespace OnlineStore.Web
 
             
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -75,7 +70,6 @@ namespace OnlineStore.Web
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -96,25 +90,19 @@ namespace OnlineStore.Web
             app.UseEndpoints(config =>
             {
                
-
-
                 config.MapControllerRoute(
                 name: "areas",
                 pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 config.MapControllerRoute(
                 name: "default",
-                pattern: "/{controller=Home}/{action=Index}/{id?}");
-                //defaults: new { Controller = "Store", Action = "Details" });
+                pattern: "/{controller=Home}/{action=Index}/{id?}/");
                
                 config.MapDefaultControllerRoute();
                 config.MapRazorPages();
                 
             });
             
-            
-
-
             app.Run();
         }
     }

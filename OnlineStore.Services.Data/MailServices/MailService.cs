@@ -23,7 +23,7 @@ namespace OnlineStore.Services.Data.MailServices
         {
             var apiKey = config["SendGridApiKey"];
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("mitzterbg@gmail.com", "DILOR LTD.");
+            var from = new EmailAddress(config["SendGridEmailSender"], config["SendGridNameSender"]);
             var subjectx = subject;
             var to = new EmailAddress(toEmail);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, content, content);
