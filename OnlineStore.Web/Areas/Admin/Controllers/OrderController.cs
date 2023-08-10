@@ -28,9 +28,9 @@ namespace OnlineStore.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> ChangeStatus(string id, int statusNum)
+        public async Task<IActionResult> ChangeStatus(string id, int status)
         {
-            await this.orderService.ChangeOrderStatusAsync(id, statusNum);
+            await this.orderService.ChangeOrderStatusAsync(id, status);
 
             return RedirectToAction("AllOrders", "Order");
         }
