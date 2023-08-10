@@ -67,7 +67,7 @@
                         Email = email,
                         DisplayName = "Admin"
                     };
-
+                    adminUser.EmailConfirmed = true;
                     string adminPassword = "admin1"; // Replace with the actual password
                     await userManager.CreateAsync(adminUser, adminPassword);
                 }
