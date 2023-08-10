@@ -29,7 +29,27 @@ namespace OnlineStore.Web.ViewModels.ViewModels.OrderViewModels
 
         public DateTime OrderTime { get; set; }
 
-        public decimal Total { get; set; }
+        public decimal Total
+        {
+            get
+            {
+                decimal calculatedTotal = 0;
+
+                foreach (var cartItem in CartItems)
+                {
+                    if (IsUserCompanyRegistered)
+                    {
+                        calculatedTotal += cartItem.BulkPrice * cartItem.Quantity;
+                    }
+                    else
+                    {
+                        calculatedTotal += cartItem.Price * cartItem.Quantity;
+                    }
+                }
+
+                return calculatedTotal;
+            }
+        }
 
         public OrderStatus Status { get; set; }
 

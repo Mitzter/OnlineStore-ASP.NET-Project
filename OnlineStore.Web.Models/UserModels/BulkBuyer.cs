@@ -27,7 +27,7 @@
         public string CompanyName { get; set; } = null!;
 
         [Required]
-        [MaxLength(FinancialManagerNameMinLength)]
+        [MaxLength(FinancialManagerNameMaxLength)]
         public string FinancialManager { get; set; } = null!;
 
         public Guid UserId { get; set; } 

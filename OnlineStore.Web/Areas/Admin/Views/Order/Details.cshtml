@@ -7,46 +7,50 @@
     ViewBag.Title = "Order Details";
 }
 
-<h1 class="text-light">Order Details</h1>
+<h1 class="text-center text-light">Order Details</h1>
 
-<div>
-    <h2 class="text-light">Customer Information</h2>
-    <p><strong class="text-light">First Name:</strong> <span class="text-light">@Model.FirstName</span></p>
-    <p><strong class="text-light">Last Name:</strong> <span class="text-light">@Model.LastName</span></p>
-    <p><strong class="text-light">Phone Number:</strong> <span class="text-light">@Model.PhoneNumber</span></p>
-    <p><strong class="text-light">City:</strong> <span class="text-light">@Model.City</span></p>
-    <p><strong class="text-light">Address:</strong> <span class="text-light">@Model.Address</span></p>
-    <p><strong class="text-light">Postal Code:</strong> <span class="text-light">@Model.PostalCode</span></p>
-    <p><strong class="text-light">Additional Information:</strong> <span class="text-light">@Model.AdditionalInformation</span></p>
-</div>
 
-<div>
-    <h2 class="text-light">Order Information</h2>
-    <p><strong class="text-light">Order ID:</strong> <span class="text-light">@Model.UserId</span></p>
-    <p><strong class="text-light">Order Time:</strong> <span class="text-light">@Model.OrderTime.ToString("yyyy-MM-dd HH:mm:ss")</span></p>
-    <div>
-        <strong class="text-light">Order Status:</strong>
-        @*<select name="orderStatus">
+<div class="row">
+    <div class="col">
+        <h2 class="text-light">Customer Information</h2>
+        <p><strong class="text-light">First Name:</strong> <span class="text-light">@Model.FirstName</span></p>
+        <p><strong class="text-light">Last Name:</strong> <span class="text-light">@Model.LastName</span></p>
+        <p><strong class="text-light">Phone Number:</strong> <span class="text-light">@Model.PhoneNumber</span></p>
+        <p><strong class="text-light">City:</strong> <span class="text-light">@Model.City</span></p>
+        <p><strong class="text-light">Address:</strong> <span class="text-light">@Model.Address</span></p>
+        <p><strong class="text-light">Postal Code:</strong> <span class="text-light">@Model.PostalCode</span></p>
+        <p><strong class="text-light">Additional Information:</strong> <span class="text-light">@Model.AdditionalInformation</span></p>
+    </div>
+
+    <div class="col">
+        <h2 class="text-light">Order Information</h2>
+        <p><strong class="text-light">Order ID:</strong> <span class="text-light">@Model.UserId</span></p>
+        <p><strong class="text-light">Order Time:</strong> <span class="text-light">@Model.OrderTime.ToString("yyyy-MM-dd HH:mm:ss")</span></p>
+        <div>
+            <strong class="text-light">Order Status:</strong>
+            @*<select name="orderStatus">
             <option value="0">Pending</option>
             <option value="1">Processing</option>
             <option value="2">Shipped</option>
             <option value="3">Delivered</option>
-        </select>
-        <a asp-area="Admin" asp-controller="Order" asp-action="ChangeStatus" asp-route-id="@Model.Id" class="btn btn-info">Change Status</a>*@
-
-        <form asp-area="Admin" asp-controller="Order" asp-action="ChangeStatus" method="post">
-            <select name="status" id="orderStatusSelect">
-                <option value="0">Pending</option>
-                <option value="1">Completed</option>
-                <option value="2">Cancelled</option>
-                <option value="3">Failed</option>
             </select>
-            <button type="submit" class="btn btn-info">Change Status</button>
-            <input type="hidden" name="id" value="@Model.Id" />
-        </form>
+            <a asp-area="Admin" asp-controller="Order" asp-action="ChangeStatus" asp-route-id="@Model.Id" class="btn btn-info">Change Status</a>*@
 
+            <form asp-area="Admin" asp-controller="Order" asp-action="ChangeStatus" method="post">
+                <select name="status" id="orderStatusSelect">
+                    <option value="0">Pending</option>
+                    <option value="1">Completed</option>
+                    <option value="2">Cancelled</option>
+                    <option value="3">Failed</option>
+                </select>
+                <button type="submit" class="btn btn-info">Change Status</button>
+                <input type="hidden" name="id" value="@Model.Id" />
+            </form>
+
+        </div>
     </div>
 </div>
+
 
 <div>
     <h2 class="text-light">Ordered Items</h2>
@@ -56,6 +60,7 @@
                 <th>Product Name</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th>Total: @Model.Total</th>
             </tr>
         </thead>
         <tbody>
@@ -64,9 +69,18 @@
                 <tr>
                     <td><span class="text-light">@item.ProductName</span></td>
                     <td><span class="text-light">@item.Quantity</span></td>
-                    <td><span class="text-light">@item.Price</span></td>
+                    @if (Model.IsUserCompanyRegistered)
+                    {
+                        <td><span class="text-light">@item.BulkPrice</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="text-light">@item.Price</span></td>
+                    }
+                   
                 </tr>
             }
+            
         </tbody>
     </table>
 </div>

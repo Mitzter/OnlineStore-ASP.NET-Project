@@ -52,7 +52,12 @@
 }
 else 
 {
-    <h3 class="display-4 text-center text-white">Your cart is empty</h3>
+       <h3 class="display-4 text-center text-white">Your cart is empty</h3>
+    <div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+        <a class="btn btn-outline-danger" asp-area="" asp-action="Store" asp-controller="Store">Visit the Store!</a>
+    </div>
+
+    
 }
 @if (Model.GrantTotal >= 1000 && Model.IsUserCompanyRegistered == false)
 {
