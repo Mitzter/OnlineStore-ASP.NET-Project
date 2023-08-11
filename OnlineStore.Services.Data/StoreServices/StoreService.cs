@@ -85,33 +85,7 @@
             };
         }
 
-        public async Task BuyItemAsync(string itemId, string userId, int quantity)
-        {
-            ApplicationUser user = await this.dbContext
-                .Users
-                .Include(u => u.BoughtItems)
-                .FirstAsync(i => i.Id.ToString() == userId);
-
-            Item item = await this.dbContext
-                .Items
-                .FirstAsync(i => i.Id.ToString() == itemId);
-            
-            try
-            {
-                if(user != null && item != null)
-                {
-                    
-                    user.BoughtItems.Add(item);
-                    await this.dbContext.SaveChangesAsync();
-                }
-                
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ArgumentNullException("Something does not exist!");
-            }
-            
-        }
+        
 
        
 

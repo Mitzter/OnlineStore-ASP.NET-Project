@@ -64,29 +64,29 @@
                 return this.GeneralError();
             }
         }
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Buy(string itemId, int quantity)
-        {
-            bool itemExists = await this.storeService.ExistsByIdAsync(itemId);
-            if (!itemExists)
-            {
-                this.TempData[ErrorMessage] = "Item with the provided ID does not exist";
+        //[Authorize]
+        //[HttpPost]
+        //public async Task<IActionResult> Buy(string itemId, int quantity)
+        //{
+        //    bool itemExists = await this.storeService.ExistsByIdAsync(itemId);
+        //    if (!itemExists)
+        //    {
+        //        this.TempData[ErrorMessage] = "Item with the provided ID does not exist";
 
-                return this.RedirectToAction("Store", "Store");
-            }
+        //        return this.RedirectToAction("Store", "Store");
+        //    }
 
-            try
-            {
-               await this.storeService.BuyItemAsync(itemId, this.User.GetId()!, quantity);
-               return Ok(new { message = "Item purchased successfully!" });
-            }
-            catch (Exception)
-            {
+        //    try
+        //    {
+        //       await this.storeService.BuyItemAsync(itemId, this.User.GetId()!, quantity);
+        //       return Ok(new { message = "Item purchased successfully!" });
+        //    }
+        //    catch (Exception)
+        //    {
 
-                return this.GeneralError();
-            }
-        }
+        //        return this.GeneralError();
+        //    }
+        //}
 
 
        

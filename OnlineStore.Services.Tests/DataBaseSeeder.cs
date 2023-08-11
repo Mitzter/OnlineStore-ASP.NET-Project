@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Web.Data;
+    using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.Models.UserModels;
 
     public static class DataBaseSeeder
@@ -10,6 +11,10 @@
         public static ApplicationUser AppUser;
         public static ApplicationUser BulkBuyerUser;
         public static BulkBuyer BulkBuyer;
+        public static Item itemOne;
+        public static Item itemTwo;
+        public static ItemCategory categoryOne;
+        public static ItemCategory categoryTwo;
 
         public static void SeedDatabase(OnlineStoreDbContext dbContext)
         {
@@ -55,9 +60,53 @@
                 VATNumber = "123456789",
             };
 
+            categoryOne = new ItemCategory()
+            {
+                Id = 1,
+                Name = "Spray"
+            };
+
+            categoryTwo = new ItemCategory()
+            {
+                Id = 2,
+                Name = "Part"
+            };
+
+            itemOne = new Item()
+            {
+                Id = new Guid("18c3b14a-48bb-4883-86fd-31666fe34636"),
+                Name = "ItemOne",
+                Description = "DescriptionOne",
+                Price = 5m,
+                BulkPrice = 3.5m,
+                Category = categoryOne,
+                ImageUrl = "imgUrl",
+                CreatedOn = DateTime.MinValue,
+                IsActive = true,
+            };
+
+            itemTwo = new Item()
+            {
+                Id = new Guid("725a27ad-5b11-4f2e-bd56-d11027de85b4"),
+                Name = "ItemTwo",
+                Description = "DescriptionTwo",
+                Price = 100m,
+                BulkPrice = 50m,
+                Category = categoryTwo,
+                ImageUrl = "imgUrlTwo",
+                CreatedOn = DateTime.UtcNow,
+                IsActive = true,
+            };
+
+            
             dbContext.Users.Add(AppUser);
             dbContext.Users.Add(BulkBuyerUser);
             dbContext.BulkBuyers.Add(BulkBuyer);
+            dbContext.ItemCategories.Add(categoryOne);
+            dbContext.ItemCategories.Add(categoryTwo);
+            dbContext.Items.Add(itemOne);
+            dbContext.Items.Add(itemTwo);
+
 
             dbContext.SaveChanges();
 

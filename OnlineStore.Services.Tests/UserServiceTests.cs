@@ -6,6 +6,7 @@ namespace OnlineStore.Services.Tests
     using OnlineStore.Web.Data;
     using OnlineStore.Web.Models.UserModels;
     using OnlineStore.Web.ViewModels.FormModels.UserFormModels;
+    using OnlineStore.Web.ViewModels.ViewModels.UserViewModels;
     using static DataBaseSeeder;
 
     public class UserServiceTests
@@ -146,6 +147,27 @@ namespace OnlineStore.Services.Tests
             BulkBuyer expectedResult = this.dbContext.BulkBuyers.FirstOrDefault(u => u.UserId.ToString() == userId);
 
             Assert.Contains(expectedResult, users);
+
+        }
+
+        [Test]
+        public async Task AllUsersAsyncShouldReturnAllUsersInTheDatabase()
+        {
+            IEnumerable<UserViewModel> allUsers = await this.userService.AllUsersAsync();
+
+            int expectedUserCount = 2;
+            int actualUserCount = allUsers.Count();
+
+            Assert.That(expectedUserCount, Is.EqualTo(actualUserCount));
+        }
+
+        [Test]
+        public async Task GetUserByIdAsyncShouldReturnTheCorrectUser()
+        {
+            ApplicationUser expectedUser = AppUser;
+            ApplicationUser actualUser = await this.userService.GetUserByIdAsync(Guid.Parse("F1E6CEAE-0595-404B-BD12-51DDAF35655B").ToString());
+
+            Assert.That(expectedUser, Is.EqualTo(actualUser));
 
         }
     }
