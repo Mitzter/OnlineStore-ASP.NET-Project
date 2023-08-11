@@ -60,13 +60,6 @@
             return allUsers;
 
 
-            //IEnumerable<UserViewModel> bulkBuyers = await this.dbContext
-            //    .BulkBuyers
-            //    .Include(a => a.User)
-            //    .To<UserViewModel>()
-            //    .ToArrayAsync();
-
-            //allUsers.AddRange(bulkBuyers);
         }
 
         public async Task CreateBulkClient(string userId, BecomeBulkClientFormModel formModel)
