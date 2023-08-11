@@ -2,11 +2,6 @@
 using OnlineStore.Services.Data._0_Interfaces.MailInterfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnlineStore.Services.Data.MailServices
 {

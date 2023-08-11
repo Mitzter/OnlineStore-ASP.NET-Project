@@ -23,7 +23,25 @@
             this.dbcontext = dbcontext;
             this.userManager = userManager;
         }
-        
+
+        public async Task ChangePostStatusAsync(string id, int status)
+        {
+            
+
+            Post? post = await this.dbcontext
+                .ForumPosts
+                .FirstOrDefaultAsync(p => p.Id.ToString() == id);
+
+            bool changeStatus = true;
+            if (status != 0)
+            {
+                changeStatus = false;
+            }
+
+            post.IsActive = changeStatus;
+            await this.dbcontext.SaveChangesAsync();
+        }
+
         public async Task<string> CreatePostAsync(PostFormModel model, string posterId)
         {
             var user = await this.userManager
@@ -88,6 +106,41 @@
             return post;
         }
 
+        public async Task<AllPostsViewModel> GetAllPostsAsync()
+        {
+            ICollection<Post> posts = await this.dbcontext
+                .ForumPosts
+                .Include(p => p.Poster)
+                .Include(p => p.Replies)
+                .ThenInclude(r => r.User)
+                .ToListAsync();
+
+            List<PostViewModel> postsVM = new List<PostViewModel>();
+            PostViewModel singlePostVM;
+
+            foreach (var post in posts)
+            {
+                singlePostVM = new PostViewModel()
+                {
+                    Id = post.Id,
+                    CreatedAt = post.CreatedOn,
+                    ImageUrl = post.ImageUrl,
+                    Poster = post.Poster,
+                    Replies = post.Replies,
+                    Text = post.Text,
+                    Title = post.Title,
+                    IsActive = post.IsActive,
+                };
+
+                postsVM.Add(singlePostVM);
+            }
+
+            return new AllPostsViewModel()
+            {
+                AllPosts = postsVM
+            };
+        }
+
         public async Task<IEnumerable<PostViewModel>> GetLatestForumPostsAsync()
         {
             var latestPosts = await this.dbcontext.ForumPosts
@@ -98,7 +151,8 @@
                     Id = post.Id,
                     Title = post.Title,
                     CreatedAt = post.CreatedOn,
-                    Replies = post.Replies
+                    Replies = post.Replies,
+                    IsActive = post.IsActive,
 
                 })
                 .ToListAsync();
@@ -180,7 +234,7 @@
                 Poster = post.Poster,
                 Replies = post.Replies,
                 CreatedAt = DateTime.UtcNow,
-
+                IsActive = true,
             };
                 
         }

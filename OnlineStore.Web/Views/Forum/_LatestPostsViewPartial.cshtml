@@ -13,7 +13,9 @@
 <nav class="w1-sidebar w1-bar-block">
     @foreach (var post in Model)
     {
-        <div class="container-fluid align-items-md-start w1-sidebar">
+        if (post.IsActive)
+        {
+            <div class="container-fluid align-items-md-start w1-sidebar">
             <h8 class="text-white">
                 <a class="text-white" href="@Url.Action("ViewPost", "Forum", new { id = post.Id })">
                     <div class="post-title-container">@post.Title</div>
@@ -23,5 +25,7 @@
             </h8>
         </div>
         <hr/>
+        }
+        
     }
 </nav>

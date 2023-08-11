@@ -22,5 +22,7 @@
         public virtual IEnumerable<Reply> Replies { get; set; } = null!;
 
         public DateTime CreatedAt { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

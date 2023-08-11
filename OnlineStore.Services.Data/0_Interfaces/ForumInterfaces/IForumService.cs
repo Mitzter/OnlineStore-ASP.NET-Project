@@ -21,5 +21,9 @@
         Task<Post> FindPostById(int id);
 
         Task<IEnumerable<PostViewModel>> GetLatestForumPostsAsync();
+
+        Task<AllPostsViewModel> GetAllPostsAsync();
+
+        Task ChangePostStatusAsync(string id, int status);
     }
 }

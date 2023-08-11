@@ -28,10 +28,16 @@ namespace OnlineStore.Web
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
+                options.SignIn.RequireConfirmedAccount =
+                       builder.Configuration.GetValue<bool>("Identity:SignIn:RequireConfirmedAccount");
+                options.Password.RequireLowercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
+                options.Password.RequireUppercase =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
+                options.Password.RequireNonAlphanumeric =
+                    builder.Configuration.GetValue<bool>("Identity:Password:RequireNonAlphanumeric");
+                options.Password.RequiredLength =
+                    builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<OnlineStoreDbContext>();
@@ -65,11 +71,14 @@ namespace OnlineStore.Web
 
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error/500");
+                app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+
                 app.UseHsts();
             }
 
@@ -80,12 +89,14 @@ namespace OnlineStore.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
 
             if (app.Environment.IsDevelopment())
             {
+                
                 app.SeedAdministrator(DevelopmentAdminEmail);
             }
+            
 
             app.UseEndpoints(config =>
             {

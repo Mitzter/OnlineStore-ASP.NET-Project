@@ -1,0 +1,62 @@
+﻿@model AllPostsViewModel
+
+@{
+    ViewBag.Title = "All Posts";
+}
+
+
+<h2 class="text-center text-light">@ViewBag.Title</h2>
+<hr />
+<table class="table text-light">
+    <thead>
+        <tr>
+            <th><label>Image</label></th>
+            <th><label>Title</label></th>
+            <th><label>Text</label></th>
+            <th><label>Username</label></th>
+            <th><label>Created at</label></th>
+            <th><label></label></th>
+            <th><label>Status</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model.AllPosts)
+        {
+            <tr>
+                <td><label>@post.ImageUrl</label></td>
+                <td><label>@post.Title</label></td>
+                <td><label>@post.Text</label></td>
+                <td><label>@post.Poster.DisplayName</label></td>
+                <td><label>@post.CreatedAt</label></td>
+                
+
+                <td><a asp-area="" asp-controller="Forum" asp-action="ViewPost" asp-route-id="@post.Id" class="btn btn-info">View Post</a></td>
+                <td>
+
+                    <form asp-area="Admin" asp-controller="Forum" asp-action="ChangeStatus" method="post">
+                        <select name="status" id="postStatusSelect">
+                            <option value="0">Active</option>
+                            <option value="1">Not Active</option>
+                        </select>
+                        <button type="submit" class="btn btn-outline-warning">Change Status</button>
+                        <input type="hidden" name="id" value="@post.Id"/>
+                    </form>
+                </td>
+                <td>
+                    @if (post.IsActive)
+                    {
+                        <h5 class="text-light text-bold">Active</h5>
+                    }
+                    else
+                    {
+                        <h5 class="text-light text-bold">Not Active</h5>
+                    }
+                </td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+
+                   

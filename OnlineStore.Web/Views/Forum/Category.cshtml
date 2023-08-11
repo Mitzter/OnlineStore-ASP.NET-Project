@@ -37,7 +37,9 @@
 
     @foreach (var post in posts)
     {
-            <div class="container-fluid col-md-6 section-outline align-content-center" style="padding: 10px;">
+        if (post.IsActive)
+        {
+             <div class="container-fluid col-md-6 section-outline align-content-center" style="padding: 10px;">
                 <div>
                      <a href="@Url.Action("ViewPost", "Forum", new { Id = post.Id })" class="larger-post-title">@post.Title</a>
                 </div>
@@ -50,7 +52,8 @@
                 </div>
             
             </div>
-
+        }
+           
     }
 </div>
 

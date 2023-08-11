@@ -17,7 +17,6 @@
         private OnlineStoreDbContext dbContext;
 
         private IStoreService storeService;
-        private ItemSort itemSort;  
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
