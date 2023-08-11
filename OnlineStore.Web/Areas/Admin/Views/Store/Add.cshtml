@@ -3,16 +3,15 @@
 @{
     ViewBag.Title = "Add Product";
 }
-
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/OnlineStore.Web.styles.css" asp-append-version="true" />
+</head>
 <h2 class="text-center text-light">@ViewBag.Title</h2>
 <hr />
 
-<style>
-    .image-preview-container {
-        display: flex;
-        justify-content: center;
-    }
-</style>
+
 
 <div class="row">
      <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6 text-light">
@@ -33,12 +32,7 @@
                 placeholder=""></textarea>
                  <span asp-validation-for="Description" class="small text-danger"></span>
              </div>
-             @*<div class="form-group">
-                 <label asp-for="ImageUrl"></label>
-                 <input asp-for="ImageUrl" class="form-control" placeholder="Paste link">
-                
-                 <span asp-validation-for="ImageUrl" class="small text-danger"></span>
-             </div>*@
+            
             <div class="form-group">
                 <label asp-for="ImageUrl">Image URL</label>
                 <input asp-for="ImageUrl" class="form-control" id="imageUrlInput" placeholder="Paste link">
@@ -72,25 +66,4 @@
          </form>
      </div>
 </div>
-
-<script>
-    // Get the input field and image preview elements
-    const imageUrlInput = document.getElementById('imageUrlInput');
-    const imagePreview = document.getElementById('imagePreview');
-
-    // Add an event listener to the input field to listen for changes
-    imageUrlInput.addEventListener('input', function() {
-        // Get the value of the input field
-        const imageUrl = this.value;
-
-        // Update the image preview source if a valid URL is provided
-        if (imageUrl) {
-            imagePreview.src = imageUrl;
-            imagePreview.style.display = 'block';
-        } else {
-            // If the URL is empty, hide the image preview
-            imagePreview.src = '#';
-            imagePreview.style.display = 'none';
-        }
-    });
-</script>
+<script src="~/js/imagePreview.js"></script>

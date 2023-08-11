@@ -4,29 +4,11 @@
     ViewData["Title"] = "Home Page";
     var items = Model.ToList();
 }
-<style>
-    .w1-sidebar {
-        border: 1px solid brown;
-        margin-right: auto;
-        margin-left: 0;
-    }
-
-    .col-md-4 {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .w1-container {
-        border-left: none;
-        border-right: none;
-    }
-
-    .col-md-2 { 
-        border: 5px solid grey;
-    }
-
-    
-</style>
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/OnlineStore.Web.styles.css" asp-append-version="true" />
+</head>
 
 <div class="container-fluid w1-container justify-content-center">
     <div class="row">

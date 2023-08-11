@@ -28,13 +28,7 @@
         <p><strong class="text-light">Order Time:</strong> <span class="text-light">@Model.OrderTime.ToString("yyyy-MM-dd HH:mm:ss")</span></p>
         <div>
             <strong class="text-light">Order Status:</strong>
-            @*<select name="orderStatus">
-            <option value="0">Pending</option>
-            <option value="1">Processing</option>
-            <option value="2">Shipped</option>
-            <option value="3">Delivered</option>
-            </select>
-            <a asp-area="Admin" asp-controller="Order" asp-action="ChangeStatus" asp-route-id="@Model.Id" class="btn btn-info">Change Status</a>*@
+      
 
             <form asp-area="Admin" asp-controller="Order" asp-action="ChangeStatus" method="post">
                 <select name="status" id="orderStatusSelect">

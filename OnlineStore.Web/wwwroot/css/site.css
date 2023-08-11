@@ -16,3 +16,81 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.w1-container {
+    border-left: none;
+    border-right: none;
+}
+
+.image-preview-container {
+    display: flex;
+    justify-content: center;
+}
+
+.section-outline {
+    border: 2px solid red;
+    padding: 10px;
+}
+
+.post-title-container {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.section-outline-category {
+    border: 5px solid brown;
+    padding: 10px;
+    background-color: darkgray
+}
+
+.section-outline-forum {
+    border: 5px solid brown;
+    padding: 10px;
+    background-color: darkgray
+}
+
+.larger-post-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black; 
+}
+
+    
+.larger-post-title:hover {
+    text-decoration: underline; 
+    color: #007bff; 
+}
+
+.section-post-outline {
+    border: 2px solid brown;
+    padding: 20px;
+}
+
+.section-outline-maindiv {
+    border: 5px solid brown;
+    padding: 10px;
+    background-color: darkgray
+}
+
+.section-comment-outline {
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+.w1-sidebar-post {
+    border: 1px solid brown;
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.w1-sidebar-index {
+    border: 1px solid brown;
+    margin-right: auto;
+    margin-left: 0;
+}
+
+   

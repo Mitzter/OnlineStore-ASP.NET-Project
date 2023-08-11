@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<PostViewModel>
 
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/OnlineStore.Web.styles.css" asp-append-version="true" />
+</head>
 
-<style>
-    .post-title-container {
-        max-width: 200px; 
-        white-space: nowrap; 
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-    }
-</style>
 
 <nav class="w1-sidebar w1-bar-block">
     @foreach (var post in Model)

@@ -62,18 +62,13 @@ else
 }
 @if (Model.GrantTotal >= 1000 && Model.IsUserCompanyRegistered == false)
 {
-    <script>
-        function showConfirmation() {
-            var isBulkClient = confirm("Your total price exceeds 1000 BGN. Would you like to register your company and receive our Bulk Discounts?");
-            if (isBulkClient) {
-                window.location.href = '@Url.Action("RegisterCompany", "BulkBuyer")';
-            }
-        }
+    @if (Model.GrantTotal >= 1000 && Model.IsUserCompanyRegistered == false)
+    {
+        <script src="~/js/notificationBulk.js"></script>
+        <script>
+            showConfirmation('@Url.Action("RegisterCompany", "BulkBuyer")');
+        </script>
+    }
 
-
-        window.onload = function () {
-            showConfirmation();
-        };
-    </script>
 }
 

@@ -3,13 +3,11 @@
 @{
     ViewData["Title"] = "Forum";
 }
-<style>
-    .section-outline{
-        border: 5px solid brown;
-        padding: 10px;
-        background-color:darkgray
-    }
-</style>
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/OnlineStore.Web.styles.css" asp-append-version="true" />
+</head>
 
 <div class="container-fluid d-flex justify-content-center">
     
@@ -24,7 +22,7 @@
             @Html.Partial("_LatestPostsViewPartial", Model.LatestPosts)
     </div>
     <div class="col-sm-1">
-        <!-- Empty space with a margin-top of 20px -->
+        
     </div>
     <div class="row">
 
@@ -39,7 +37,7 @@
         @foreach (var item in Model.Categories)
         {
                 <div class="col">
-                        <div class="card section-outline mb-3 text-center bg-gradient">
+                        <div class="card section-outline-forum mb-3 text-center bg-gradient">
                         <div class="card-body">
                             <h3><a class="text-light" href="@Url.Action("Category", "Forum", new { categoryId = item.Id })">@item.Name</a></h3>
                            
