@@ -26,7 +26,7 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Store([FromQuery]AllItemsQueryModel queryModel)
+        public async Task<IActionResult> Products([FromQuery]AllItemsQueryModel queryModel)
         {
             FilteredAndPagedItemsServiceModel serviceModel = await
                 this.storeService.AllAsync(queryModel);
@@ -51,7 +51,7 @@
                 {
                     this.TempData[ErrorMessage] = "Item does not exist";
 
-                    return this.RedirectToAction("Store", "Store");
+                    return this.RedirectToAction("Products", "Store");
                 }
 
                 ItemDetailsViewModel viewModel = await this.storeService
@@ -64,29 +64,7 @@
                 return this.GeneralError();
             }
         }
-        //[Authorize]
-        //[HttpPost]
-        //public async Task<IActionResult> Buy(string itemId, int quantity)
-        //{
-        //    bool itemExists = await this.storeService.ExistsByIdAsync(itemId);
-        //    if (!itemExists)
-        //    {
-        //        this.TempData[ErrorMessage] = "Item with the provided ID does not exist";
-
-        //        return this.RedirectToAction("Store", "Store");
-        //    }
-
-        //    try
-        //    {
-        //       await this.storeService.BuyItemAsync(itemId, this.User.GetId()!, quantity);
-        //       return Ok(new { message = "Item purchased successfully!" });
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        return this.GeneralError();
-        //    }
-        //}
+        
 
 
        

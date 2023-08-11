@@ -8,15 +8,15 @@
     {
         Task<FilteredAndPagedItemsServiceModel> AllAsync(AllItemsQueryModel queryModel);
 
+        Task<FilteredAndPagedItemsServiceModel> AllAdminViewAsync(AllItemsQueryModel queryModel);
+
         Task<ItemDetailsViewModel> GetDetailsByIdAsync(string itemId);
 
         Task<bool> ExistsByIdAsync(string itemId);
 
-        
-
-        Task<ShoppingCartViewModel> GetShoppingCartByUserIdAsync(string userId);
-
         Task<string> CreateOrderAsync(OrderFormModel formModel, string userId, List<CartItem> sessionItems);
+
+        
 
     }
 }

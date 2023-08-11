@@ -64,7 +64,11 @@
 <div class="row">
     @foreach (var item in Model.Items)
     {
-     <partial name="_ItemPartial" model="@item" />
+        @if (item.IsActive)
+        {
+            <partial name="_ItemPartial" model="@item" />
+        }   
+       
     }
 </div>
 

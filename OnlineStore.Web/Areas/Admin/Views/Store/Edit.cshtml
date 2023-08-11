@@ -1,0 +1,93 @@
+﻿@model ItemFormModel
+
+@{
+    ViewBag.Title = "Add Product";
+}
+
+<h2 class="text-center text-light">@ViewBag.Title</h2>
+<hr />
+
+<style>
+    .image-preview-container {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6 text-light">
+        <form method="post">
+            <div class="form-group text-center">
+                <div class="image-preview-container">
+                    <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 100%; max-height: 200px; display: none;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="">
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" rows="4" class="form-control"
+                          placeholder=""></textarea>
+                <span asp-validation-for="Description" class="small text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="ImageUrl">Image URL</label>
+                <input asp-for="ImageUrl" class="form-control" id="imageUrlInput" placeholder="Paste link">
+                <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" class="form-control">
+                <span asp-validation-for="Price" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BulkPrice"></label>
+                <input asp-for="BulkPrice" class="form-control">
+                <span asp-validation-for="BulkPrice" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" class="form-control">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="small textdanger"></span>
+
+               
+            </div>
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Get the input field and image preview elements
+    const imageUrlInput = document.getElementById('imageUrlInput');
+    const imagePreview = document.getElementById('imagePreview');
+
+    // Add an event listener to the input field to listen for changes
+    imageUrlInput.addEventListener('input', function () {
+        // Get the value of the input field
+        const imageUrl = this.value;
+
+        // Update the image preview source if a valid URL is provided
+        if (imageUrl) {
+            imagePreview.src = imageUrl;
+            imagePreview.style.display = 'block';
+        } else {
+            // If the URL is empty, hide the image preview
+            imagePreview.src = '#';
+            imagePreview.style.display = 'none';
+        }
+    });
+</script>

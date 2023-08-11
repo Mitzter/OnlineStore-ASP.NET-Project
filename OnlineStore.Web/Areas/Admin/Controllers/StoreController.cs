@@ -10,13 +10,25 @@
     {
         private readonly IItemCategoryService itemCategoryService;
         private readonly IItemService itemService;
+        private readonly IStoreService storeService;
 
-        public StoreController(IItemCategoryService itemCategoryService, IItemService itemService)
+        public StoreController(IItemCategoryService itemCategoryService, IItemService itemService, IStoreService storeService)
         {
             this.itemCategoryService = itemCategoryService;    
             this.itemService = itemService;
+            this.storeService = storeService;
         }
-        
+        public async Task<IActionResult> Products([FromQuery] AllItemsQueryModel queryModel)
+        {
+            FilteredAndPagedItemsServiceModel serviceModel = await
+                this.storeService.AllAdminViewAsync(queryModel);
+
+            queryModel.Items = serviceModel.Items;
+            queryModel.TotalItems = serviceModel.TotalItemsCount;
+            queryModel.Categories = await this.itemCategoryService.AllCategoryNamesAsync();
+
+            return View(queryModel);
+        }
         [HttpGet]
         public async Task<IActionResult> Add()
         {
@@ -62,6 +74,33 @@
 
                 return this.View(model);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            ItemFormModel formModel = await this.itemService
+                .GetItemForEditByIdAsync(id);
+
+            formModel.Categories = await this.itemCategoryService.AllCategoriesAsync();
+
+            return View(formModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, ItemFormModel formModel)
+        {
+            await this.itemService.EditItemById(id, formModel);
+
+            return RedirectToAction("Products", "Store");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeStatus(string id, int status)
+        {
+            await this.itemService.ChangeItemStatusAsync(id, status);
+
+            return RedirectToAction("Products", "Store");
         }
     }
 }

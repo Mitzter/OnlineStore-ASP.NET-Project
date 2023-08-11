@@ -4,7 +4,7 @@
     using OnlineStore.Services.Mapping;
     using OnlineStore.Web.Models.UserModels;
 
-    public class UserViewModel : IMapFrom<BulkBuyer> //IHaveCustomMappings
+    public class UserViewModel : IMapFrom<BulkBuyer> 
     {
         public string Id { get; set; } = null!;
 
@@ -20,12 +20,6 @@
 
         public string? FinancialManager { get; set; }
 
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
-        //    configuration
-        //        .CreateMap<BulkBuyer, UserViewModel>()
-        //        .ForMember(d => d.Email, opt => opt.MapFrom(s => s.User.Email))
-        //        .ForMember(d => d.UserName, opt => opt.MapFrom(s => s.User.UserName))
-        //}
+     
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineStore.Web.Data;
 
@@ -11,9 +12,10 @@ using OnlineStore.Web.Data;
 namespace OnlineStore.Web.Data.Migrations
 {
     [DbContext(typeof(OnlineStoreDbContext))]
-    partial class OnlineStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230811152523_FixItemSeeding")]
+    partial class FixItemSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,7 +173,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ForumCategories", (string)null);
+                    b.ToTable("ForumCategories");
 
                     b.HasData(
                         new
@@ -243,7 +245,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasIndex("PosterId");
 
-                    b.ToTable("ForumPosts", (string)null);
+                    b.ToTable("ForumPosts");
 
                     b.HasData(
                         new
@@ -300,7 +302,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ForumReplies", (string)null);
+                    b.ToTable("ForumReplies");
 
                     b.HasData(
                         new
@@ -355,7 +357,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("OnlineStore.Web.Models.StoreModels.Item", b =>
@@ -403,7 +405,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items");
 
                     b.HasData(
                         new
@@ -495,7 +497,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ItemCategories", (string)null);
+                    b.ToTable("ItemCategories");
 
                     b.HasData(
                         new
@@ -582,7 +584,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("OnlineStore.Web.Models.UserModels.ApplicationUser", b =>
@@ -726,7 +728,7 @@ namespace OnlineStore.Web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BulkBuyers", (string)null);
+                    b.ToTable("BulkBuyers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

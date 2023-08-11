@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
@@ -11,6 +12,7 @@ using static OnlineStore.Common.NotificationMessagesConstants;
 
 namespace OnlineStore.Web.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly OnlineStoreDbContext dbContext;
@@ -59,7 +61,6 @@ namespace OnlineStore.Web.Controllers
 
             return View(viewModel);
         }
-
         public async Task<IActionResult> Add(Guid id)
         {
             Item? item = await dbContext.Items.FindAsync(id);

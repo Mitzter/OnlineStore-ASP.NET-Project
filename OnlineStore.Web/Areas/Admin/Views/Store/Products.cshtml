@@ -1,0 +1,122 @@
+﻿
+@model AllItemsQueryModel
+
+@{
+    ViewBag.Title = "Store";
+}
+
+<style>
+    .section-outline {
+        border: 2px solid red;
+        padding: 10px;
+    }
+</style>
+
+<h2 class="text-center text-light">@ViewBag.Title</h2>
+<hr />
+<form method="get">
+
+
+
+    <div class="row section-outline align-items-start">
+    <div class="col-md-3">
+        <div class="form-group mt-3 p-2">
+            <input type="submit" value="Search" class="btn btn-outline-danger btn-lg" />
+        </div>
+    </div>
+    <div class="form-group col-md-3 d-flex flex-column justify-content-start text-light">
+        <div class="form-group">
+            <label asp-for="Category"></label>
+            <select asp-for="Category" class="form-control form-control-sm">
+                <option value="">All</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category">@category</option>
+                    }
+            </select>
+        </div>
+    
+    </div>
+    <div class="form-group col-md-3 text-light">
+        <label asp-for="SearchString"></label>
+        <input asp-for="SearchString" class="form-control form-control-sm" placeholder="...">
+    </div>
+    <div class="form-group col-md-3 text-light">
+        <div class="form-group">
+            <label asp-for="ItemSorting"></label>
+            <select asp-for="ItemSorting" class="form-control form-control-sm">
+                <option value="0">Newest</option>
+                <option value="1">Oldest</option>
+                <option value="2">Price (Ascending)</option>
+                <option value="3">Price (Descending)</option>
+                <option value="4">Category</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+</form>
+
+@if (!Model.Items.Any())
+{
+     <h2 class="text-center">No items found by the given criteria!</h2>
+}
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="text-light">Image</th>
+                <th class="text-light">Name</th>
+                <th class="text-light">Price</th>
+                <th class="text-light">Bulk Price</th>
+                <th class="text-light">Options</th>
+                <th class="text-light">Status Control</th>
+                <th class="text-light">Current Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.ImageUrl" alt="Image" style="max-width: 200px; max-height: 180px;" />
+                    </td>
+                    <td class="text-light" style="max-width: 200px; max-height: 180px;">@item.Name</td>
+
+                    <td class="text-light" style="max-width: 200px; max-height: 180px;"> @($"{item.BulkPrice:f2}") BGN</td>
+
+                    <td class="text-light" style="max-width: 200px; max-height: 180px;">@($"{item.Price:f2}") BGN</td>
+
+                    <td>
+                        <a asp-area="" asp-controller="Store" asp-action="Details" asp-route-id="@item.Id" class="btn btn-success">Details</a>
+                        <a asp-area="Admin" asp-controller="Store" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-light">Edit</a>
+                    </td>
+                    <td>
+                        
+                        <form asp-area="Admin" asp-controller="Store" asp-action="ChangeStatus" method="post">
+                            <select name="status" id="itemStatusSelect">
+                                <option value="0">Active</option>
+                                <option value="1">Not Active</option>
+                            </select>
+                            <button type="submit" class="btn btn-outline-warning">Change Status</button>
+                            <input type="hidden" name="id" value="@item.Id"/>
+                        </form>
+                    </td>
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            <h5 class="text-light text-bold">Active</h5>
+                        }
+                        else
+                        {
+                            <h5 class="text-light text-bold">Not Active</h5>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>
+

@@ -9,6 +9,7 @@
         {
             Categories = new HashSet<ItemSelectCategoryFormModel>();
         }
+
         [Required]
         [StringLength(ItemNameMaxLength, MinimumLength = ItemNameMinLength)]
         public string Name { get; set; } = null!;
@@ -37,5 +38,7 @@
         public int CategoryId { get; set; }
 
         public IEnumerable<ItemSelectCategoryFormModel> Categories { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

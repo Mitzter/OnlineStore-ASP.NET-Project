@@ -25,9 +25,6 @@
             this.dbOptions = new DbContextOptionsBuilder<OnlineStoreDbContext>()
                .UseInMemoryDatabase("OnlineStoreInMemory" + Guid.NewGuid().ToString())
                .Options;
-
-
-
         }
         [SetUp]
         public void SetUp()

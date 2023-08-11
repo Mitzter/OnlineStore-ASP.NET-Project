@@ -47,7 +47,7 @@
             if (this.seedDb)
             {
                 builder.ApplyConfiguration(new UserEntityConfiguration());
-               
+                builder.ApplyConfiguration(new ItemEntityConfiguration());
                 builder.ApplyConfiguration(new PostEntityConfiguration());
                 builder.ApplyConfiguration(new ReplyEntityConfiguration());
                 builder.ApplyConfiguration(new CategoryEntityConfiguration());

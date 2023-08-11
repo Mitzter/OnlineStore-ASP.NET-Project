@@ -7,6 +7,7 @@
     using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.ViewModels;
     using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -42,9 +43,9 @@
                     Id = i.Id.ToString(),
                     Name = i.Name,
                     ImageUrl = i.ImageUrl,
-                 })
+                })
                 .ToArrayAsync();
-            
+
             return topItems;
         }
 
@@ -77,7 +78,7 @@
                 Price = model.Price,
                 BulkPrice = model.BulkPrice,
                 CategoryId = model.CategoryId,
-                IsActive = true
+                IsActive = true,
             };
 
             await dbContext.Items.AddAsync(item);
@@ -86,6 +87,69 @@
             return item.Id.ToString();
         }
 
+        public async Task EditItemById(string itemId, ItemFormModel formModel)
+        {
+            Item item = await this.dbContext
+                .Items
+                .Include(i => i.Category)
+                .FirstAsync(i => i.Id.ToString() == itemId);
 
+            ItemCategory category = await this.dbContext
+                .ItemCategories
+                .FirstOrDefaultAsync(ic => ic.Id == formModel.CategoryId);
+            
+            item.Name = formModel.Name;
+            item.Description = formModel.Description;
+            item.CategoryId = formModel.CategoryId;
+            item.Category = category;
+            item.BulkPrice = formModel.BulkPrice;
+            item.Price = formModel.Price;
+            item.IsActive = formModel.IsActive;
+            item.ImageUrl = formModel.ImageUrl;
+
+
+
+            await this.dbContext.SaveChangesAsync();
+
+        }
+
+        public async Task<ItemFormModel> GetItemForEditByIdAsync(string id)
+        {
+            Item? item = await this.dbContext
+                .Items
+                .Include(i => i.Category)
+                .FirstOrDefaultAsync(i => i.Id.ToString() == id);
+
+            
+
+            return new ItemFormModel()
+            {
+                Name = item.Name,
+                Description = item.Description,
+                CategoryId = item.CategoryId,
+                BulkPrice = item.BulkPrice,
+                Price = item.Price,
+                IsActive = item.IsActive,
+                ImageUrl = item.ImageUrl,
+
+            };
+        }
+
+        public async Task ChangeItemStatusAsync(string id, int status)
+        {
+            Item? item = await this.dbContext
+                .Items
+                .FirstOrDefaultAsync(i => i.Id.ToString() == id);
+
+            bool changeStatus = true;
+            if (status != 0)
+            {
+                changeStatus = false;
+            }
+
+            item.IsActive = changeStatus;
+
+            await this.dbContext.SaveChangesAsync();
+        }
     }
 }
