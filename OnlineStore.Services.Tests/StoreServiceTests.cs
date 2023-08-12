@@ -18,7 +18,7 @@
 
         private IStoreService storeService;
 
-        [OneTimeSetUp]
+        [OneTimeSetUp] 
         public void OneTimeSetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<OnlineStoreDbContext>()

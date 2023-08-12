@@ -16,12 +16,10 @@
     public class ForumService : IForumService
     {
         private readonly OnlineStoreDbContext dbcontext;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public ForumService(OnlineStoreDbContext dbcontext, UserManager<ApplicationUser> userManager)
+        public ForumService(OnlineStoreDbContext dbcontext)
         {
             this.dbcontext = dbcontext;
-            this.userManager = userManager;
         }
 
         public async Task ChangePostStatusAsync(string id, int status)
@@ -44,7 +42,7 @@
 
         public async Task<string> CreatePostAsync(PostFormModel model, string posterId)
         {
-            var user = await this.userManager
+            var user = await this.dbcontext
                 .Users.FirstAsync(u => u.Id == Guid.Parse(posterId));
             
             Post post = new Post()
@@ -74,7 +72,7 @@
                 .ThenInclude(r => r.User)
                 .FirstAsync(p => p.Id == model.PostedAtId);
 
-            var user = await this.userManager
+            var user = await this.dbcontext
                 .Users.FirstAsync(u => u.Id == Guid.Parse(userId));
 
             Reply reply = new Reply()
@@ -103,6 +101,10 @@
                 .ForumPosts
                 .FirstAsync(p => p.Id == id);
 
+            if (post == null)
+            {
+                return null;
+            }
             return post;
         }
 

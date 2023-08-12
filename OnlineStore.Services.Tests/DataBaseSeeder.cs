@@ -3,8 +3,11 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using OnlineStore.Web.Data;
+    using OnlineStore.Web.Models.ForumModels;
     using OnlineStore.Web.Models.StoreModels;
     using OnlineStore.Web.Models.UserModels;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
 
     public static class DataBaseSeeder
     {
@@ -21,6 +24,12 @@
         public static CartItem cartItemTwo;
         public static List<CartItem> orderedItemsOne;
         public static List<CartItem> orderedItemsTwo;
+        public static ForumCategory forumCategoryOne;
+        public static ForumCategory forumCategoryTwo;
+        public static Post postOne;
+        public static Post postTwo;
+        public static Reply replyOne;
+        public static Reply replyTwo;
 
         public static void SeedDatabase(OnlineStoreDbContext dbContext)
         {
@@ -153,7 +162,66 @@
                 User = BulkBuyerUser,
                 AdditionalInformation = "Something",
             };
-            
+
+            forumCategoryOne = new ForumCategory()
+            {
+                Id = 1,
+                Name = "General",
+
+            };
+
+            forumCategoryTwo = new ForumCategory()
+            {
+                Id = 2,
+                Name = "Off-topic"
+            };
+
+            postOne = new Post()
+            {
+                Id = 1,
+                Title = "TitleOne",
+                Text = "TextOne",
+                ImageUrl = "ImgUrlOne",
+                Poster = AppUser,
+                CreatedOn = DateTime.UtcNow,
+                Category = forumCategoryOne,
+                IsActive = true,
+            };
+
+            postTwo = new Post()
+            {
+                Id = 2,
+                Title = "TitleTwo",
+                Text = "TextTwo",
+                ImageUrl = "ImgUrlOne",
+                Poster = BulkBuyerUser,
+                CreatedOn = DateTime.MinValue,
+                Category = forumCategoryTwo,
+                IsActive = true,
+
+            };
+
+            replyOne = new Reply()
+            {
+                Id = 1,
+                Message = "ReplyOne",
+                User = AppUser,
+                PostedAt = postTwo,
+                CreatedOn = DateTime.UtcNow,
+            };
+
+            replyTwo = new Reply()
+            {
+                Id = 2,
+                Message = "ReplyTwo",
+                User = BulkBuyerUser,
+                PostedAt = postOne,
+                CreatedOn = DateTime.UtcNow,
+            };
+           
+
+
+
             dbContext.Users.Add(AppUser);
             dbContext.Users.Add(BulkBuyerUser);
             dbContext.BulkBuyers.Add(BulkBuyer);
@@ -163,6 +231,12 @@
             dbContext.Items.Add(itemTwo);
             dbContext.Orders.Add(orderOne);
             dbContext.Orders.Add(orderTwo);
+            dbContext.ForumCategories.Add(forumCategoryOne);
+            dbContext.ForumCategories.Add(forumCategoryTwo);
+            dbContext.ForumPosts.Add(postOne);
+            dbContext.ForumPosts.Add(postTwo);
+            dbContext.ForumReplies.Add(replyOne);
+            dbContext.ForumReplies.Add(replyTwo);
 
             dbContext.SaveChanges();
 
