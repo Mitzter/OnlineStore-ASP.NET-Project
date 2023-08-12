@@ -4,6 +4,7 @@ using OnlineStore.Web.Data;
 using OnlineStore.Web.Models.StoreModels;
 using OnlineStore.Web.Models.StoreModels.Enums;
 using OnlineStore.Web.Models.UserModels;
+using OnlineStore.Web.ViewModels.FormModels.StoreFormModels;
 using OnlineStore.Web.ViewModels.ViewModels.OrderViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace OnlineStore.Services.Data.OrderServices
 
         public OrderService(OnlineStoreDbContext dbContext)
         {
-                this.dbContext = dbContext;
+            this.dbContext = dbContext;
         }
 
         public async Task ChangeOrderStatusAsync(string id, int statusNum)
@@ -34,8 +35,8 @@ namespace OnlineStore.Services.Data.OrderServices
 
         public async Task<IEnumerable<AllOrdersViewModel>> GetAllOrdersAsync()
         {
-            
-            
+
+
 
             IEnumerable<AllOrdersViewModel> allOrders = await this.dbContext
                 .Orders
@@ -61,11 +62,13 @@ namespace OnlineStore.Services.Data.OrderServices
         public async Task<Order> GetOrderByIdAsync(string id)
         {
 
-            Order? order = await this.dbContext
+
+            Order order = await this.dbContext
                 .Orders
                 .Include(o => o.OrderedItems)
                 .Include(o => o.User)
                 .FirstOrDefaultAsync(o => o.Id.ToString() == id);
+
 
             return order;
         }
@@ -95,5 +98,47 @@ namespace OnlineStore.Services.Data.OrderServices
 
             return viewModel;
         }
+
+        public async Task<string> CreateOrderAsync(OrderFormModel formModel, string userId, List<CartItem> sessionItems)
+        {
+            var user = await this.dbContext
+                .Users
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            var orderedItems = sessionItems;
+            bool isUserCompanyRegistered = false;
+
+            var bulkBuyer = await this.dbContext
+                .BulkBuyers
+                .FirstOrDefaultAsync(u => u.UserId.ToString() == userId);
+            if (bulkBuyer?.UserId == user!.Id)
+            {
+                isUserCompanyRegistered = true;
+            }
+
+            Order order = new Order()
+            {
+                FirstName = formModel.FirstName,
+                LastName = formModel.LastName,
+                City = formModel.City,
+                Address = formModel.Address,
+                AdditionalInformation = formModel.AdditionalInformation,
+                PhoneNumber = formModel.PhoneNumber,
+                PostalCode = formModel.PostalCode,
+                UserId = user!.Id,
+                User = user,
+                OrderTime = DateTime.UtcNow,
+                OrderedItems = orderedItems,
+                Status = OrderStatus.Pending,
+                IsUserCompanyRegistered = isUserCompanyRegistered,
+            };
+
+            await this.dbContext.Orders.AddAsync(order);
+            await this.dbContext.SaveChangesAsync();
+
+
+            return order.Id.ToString();
+        }
+
     }
 }

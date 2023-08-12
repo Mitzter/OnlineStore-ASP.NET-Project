@@ -49,17 +49,6 @@
             return topItems;
         }
 
-        public async Task<IEnumerable<ItemSelectCategoryFormModel>> AllCategories()
-        {
-            return await dbContext
-                .ItemCategories
-                .Select(c => new ItemSelectCategoryFormModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                })
-                .ToListAsync();
-        }
 
         public async Task<bool> CategoryExists(int categoryId)
         {

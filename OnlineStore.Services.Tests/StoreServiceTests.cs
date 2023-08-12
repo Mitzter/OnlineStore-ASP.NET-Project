@@ -43,7 +43,7 @@
         {
 
             ICollection<Item> items = await this.dbContext.Items.ToListAsync();
-            
+
 
             AllItemsViewModel viewModelOne = new AllItemsViewModel()
             {
@@ -94,7 +94,7 @@
             int actualItemsCount = serviceModel.TotalItemsCount;
 
             Assert.That(expectedItemsCount, Is.EqualTo(actualItemsCount));
-            
+
 
         }
         [Test]
@@ -106,5 +106,17 @@
 
             Assert.IsTrue(result);
         }
+
+        [Test]
+        public async Task GetDetailsByIdAsyncShouldNotReturnNullIfIdExists()
+        {
+
+            ItemDetailsViewModel returnedVm = await this.storeService.GetDetailsByIdAsync(itemOne.Id.ToString());
+
+            Assert.IsNotNull(returnedVm);
+        }
+
+
+
     }
 }

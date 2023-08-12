@@ -54,7 +54,6 @@ namespace OnlineStore.Services.Tests
         public async Task IsUserBulkClientAsyncShouldReturnTrueWhenItExists()
         {
             string existingUserId = BulkBuyerUser.Id.ToString();
-            bool expectedResult = true;
             bool result = await this.userService.IsUserBulkClientAsync(existingUserId);
 
             Assert.IsTrue(result);
@@ -63,7 +62,6 @@ namespace OnlineStore.Services.Tests
         public async Task IsUserBulkClientAsyncShouldReturnFalseWhenItDoesntExist()
         {
             string existingUserId = AppUser.Id.ToString();
-            bool expectedResult = false;
             bool result = await this.userService.IsUserBulkClientAsync(existingUserId);
 
             Assert.IsFalse(result);
@@ -72,7 +70,6 @@ namespace OnlineStore.Services.Tests
         public async Task IsPhoneNumberTakenAsyncShouldReturnTRUEWhenPhoneNumberIsTakenByADifferentUser()
         {
             string existingPhoneNumber = "+35988888888";
-            bool expectedResult = true;
             bool result = await this.userService.IsPhoneNumberTakenAsync(existingPhoneNumber);
 
             Assert.IsTrue(result);
@@ -82,7 +79,6 @@ namespace OnlineStore.Services.Tests
         public async Task IsPhoneNumberTakenAsyncShouldReturnFALSEWhenPhoneNumberIsTakenByADifferentUser()
         {
             string existingPhoneNumber = "+35988888889";
-            bool expectedResult = true;
             bool result = await this.userService.IsPhoneNumberTakenAsync(existingPhoneNumber);
 
             Assert.IsFalse(result);
@@ -93,7 +89,6 @@ namespace OnlineStore.Services.Tests
         public async Task IsCompanyRegisteredWithSameVatNumberShouldReturnTrueIfVATNumberIsTaken()
         {
             string VatNumber = "123456789";
-            bool expectedResult = true;
             bool result = await this.userService.IsCompanyRegisteredWithSameVAT(VatNumber);
 
             Assert.IsTrue(result);
@@ -102,7 +97,6 @@ namespace OnlineStore.Services.Tests
         public async Task IsCompanyRegisteredWithSameVatNumberShouldReturnFalseIfVATNumberIsTaken()
         {
             string VatNumber = "123456999";
-            bool expectedResult = false;
             bool result = await this.userService.IsCompanyRegisteredWithSameVAT(VatNumber);
 
             Assert.IsFalse(result);
@@ -112,7 +106,6 @@ namespace OnlineStore.Services.Tests
         public async Task IsCompanyNameTakenShouldReturnTrueIfCompanyNameIsAlreadyTaken()
         {
             string companyName = "Comp Ltd.";
-            bool expectedResult = true;
             bool result = await this.userService.IsCompanyNameTakenAsync(companyName);
 
             Assert.IsTrue(result);
@@ -122,7 +115,6 @@ namespace OnlineStore.Services.Tests
         public async Task IsCompanyNameTakenShouldReturnFalseIfCompanyNameIsAlreadyTaken()
         {
             string companyName = "New Company";
-            bool expectedResult = false;
             bool result = await this.userService.IsCompanyNameTakenAsync(companyName);
 
             Assert.IsFalse(result);
@@ -165,7 +157,7 @@ namespace OnlineStore.Services.Tests
         public async Task GetUserByIdAsyncShouldReturnTheCorrectUser()
         {
             ApplicationUser expectedUser = AppUser;
-            ApplicationUser actualUser = await this.userService.GetUserByIdAsync(Guid.Parse("F1E6CEAE-0595-404B-BD12-51DDAF35655B").ToString());
+            ApplicationUser actualUser = await this.userService.GetUserByIdAsync(AppUser.Id.ToString());
 
             Assert.That(expectedUser, Is.EqualTo(actualUser));
 

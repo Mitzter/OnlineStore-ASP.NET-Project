@@ -5,41 +5,51 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 
-
-<div class="row text-light">
-    <div class="col-md-6">
-        @if (Model.Input.CurrentPictureSource != null)
-        {
-            <img src="data:image/png;base64,@Convert.ToBase64String(Model.Input.CurrentPictureSource)" alt="Profile Picture" width="200" height="200" />
-        }
+<div class="row text-light justify-content-center">
+    <div class="col-md-6 text-center">
+        <div style="border: 1px solid #ccc; width: 200px; height: 200px;">
+            @if (Model.Input.CurrentPictureSource != null)
+            {
+                <img src="data:image/png;base64,@Convert.ToBase64String(Model.Input.CurrentPictureSource)" alt="Profile Picture" width="100%" height="100%" />
+            }
+        </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-6">
+<div style="margin-top: 50px;"></div>
+<div class="row align-content-center justify-content-center">
+    <div class="col-md-6 text-center">
         <form id="profile-form" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
-                <input asp-for="Input.DisplayName" class="form-control" />
+                <input asp-for="Input.DisplayName" class="form-control" style="width: 200px;" />
                 <label asp-for="Input.DisplayName" class="form-label"></label>
                 <span asp-validation-for="Input.DisplayName" class="text-danger"></span>
             </div>
+            <div style="margin-top: 10px;"></div>
             <div class="form-floating">
-                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <input asp-for="Input.PhoneNumber" class="form-control" style="width: 200px;" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div style="margin-top: 10px;"></div>
             <div class="form-floating">
-                <input asp-for="Input.PictureUser" class="form-control" type="file"/>
+                <input asp-for="Input.PictureUser" class="form-control" type="file" style="width: 200px;" />
                 <label asp-for="Input.PictureUser" class="form-label"></label>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <div style="margin-top: 20px;"></div>
+            <div class="text-center">
+                <!-- Add a container to center the button -->
+                <button id="update-profile-button" type="submit" class="w-25 btn btn-outline-danger" style="width: 200px; margin-right: 485px;">Save</button>
+            </div>
         </form>
     </div>
 </div>
+
+
+
+
 
 @section Scripts {
         <partial name="_ValidationScriptsPartial" />

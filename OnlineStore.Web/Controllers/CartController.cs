@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OnlineStore.Services.Data._0_Interfaces.OrderInterfaces;
 using OnlineStore.Services.Data.Interfaces.StoreInterfaces;
 using OnlineStore.Web.Data;
 using OnlineStore.Web.Infrastructure;
@@ -16,12 +17,12 @@ namespace OnlineStore.Web.Controllers
     public class CartController : Controller
     {
         private readonly OnlineStoreDbContext dbContext;
-        private readonly IStoreService storeService;
+        private readonly IOrderService orderService;
 
-        public CartController(OnlineStoreDbContext dbContext, IStoreService storeService)
+        public CartController(OnlineStoreDbContext dbContext, IOrderService orderService)
         {
             this.dbContext = dbContext;
-            this.storeService = storeService;
+            this.orderService = orderService;
         }
 
         public async Task<IActionResult> Index()
@@ -209,11 +210,11 @@ namespace OnlineStore.Web.Controllers
             try
             {
                 var userId = this.User.GetId();
-                string orderId = await this.storeService.CreateOrderAsync(order, userId!, cart);
+                string orderId = await this.orderService.CreateOrderAsync(order, userId!, cart);
                 HttpContext.Session.Remove("Cart");
                 return RedirectToAction("Index", "Cart");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 return this.GeneralError();

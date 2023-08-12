@@ -11,7 +11,7 @@
 
     using static Common.GeneralApplicationConstants;
 
-    
+
     public class HomeController : Controller
     {
         private readonly IItemService itemService;
@@ -37,8 +37,16 @@
 
             return View(viewModel);
         }
-        
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult Contacts()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
         {
@@ -48,5 +56,7 @@
             }
             return View();
         }
+
+        
     }
 }

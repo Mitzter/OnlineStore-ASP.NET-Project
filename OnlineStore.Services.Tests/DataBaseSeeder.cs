@@ -15,6 +15,12 @@
         public static Item itemTwo;
         public static ItemCategory categoryOne;
         public static ItemCategory categoryTwo;
+        public static Order orderOne;
+        public static Order orderTwo;
+        public static CartItem cartItemOne;
+        public static CartItem cartItemTwo;
+        public static List<CartItem> orderedItemsOne;
+        public static List<CartItem> orderedItemsTwo;
 
         public static void SeedDatabase(OnlineStoreDbContext dbContext)
         {
@@ -97,7 +103,56 @@
                 CreatedOn = DateTime.UtcNow,
                 IsActive = true,
             };
+            cartItemOne = new CartItem(itemOne)
+            {
+                Id = new Guid("c2410efe-6625-4aea-b4ae-38d71e55e94a"),
+                Quantity = 2,
+            };
+            cartItemTwo = new CartItem(itemTwo)
+            {
+                Id = new Guid("4b70f93e-c1b6-4050-b9ec-3b43174f7a60"),
+            };
 
+            orderedItemsOne = new List<CartItem>();
+            orderedItemsOne.Add(cartItemOne);
+            orderedItemsTwo = new List<CartItem>();
+            orderedItemsTwo.Add(cartItemOne);
+            orderedItemsTwo.Add(cartItemTwo);
+
+            orderOne = new Order()
+            {
+                Id = new Guid("1b354479-00fb-4189-a34a-af2cb8d1e8cd"),
+                FirstName = "Test",
+                LastName = "Testov",
+                PhoneNumber = "+3598883454",
+                OrderedItems = orderedItemsOne,
+                City = "Sofia",
+                Address = "Address Information",
+                OrderTime = DateTime.UtcNow,
+                IsUserCompanyRegistered = false,
+                Status = 0,
+                PostalCode = "1000",
+                User = AppUser,
+                AdditionalInformation = "Nothing",
+
+            };
+
+            orderTwo = new Order()
+            {
+                Id = new Guid("b4a738bb-2142-4416-bf2c-035c33af1b66"),
+                FirstName = "Tset",
+                LastName = "Votstet",
+                PhoneNumber = "+359232131",
+                OrderedItems = orderedItemsTwo,
+                City = "TestCity",
+                Address = "The Moon",
+                OrderTime = DateTime.UtcNow,
+                IsUserCompanyRegistered = true,
+                Status = 0,
+                PostalCode = "0000",
+                User = BulkBuyerUser,
+                AdditionalInformation = "Something",
+            };
             
             dbContext.Users.Add(AppUser);
             dbContext.Users.Add(BulkBuyerUser);
@@ -106,7 +161,8 @@
             dbContext.ItemCategories.Add(categoryTwo);
             dbContext.Items.Add(itemOne);
             dbContext.Items.Add(itemTwo);
-
+            dbContext.Orders.Add(orderOne);
+            dbContext.Orders.Add(orderTwo);
 
             dbContext.SaveChanges();
 

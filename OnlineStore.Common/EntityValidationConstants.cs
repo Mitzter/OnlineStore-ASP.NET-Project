@@ -53,5 +53,25 @@
             public const int FinancialManagerNameMaxLength = 100;
         }
 
+        public static class Order
+        {
+            public const int FirstNameMaxLength = 100;
+            public const int FirstNameMinLength = 3;
+
+            public const int LastNameMaxLength = 100;
+            public const int LastNameMinLength = 3;
+
+            public const int PhoneNumberMinLength = 8;
+            public const int PhoneNumberMaxLength = 15;
+
+            public const int CityNameMaxLength = 100;
+            public const int CityNameMinLength = 4;
+
+            public const int AddressMaxLength = 200;
+            public const int AddressMinLength = 5;
+
+            public const int PostalCodeLength = 4;
+            
+        }
     }
 }

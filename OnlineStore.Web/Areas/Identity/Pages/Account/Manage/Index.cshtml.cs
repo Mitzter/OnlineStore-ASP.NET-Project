@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OnlineStore.Web.Data;
 using OnlineStore.Web.Models.UserModels;
 
 namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
@@ -14,13 +15,16 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly OnlineStoreDbContext dbContext;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            OnlineStoreDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.dbContext = dbContext;
         }
 
       
@@ -52,6 +56,7 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                DisplayName = user.DisplayName,
                 PhoneNumber = phoneNumber,
                 CurrentPictureSource = user.PictureSource
             };
@@ -107,6 +112,7 @@ namespace OnlineStore.Web.Areas.Identity.Pages.Account.Manage
                     if (memoryStream.Length < 2097152)
                     {
                         user.PictureSource = memoryStream.ToArray();
+                        await this.dbContext.SaveChangesAsync();  
                     }
                     else
                     {

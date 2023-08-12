@@ -111,68 +111,24 @@
                 .Where(i => i.IsActive)
                 .FirstAsync(i => i.Id.ToString() == itemId);
 
-            try
+            
+            return new ItemDetailsViewModel()
             {
-                return new ItemDetailsViewModel()
-                {
-                    Id = item.Id.ToString(),
-                    Name = item.Name,
-                    Description = item.Description,
-                    ImageUrl = item.ImageUrl,
-                    Price = item.Price,
-                    BulkPrice = item.Price,
-                    Category = item.Category
-                };
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ArgumentNullException("Item ID is null.");
-            }
+                Id = item.Id.ToString(),
+                Name = item.Name,
+                Description = item.Description,
+                ImageUrl = item.ImageUrl,
+                Price = item.Price,
+                BulkPrice = item.Price,
+                Category = item.Category
+            };
+            
+            
         }
 
        
 
-        public async Task<string> CreateOrderAsync(OrderFormModel formModel, string userId, List<CartItem> sessionItems)
-        {
-            var user = await this.dbContext
-                .Users
-                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-
-            var orderedItems = sessionItems;
-            bool isUserCompanyRegistered = false;
-
-            var bulkBuyer = await this.dbContext
-                .BulkBuyers
-                .FirstOrDefaultAsync(u => u.UserId.ToString() == userId);
-            if (bulkBuyer?.UserId == user!.Id)
-            {
-                isUserCompanyRegistered = true;
-            }
-
-            Order order = new Order()
-            {
-                FirstName = formModel.FirstName,
-                LastName = formModel.LastName,
-                City = formModel.City,
-                Address = formModel.Address,
-                AdditionalInformation = formModel.AdditionalInformation,
-                PhoneNumber = formModel.PhoneNumber,
-                PostalCode = formModel.PostalCode,
-                UserId = user!.Id,
-                User = user,
-                OrderTime = DateTime.UtcNow,
-                OrderedItems = orderedItems,
-                Status = OrderStatus.Pending,
-                IsUserCompanyRegistered = isUserCompanyRegistered,
-            };
-             
-            await this.dbContext.Orders.AddAsync(order);
-            await this.dbContext.SaveChangesAsync();
-
-            
-            return order.Id.ToString();
-        }
-
+       
         public async Task<FilteredAndPagedItemsServiceModel> AllAdminViewAsync(AllItemsQueryModel queryModel)
         {
             IQueryable<Item> itemQuery = dbContext
