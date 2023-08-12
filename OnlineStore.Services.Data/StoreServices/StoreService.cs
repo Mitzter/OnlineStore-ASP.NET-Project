@@ -119,7 +119,7 @@
                 Description = item.Description,
                 ImageUrl = item.ImageUrl,
                 Price = item.Price,
-                BulkPrice = item.Price,
+                BulkPrice = item.BulkPrice,
                 Category = item.Category
             };
             

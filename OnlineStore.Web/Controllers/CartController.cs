@@ -135,9 +135,9 @@ namespace OnlineStore.Web.Controllers
 
                 HttpContext.Session.SetJson("Cart", cart);
 
-                TempData["Success"] = "The product has been added";
+                TempData["Success"] = "The product has been decreased";
 
-                return Redirect("Index");
+                return Redirect(Request.Headers["Referer"].ToString());
             }
             catch (Exception)
             {
@@ -163,9 +163,9 @@ namespace OnlineStore.Web.Controllers
                 {
                     HttpContext.Session.SetJson("Cart", cart);
                 }
-                TempData["Success"] = "The product has been added";
+                TempData["Success"] = "The product has been removed";
 
-                return Redirect("Index");
+                return RedirectToAction("Index", "Cart");
             }
             catch (Exception)
             {

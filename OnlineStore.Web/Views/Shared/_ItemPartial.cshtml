@@ -22,7 +22,7 @@
 
                 <h6 class="text-center">
                     Price:
-                    <b>@($"{(isBulkBuyer ? Model.BulkPrice : Model.Price):f2}") BGN</b>
+                    <b>@($"{Model.Price:f2}") BGN</b>
                 </h6>
 
                 @if (isBulkBuyer)
@@ -33,14 +33,6 @@
                     </h6>
                 }
             }
-            else
-            {
-                <h6 class="text-center">
-                    Price:
-                    <b>@($"{Model.Price:f2}") BGN</b>
-                </h6>
-            }
-
             <br />
             <a asp-area="" asp-controller="Store" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-success w-100">Details</a>
         </div>

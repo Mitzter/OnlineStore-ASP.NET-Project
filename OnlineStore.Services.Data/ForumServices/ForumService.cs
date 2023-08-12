@@ -101,10 +101,7 @@
                 .ForumPosts
                 .FirstAsync(p => p.Id == id);
 
-            if (post == null)
-            {
-                return null;
-            }
+           
             return post;
         }
 

@@ -29,7 +29,7 @@
 
                 <h4 class="mt-4">
                     Price:
-                    <span class="text-primary">@($"{(isBulkBuyer ? Model.BulkPrice : Model.Price):f2}") BGN</span>
+                    <span class="text-primary">@($"{Model.Price:f2}") BGN</span>
                 </h4>
 
                 @if (isBulkBuyer)
@@ -39,13 +39,6 @@
                         <span class="text-success">@($"{Model.BulkPrice:f2}") BGN</span>
                     </h5>
                 }
-            }
-            else
-            {
-                <h4 class="mt-4">
-                    Price:
-                    <span class="text-primary">@($"{Model.Price:f2}") BGN</span>
-                </h4>
             }
 
             <p class="mt-4">

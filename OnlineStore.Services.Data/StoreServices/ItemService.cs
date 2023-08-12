@@ -26,12 +26,12 @@
 
         public async Task<IEnumerable<IndexViewModel>> TopItemAsync()
         {
-
-            ICollection<Post> posts = await this.dbContext
-                .ForumPosts
-                .OrderByDescending(post => post.CreatedOn)
-                .Take(8)
-                .ToListAsync();
+            //TopPosts page was going to be on the front page. It has been moved to the ForumMain page.
+            //ICollection<Post> posts = await this.dbContext
+            //    .ForumPosts
+            //    .OrderByDescending(post => post.CreatedOn)
+            //    .Take(8)
+            //    .ToListAsync();
 
             IEnumerable<IndexViewModel> topItems = await dbContext
                 .Items

@@ -19,7 +19,6 @@
 
         private IForumService forumService;
         private IForumCategoryService forumCategoryService;
-        private UserManager<ApplicationUser> userManager;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -116,11 +115,23 @@
         }
 
         [Test]
-        public async Task FindPostByIdShouldReturnNullIfPostDoesNotExist()
+        public async Task GetPostRepliesShouldReturnThePostReplies()
         {
-            var actualPost = await this.forumService.FindPostById(4);
+            IEnumerable<ReplyFormModel> replies = await this.forumService.GetPostRepliesAsync(1.ToString());
 
-            Assert.IsNull(actualPost);
+            int expectedCount = 1;
+            int actualCount = replies.Count();
+
+            Assert.That(expectedCount, Is.EqualTo(actualCount));
         }
+
+        [Test]
+        public async Task ExistsByIdShouldReturnTrueIfCategoryExists()
+        {
+            bool result = await this.forumCategoryService.ExistsById(1);
+
+            Assert.IsTrue(result);
+        }
+
     }
 }
