@@ -53,14 +53,23 @@ namespace OnlineStore.Web.Controllers
             }
 
 
-            ShoppingCartViewModel viewModel = new()
+            try
             {
-                CartItems = cart,
-                GrantTotal = grandTotal,
-                IsUserCompanyRegistered = isUserCompanyRegistered,
-            };
+                ShoppingCartViewModel viewModel = new()
+                {
+                    CartItems = cart,
+                    GrantTotal = grandTotal,
+                    IsUserCompanyRegistered = isUserCompanyRegistered,
+                };
 
-            return View(viewModel);
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
+            
         }
         public async Task<IActionResult> Add(Guid id)
         {

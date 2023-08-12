@@ -10,6 +10,7 @@
     using OnlineStore.Web.ViewModels.FormModels.ForumFormModels;
     using OnlineStore.Web.ViewModels.ViewModels.ForumViewModels;
     using static OnlineStore.Web.Infrastructure.GetPrincipalExtension;
+    using static OnlineStore.Common.NotificationMessagesConstants;
 
     [Authorize]
     public class ForumController : Controller
@@ -30,25 +31,43 @@
             IEnumerable<ForumCategoryFormModel> categories = await this.categoryService
                 .AllCategoriesAsync();
 
-            var latestPosts = await this.forumService.GetLatestForumPostsAsync(); 
-
             
-            var viewModel = new ForumMainViewModel
+            try
             {
-                Categories = categories,
-                LatestPosts = latestPosts
-            };
+                var latestPosts = await this.forumService.GetLatestForumPostsAsync();
 
-            return View(viewModel);
+
+                var viewModel = new ForumMainViewModel
+                {
+                    Categories = categories,
+                    LatestPosts = latestPosts
+                };
+
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+            
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> Category(int categoryId)
         {
-            ForumCategoryViewModel viewModel = await this.forumService
+            
+            try
+            {
+                ForumCategoryViewModel viewModel = await this.forumService
                 .GetSelectedCategoryViewAsync(categoryId.ToString());
 
-           return View(viewModel);
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+           
         }
 
         [HttpGet]
@@ -57,34 +76,57 @@
             var user = HttpContext.User;
             var currentUser = await _userManager.GetUserAsync(user);
 
-
-
-            PostFormModel post = new PostFormModel()
+            try
             {
-                PosterId = currentUser.Id,
-                Poster = currentUser,
-                CategoryId = categoryId,
-            };
+                PostFormModel post = new PostFormModel()
+                {
+                    PosterId = currentUser.Id,
+                    Poster = currentUser,
+                    CategoryId = categoryId,
+                };
 
-            return View(post);
+                return View(post);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+
+           
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePost(PostFormModel formModel)
         {
             var userId = this.User.GetId()!.ToString();
-            string postId = await this.forumService.CreatePostAsync(formModel, userId);
-            return this.RedirectToAction("ForumMain", "Forum");
+            try
+            {
+                string postId = await this.forumService.CreatePostAsync(formModel, userId);
+                return this.RedirectToAction("ForumMain", "Forum");
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+            
 
         }
 
         [HttpGet]
         public async Task<IActionResult> ViewPost(string id)
         {
-            PostViewModel viewModel = await forumService
+            try
+            {
+                PostViewModel viewModel = await forumService
                 .ViewPostAsync(id);
 
-            return View(viewModel);
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+            
 
         }
 
@@ -95,16 +137,23 @@
             var currentUser = await
                 this._userManager.Users
                 .FirstOrDefaultAsync(u => u.Id == Guid.Parse(user));
-
-            ReplyFormModel reply = new ReplyFormModel()
+            try
             {
-                PosterId = currentUser!.Id,
-                User = currentUser,
-                PostedAtId = postId
-            };
+                ReplyFormModel reply = new ReplyFormModel()
+                {
+                    PosterId = currentUser!.Id,
+                    User = currentUser,
+                    PostedAtId = postId
+                };
 
 
-            return View(reply);
+                return View(reply);
+            }
+            catch (Exception)
+            {
+                return this.GeneralError();
+            }
+            
         }
 
         [HttpPost]
@@ -118,9 +167,16 @@
             }
             catch (Exception)
             {
-                throw new Exception("Was unble to create a reply!");
+                return this.GeneralError();
             }
-            
+
+        }
+
+        private IActionResult GeneralError()
+        {
+            this.TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact an administrator!";
+
+            return this.RedirectToAction("ForumMain", "Forum");
         }
     }
 }

@@ -28,14 +28,20 @@
         [AllowAnonymous]
         public async Task<IActionResult> Products([FromQuery]AllItemsQueryModel queryModel)
         {
-            FilteredAndPagedItemsServiceModel serviceModel = await
-                this.storeService.AllAsync(queryModel);
+            try
+            {
+                FilteredAndPagedItemsServiceModel serviceModel = await this.storeService.AllAsync(queryModel);
 
-            queryModel.Items = serviceModel.Items;
-            queryModel.TotalItems = serviceModel.TotalItemsCount;
-            queryModel.Categories = await this.itemCategoryService.AllCategoryNamesAsync();
+                queryModel.Items = serviceModel.Items;
+                queryModel.TotalItems = serviceModel.TotalItemsCount;
+                queryModel.Categories = await this.itemCategoryService.AllCategoryNamesAsync();
 
-            return View(queryModel);
+                return View(queryModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
 
         [HttpGet]

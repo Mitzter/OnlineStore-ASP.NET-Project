@@ -26,43 +26,53 @@
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart") ?? new List<CartItem>();
             var userId = this.User.GetId();
-            bool isBulkBuyerAlready = await this.userService.IsUserBulkClientAsync(userId!);
-            ApplicationUser user = await this.userService.GetUserByIdAsync(userId!);
 
 
-            if(cart != null)
+            try
             {
-                decimal shoppingCartTotal = 0;
+                bool isBulkBuyerAlready = await this.userService.IsUserBulkClientAsync(userId!);
+                ApplicationUser user = await this.userService.GetUserByIdAsync(userId!);
 
-                foreach (var item in cart)
+                if (cart != null)
                 {
-                    shoppingCartTotal += item.Price * item.Quantity;
-                }
+                    decimal shoppingCartTotal = 0;
 
-                if (shoppingCartTotal < 1000)
+                    foreach (var item in cart)
+                    {
+                        shoppingCartTotal += item.Price * item.Quantity;
+                    }
+
+                    if (shoppingCartTotal < 1000)
+                    {
+                        this.TempData[ErrorMessage] = "You do not have access to this page.";
+
+                        return this.RedirectToAction("Index", "Home");
+                    }
+                }
+                else if (cart == null)
                 {
                     this.TempData[ErrorMessage] = "You do not have access to this page.";
 
                     return this.RedirectToAction("Index", "Home");
                 }
-            }
-            else if (cart == null)
-            {
-                this.TempData[ErrorMessage] = "You do not have access to this page.";
 
+
+
+                if (isBulkBuyerAlready)
+                {
+                    this.TempData[ErrorMessage] = "You have already registered your company for your bulk discounts!";
+
+                    return this.RedirectToAction("Index", "Home");
+                }
+
+                return this.View();
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = "Was unable to register as a company. An unexpected error occured";
                 return this.RedirectToAction("Index", "Home");
             }
-
-            
-
-            if (isBulkBuyerAlready)
-            {
-                this.TempData[ErrorMessage] = "You have already registered your company for your bulk discounts!";
-
-                return this.RedirectToAction("Index", "Home");
-            }
-
-            return this.View();
+           
         }
 
         [HttpPost]
