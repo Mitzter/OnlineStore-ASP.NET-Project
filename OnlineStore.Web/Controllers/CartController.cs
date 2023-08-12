@@ -94,7 +94,8 @@ namespace OnlineStore.Web.Controllers
 
                 HttpContext.Session.SetJson("Cart", cart);
 
-                TempData["Success"] = "The product has been added";
+                TempData["Success"] = "The product has been added to your cart.";
+
 
                 return Redirect(Request.Headers["Referer"].ToString());
             }
@@ -221,6 +222,9 @@ namespace OnlineStore.Web.Controllers
                 var userId = this.User.GetId();
                 string orderId = await this.orderService.CreateOrderAsync(order, userId!, cart);
                 HttpContext.Session.Remove("Cart");
+
+                TempData["OrderSuccessMessage"] = "Your order was successful! Thank you for shopping with us.";
+
                 return RedirectToAction("Index", "Cart");
             }
             catch (Exception)

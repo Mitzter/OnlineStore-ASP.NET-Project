@@ -34,7 +34,7 @@
 
         public string PostalCode { get; set; }
 
-        public string AdditionalInformation { get; set; }
+        public string? AdditionalInformation { get; set; }
 
         public Guid UserId { get; set; }
 
